@@ -41,17 +41,37 @@ namespace AniDroid.AniList.Service
             return client.Execute<AniListAuthorizationResponse>(authReq);
         }
 
-        public async Task<IRestResponse<GraphQLResponse<Media>>> GetMedia(int id)
+        #region Media
+
+        public async Task<IRestResponse<GraphQLResponse<Media>>> GetMedia(int id, Media.MediaType type)
         {
             var client = CreateClient();
             var query = new GraphQLQuery
             {
-                Query = "query($id: Int) { Media (id: $id, type: ANIME) { id idMal type title { english romaji native userPreferred } } }",
-                Variables = $"{{\"id\": {id}}}"
+                Query = QueryStore.GetSeriesByIdAndType,
+                Variables = JsonConvert.SerializeObject(new { id, type = type.Value })
             };
             var req = CreateRequest(Method.POST, query);
             return await client.ExecuteTaskAsync<GraphQLResponse<Media>>(req);
         }
+
+        #endregion
+
+        #region User
+
+        public async Task<IRestResponse<GraphQLResponse<User>>> GetUser(string name)
+        {
+            var client = CreateClient();
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.GetUserByName,
+                Variables = JsonConvert.SerializeObject(new { name })
+            };
+            var req = CreateRequest(Method.POST, query);
+            return await client.ExecuteTaskAsync<GraphQLResponse<User>>(req);
+        }
+
+        #endregion
 
         #region Internal
 
