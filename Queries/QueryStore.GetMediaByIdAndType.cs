@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AniDroid.AniList
+namespace AniDroid.AniList.Queries
 {
-    internal class QueryStore
+    internal static partial class QueryStore
     {
-        public const string GetSeriesByIdAndType = @"query ($id: Int!, $type: MediaType) {
-  Media(id: $id, type: $type) {
+        public const string GetMediaByIdAndType = @"query ($id: Int!, $type: MediaType) {
+  Data: Media(id: $id, type: $type) {
     id
     title {
       romaji
@@ -61,7 +61,5 @@ namespace AniDroid.AniList
     }
   }
 }";
-
-        public const string GetUserByName = "query ($name: String) { User (name: $name) { id name about(asHtml: true) avatar { large medium } bannerImage isFollowing options { titleLanguage displayAdultContent } mediaListOptions { 	scoreFormat rowOrder useLegacyLists animeList { splitCompletedSectionByFormat advancedScoringEnabled sectionOrder } mangaList { splitCompletedSectionByFormat advancedScoringEnabled sectionOrder } } donatorTier unreadNotificationCount siteUrl updatedAt } }";
     }
 }

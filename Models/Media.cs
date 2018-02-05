@@ -121,7 +121,7 @@ namespace AniDroid.AniList.Models
             public bool Private { get; set; }
             public string Notes { get; set; }
             public bool HiddenFromStatusLists { get; set; }
-            // custom lists
+            //public List<Tuple<string, bool>> CustomLists { get; set; }    Bug created on github for this
             // advanced scores
             public FuzzyDate StartedAt { get; set; }
             public FuzzyDate CompletedAt { get; set; }
@@ -129,6 +129,14 @@ namespace AniDroid.AniList.Models
             public int CreatedAt { get; set; }
             public Media Media { get; set; }
             public User User { get; set; }
+        }
+
+        public class MediaListCollection
+        {
+            public List<List<MediaList>> StatusLists { get; set; }
+            public List<List<MediaList>> CustomLists { get; set; }
+            public User User { get; set; }
+
         }
 
         public class MediaStats

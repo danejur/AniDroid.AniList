@@ -8,5 +8,6 @@ namespace AniDroid.AniList.Service
     {
         public Dictionary<string, T> Data { get; set; }
         public List<GraphQLError> Errors { get; set; }
+        public T Value => Data["Data"];
     }
 }

@@ -12,6 +12,7 @@ using Newtonsoft.Json.Serialization;
 using AniDroid.AniList.Authorization;
 using AniDroid.AniList.Interfaces;
 using RestSharp.Deserializers;
+using AniDroid.AniList.Queries;
 
 namespace AniDroid.AniList.Service
 {
@@ -48,7 +49,7 @@ namespace AniDroid.AniList.Service
             var client = CreateClient();
             var query = new GraphQLQuery
             {
-                Query = QueryStore.GetSeriesByIdAndType,
+                Query = QueryStore.GetMediaByIdAndType,
                 Variables = JsonConvert.SerializeObject(new { id, type = type.Value })
             };
             var req = CreateRequest(Method.POST, query);
@@ -69,6 +70,18 @@ namespace AniDroid.AniList.Service
             };
             var req = CreateRequest(Method.POST, query);
             return await client.ExecuteTaskAsync<GraphQLResponse<User>>(req);
+        }
+
+        public async Task<IRestResponse<GraphQLResponse<Media.MediaListCollection>>> GetUserMediaList(string userName, Media.MediaType type)
+        {
+            var client = CreateClient();
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.GetMediaListsByUserNameAndType,
+                Variables = JsonConvert.SerializeObject(new { name = userName, type = type.Value })
+            };
+            var req = CreateRequest(Method.POST, query);
+            return await client.ExecuteTaskAsync<GraphQLResponse<Media.MediaListCollection>>(req);
         }
 
         #endregion
