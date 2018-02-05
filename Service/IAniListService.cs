@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AniDroid.AniList
 {
-    public class IAniListService
+    public interface IAniListService
     {
     }
 }
