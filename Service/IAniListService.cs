@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AniDroid.AniList
+namespace AniDroid.AniList.Service
 {
     public interface IAniListService
     {
