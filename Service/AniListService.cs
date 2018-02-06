@@ -29,7 +29,7 @@ namespace AniDroid.AniList.Service
             AuthCodeResolver = auth;
         }
 
-        public static IRestResponse<AniListAuthorizationResponse> AuthenticateUser(IAniListServiceConfig config, string code)
+        public static async Task<IRestResponse<AniListAuthorizationResponse>> AuthenticateUser(IAniListServiceConfig config, string code, CancellationToken cToken = default(CancellationToken))
         {
             var authReq = new RestRequest(config.AuthUrl, Method.POST);
             authReq.AddParameter("client_id", config.ClientId);
@@ -39,12 +39,12 @@ namespace AniDroid.AniList.Service
             authReq.AddParameter("code", code);
 
             var client = new RestClient();
-            return client.Execute<AniListAuthorizationResponse>(authReq);
+            return await client.ExecuteTaskAsync<AniListAuthorizationResponse>(authReq, cToken);
         }
 
         #region Media
 
-        public async Task<IRestResponse<GraphQLResponse<Media>>> GetMedia(int id, Media.MediaType type)
+        public async Task<IRestResponse<GraphQLResponse<Media>>> GetMedia(int id, Media.MediaType type, CancellationToken cToken = default(CancellationToken))
         {
             var client = CreateClient();
             var query = new GraphQLQuery
@@ -53,7 +53,7 @@ namespace AniDroid.AniList.Service
                 Variables = JsonConvert.SerializeObject(new { id, type = type.Value })
             };
             var req = CreateRequest(Method.POST, query);
-            return await client.ExecuteTaskAsync<GraphQLResponse<Media>>(req);
+            return await client.ExecuteTaskAsync<GraphQLResponse<Media>>(req, cToken);
         }
 
         #endregion

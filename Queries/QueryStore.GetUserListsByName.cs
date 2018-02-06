@@ -9,20 +9,6 @@ namespace AniDroid.AniList.Queries
         public const string GetMediaListsByUserNameAndType = @"
 query ($name: String, $type: MediaType) {
   Data: MediaListCollection(userName: $name, type: $type) {
-    user {
-      mediaListOptions {
-        scoreFormat
-        animeList {
-          sectionOrder
-          customLists
-        }
-        mangaList {
-          sectionOrder
-          customLists
-        }
-        rowOrder
-      }
-    }
     statusLists(asArray: true) {
       status
       score
@@ -49,15 +35,20 @@ query ($name: String, $type: MediaType) {
           userPreferred
           english
           romaji
+          native
         }
         coverImage {
           medium
           large
         }
+        status
         episodes
         chapters
         volumes
         format
+        averageScore
+        meanScore
+        popularity
         startDate {
           year
           month

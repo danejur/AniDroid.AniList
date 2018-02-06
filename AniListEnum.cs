@@ -57,6 +57,11 @@ namespace AniDroid.AniList
             return GetEnumValues<T>().FirstOrDefault(x => x.Index == index)?.DisplayValue ?? defaultValue;
         }
 
+        public static T GetEnum<T>(string value) where T : AniListEnum
+        {
+            return GetEnumValues<T>().FirstOrDefault(x => x.Value == value);
+        }
+
         public static int GetIndex<T>(string value) where T : AniListEnum
         {
             var dict = GetValueDictionary<T>();
