@@ -167,6 +167,9 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
+        /// <summary>
+        /// Describes the type of Media (e.g. Anime or Manga)
+        /// </summary>
         public class MediaType : AniListEnum
         {
             private MediaType(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -175,6 +178,9 @@ namespace AniDroid.AniList.Models
             public static MediaType Manga => new MediaType("MANGA", "Manga", 1);
         }
 
+        /// <summary>
+        /// Describes the format of Media (e.g. Tv, Manga, etc.)
+        /// </summary>
         public class MediaFormat : AniListEnum
         {
             private MediaFormat(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -191,6 +197,9 @@ namespace AniDroid.AniList.Models
             public static MediaFormat OneShot => new MediaFormat("ONE_SHOT", "One Shot", 9);
         }
 
+        /// <summary>
+        /// Describes the satus of the Media (e.g. Finished, Releasing, etc.)
+        /// </summary>
         public class MediaStatus : AniListEnum
         {
             private MediaStatus(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -201,6 +210,9 @@ namespace AniDroid.AniList.Models
             public static MediaStatus Cancelled => new MediaStatus("CANCELLED", "Cancelled", 3);
         }
 
+        /// <summary>
+        /// Describes the season of the Media (e.g. Winter, Summer, etc.)
+        /// </summary>
         public class MediaSeason : AniListEnum
         {
             private MediaSeason(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -211,6 +223,9 @@ namespace AniDroid.AniList.Models
             public static MediaSeason Fall => new MediaSeason("FALL", "Fall", 3);
         }
 
+        /// <summary>
+        /// Describes the source of the Media (e.g. Original, Light Novel, etc.)
+        /// </summary>
         public class MediaSource : AniListEnum
         {
             private MediaSource(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -223,6 +238,9 @@ namespace AniDroid.AniList.Models
             public static MediaSource Other => new MediaSource("OTHER", "Other", 5);
         }
 
+        /// <summary>
+        /// Describes the relation of the Media to a related Media (e.g. Adaptation, Sequel, etc.)
+        /// </summary>
         public class MediaRelation : AniListEnum
         {
             private MediaRelation(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -239,6 +257,9 @@ namespace AniDroid.AniList.Models
             public static MediaRelation Other => new MediaRelation("OTHER", "Other", 9);
         }
 
+        /// <summary>
+        /// Describes the ranking type of the Media (e.g. Rated, Popular)
+        /// </summary>
         public class MediaRankType : AniListEnum
         {
             private MediaRankType(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -247,6 +268,9 @@ namespace AniDroid.AniList.Models
             public static MediaRankType Popular => new MediaRankType("POPULAR", "Popular", 1);
         }
 
+        /// <summary>
+        /// Describes the list status of the Media (e.g. Current, Completed, etc.)
+        /// </summary>
         public class MediaListStatus : AniListEnum
         {
             private MediaListStatus(string val, string displayVal, int index) : base(val, displayVal, index) { }
