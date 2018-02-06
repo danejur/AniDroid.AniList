@@ -1,11 +1,10 @@
-﻿using AniDroid.AniList.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AniDroid.AniList.Models
 {
-    public class Staff : BaseAniListObject
+    public class Staff : AniListObject
     {
         public AniListName Name { get; set; }
         public string Language { get; set; }
@@ -30,18 +29,18 @@ namespace AniDroid.AniList.Models
 
         public class StaffLanguage : AniListEnum
         {
-            protected StaffLanguage(string val, string displayVal) : base(val, displayVal) { }
+            protected StaffLanguage(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static StaffLanguage Japanese => new StaffLanguage("JAPANESE", "Japanese");
-            public static StaffLanguage English => new StaffLanguage("ENGLISH", "English");
-            public static StaffLanguage Korean => new StaffLanguage("KOREAN", "Korean");
-            public static StaffLanguage Italian => new StaffLanguage("ITALIAN", "Japanese");
-            public static StaffLanguage Spanish => new StaffLanguage("SPANISH", "Spanish");
-            public static StaffLanguage Portuguese => new StaffLanguage("PORTUGUESE", "Portuguese");
-            public static StaffLanguage French => new StaffLanguage("FRENCH", "French");
-            public static StaffLanguage German => new StaffLanguage("GERMAN", "German");
-            public static StaffLanguage Hebrew => new StaffLanguage("HEBREW", "Hebrew");
-            public static StaffLanguage Hungarian => new StaffLanguage("HUNGARIAN", "Hungarian");
+            public static StaffLanguage Japanese => new StaffLanguage("JAPANESE", "Japanese", 0);
+            public static StaffLanguage English => new StaffLanguage("ENGLISH", "English", 1);
+            public static StaffLanguage Korean => new StaffLanguage("KOREAN", "Korean", 2);
+            public static StaffLanguage Italian => new StaffLanguage("ITALIAN", "Japanese", 3);
+            public static StaffLanguage Spanish => new StaffLanguage("SPANISH", "Spanish", 4);
+            public static StaffLanguage Portuguese => new StaffLanguage("PORTUGUESE", "Portuguese", 5);
+            public static StaffLanguage French => new StaffLanguage("FRENCH", "French", 6);
+            public static StaffLanguage German => new StaffLanguage("GERMAN", "German", 7);
+            public static StaffLanguage Hebrew => new StaffLanguage("HEBREW", "Hebrew", 8);
+            public static StaffLanguage Hungarian => new StaffLanguage("HUNGARIAN", "Hungarian", 9);
         }
 
         #endregion

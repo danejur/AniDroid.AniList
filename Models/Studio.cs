@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AniDroid.AniList.Models
 {
-    public class Studio : BaseAniListObject
+    public class Studio : AniListObject
     {
         public string Name { get; set; }
         public Connection<Media.Edge, Media> Media { get; set; }

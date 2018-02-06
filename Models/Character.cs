@@ -1,11 +1,10 @@
-﻿using AniDroid.AniList.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AniDroid.AniList.Models
 {
-    public class Character : BaseAniListObject
+    public class Character : AniListObject
     {
         public AniListName Name { get; set; }
         public AniListImage Image { get; set; }
@@ -30,11 +29,11 @@ namespace AniDroid.AniList.Models
 
         public class CharacterRole : AniListEnum
         {
-            protected CharacterRole(string val, string displayVal) : base(val, displayVal) { }
+            protected CharacterRole(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static CharacterRole Main => new CharacterRole("MAIN", "Main");
-            public static CharacterRole Supporting => new CharacterRole("SUPPORTING", "Supporting");
-            public static CharacterRole Background => new CharacterRole("BACKGROUND", "Background");
+            public static CharacterRole Main => new CharacterRole("MAIN", "Main", 0);
+            public static CharacterRole Supporting => new CharacterRole("SUPPORTING", "Supporting", 1);
+            public static CharacterRole Background => new CharacterRole("BACKGROUND", "Background", 2);
         }
 
         #endregion

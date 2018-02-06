@@ -60,7 +60,7 @@ namespace AniDroid.AniList.Service
 
         #region User
 
-        public async Task<IRestResponse<GraphQLResponse<User>>> GetUser(string name)
+        public async Task<IRestResponse<GraphQLResponse<User>>> GetUser(string name, CancellationToken cToken = default(CancellationToken))
         {
             var client = CreateClient();
             var query = new GraphQLQuery
@@ -69,10 +69,10 @@ namespace AniDroid.AniList.Service
                 Variables = JsonConvert.SerializeObject(new { name })
             };
             var req = CreateRequest(Method.POST, query);
-            return await client.ExecuteTaskAsync<GraphQLResponse<User>>(req);
+            return await client.ExecuteTaskAsync<GraphQLResponse<User>>(req, cToken);
         }
 
-        public async Task<IRestResponse<GraphQLResponse<Media.MediaListCollection>>> GetUserMediaList(string userName, Media.MediaType type)
+        public async Task<IRestResponse<GraphQLResponse<Media.MediaListCollection>>> GetUserMediaList(string userName, Media.MediaType type, CancellationToken cToken = default(CancellationToken))
         {
             var client = CreateClient();
             var query = new GraphQLQuery
@@ -81,7 +81,7 @@ namespace AniDroid.AniList.Service
                 Variables = JsonConvert.SerializeObject(new { name = userName, type = type.Value })
             };
             var req = CreateRequest(Method.POST, query);
-            return await client.ExecuteTaskAsync<GraphQLResponse<Media.MediaListCollection>>(req);
+            return await client.ExecuteTaskAsync<GraphQLResponse<Media.MediaListCollection>>(req, cToken);
         }
 
         #endregion

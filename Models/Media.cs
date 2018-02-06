@@ -1,12 +1,11 @@
 ﻿using AniDroid.AniList.DataTypes;
-using AniDroid.AniList.Internal;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AniDroid.AniList.Models
 {
-    public class Media : BaseAniListObject
+    public class Media : AniListObject
     {
         public int IdMal { get; set; }
         public MediaTitle Title { get; set; }
@@ -170,94 +169,94 @@ namespace AniDroid.AniList.Models
 
         public class MediaType : AniListEnum
         {
-            private MediaType(string val, string displayVal) : base(val, displayVal) { }
+            private MediaType(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static MediaType Anime => new MediaType("ANIME", "Anime");
-            public static MediaType Manga => new MediaType("MANGA", "Manga");
+            public static MediaType Anime => new MediaType("ANIME", "Anime", 0);
+            public static MediaType Manga => new MediaType("MANGA", "Manga", 1);
         }
 
         public class MediaFormat : AniListEnum
         {
-            private MediaFormat(string val, string displayVal) : base(val, displayVal) { }
+            private MediaFormat(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static MediaFormat Tv => new MediaFormat("TV", "Tv");
-            public static MediaFormat TvShort => new MediaFormat("TV_SHORT", "Tv Short");
-            public static MediaFormat Movie => new MediaFormat("MOVIE", "Movie");
-            public static MediaFormat Special => new MediaFormat("SPECIAL", "Special");
-            public static MediaFormat Ova => new MediaFormat("OVA", "Ova");
-            public static MediaFormat Ona => new MediaFormat("ONA", "Ona");
-            public static MediaFormat Music => new MediaFormat("MUSIC", "Music");
-            public static MediaFormat Manga => new MediaFormat("MANGA", "Manga");
-            public static MediaFormat Novel => new MediaFormat("NOVEL", "Novel");
-            public static MediaFormat OneShot => new MediaFormat("ONE_SHOT", "One Shot");
+            public static MediaFormat Tv => new MediaFormat("TV", "Tv", 0);
+            public static MediaFormat TvShort => new MediaFormat("TV_SHORT", "Tv Short", 1);
+            public static MediaFormat Movie => new MediaFormat("MOVIE", "Movie", 2);
+            public static MediaFormat Special => new MediaFormat("SPECIAL", "Special", 3);
+            public static MediaFormat Ova => new MediaFormat("OVA", "Ova", 4);
+            public static MediaFormat Ona => new MediaFormat("ONA", "Ona", 5);
+            public static MediaFormat Music => new MediaFormat("MUSIC", "Music", 6);
+            public static MediaFormat Manga => new MediaFormat("MANGA", "Manga", 7);
+            public static MediaFormat Novel => new MediaFormat("NOVEL", "Novel", 8);
+            public static MediaFormat OneShot => new MediaFormat("ONE_SHOT", "One Shot", 9);
         }
 
         public class MediaStatus : AniListEnum
         {
-            private MediaStatus(string val, string displayVal) : base(val, displayVal) { }
+            private MediaStatus(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static MediaStatus Finished => new MediaStatus("FINISHED", "Finished");
-            public static MediaStatus Releasing => new MediaStatus("RELEASING", "Releasing");
-            public static MediaStatus NotYetReleased => new MediaStatus("NOT_YET_RELEASED", "Not Yet Released");
-            public static MediaStatus Cancelled => new MediaStatus("CANCELLED", "Cancelled");
+            public static MediaStatus Finished => new MediaStatus("FINISHED", "Finished", 0);
+            public static MediaStatus Releasing => new MediaStatus("RELEASING", "Releasing", 1);
+            public static MediaStatus NotYetReleased => new MediaStatus("NOT_YET_RELEASED", "Not Yet Released", 2);
+            public static MediaStatus Cancelled => new MediaStatus("CANCELLED", "Cancelled", 3);
         }
 
         public class MediaSeason : AniListEnum
         {
-            private MediaSeason(string val, string displayVal) : base(val, displayVal) { }
+            private MediaSeason(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static MediaSeason Winter => new MediaSeason("WINTER", "Winter");
-            public static MediaSeason Spring => new MediaSeason("SPRING", "Spring");
-            public static MediaSeason Summer => new MediaSeason("SUMMER", "Summer");
-            public static MediaSeason Fall => new MediaSeason("FALL", "Fall");
+            public static MediaSeason Winter => new MediaSeason("WINTER", "Winter", 0);
+            public static MediaSeason Spring => new MediaSeason("SPRING", "Spring", 1);
+            public static MediaSeason Summer => new MediaSeason("SUMMER", "Summer", 2);
+            public static MediaSeason Fall => new MediaSeason("FALL", "Fall", 3);
         }
 
         public class MediaSource : AniListEnum
         {
-            private MediaSource(string val, string displayVal) : base(val, displayVal) { }
+            private MediaSource(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static MediaSource Original => new MediaSource("ORIGINAL", "Original");
-            public static MediaSource Manga => new MediaSource("MANGA", "Manga");
-            public static MediaSource LightNovel => new MediaSource("LIGHT_NOVEL", "Light Novel");
-            public static MediaSource VisualNovel => new MediaSource("VISUAL_NOVEL", "Visual Novel");
-            public static MediaSource VideoGame => new MediaSource("VIDEO_GAME", "Video Game");
-            public static MediaSource Other => new MediaSource("OTHER", "Other");
+            public static MediaSource Original => new MediaSource("ORIGINAL", "Original", 0);
+            public static MediaSource Manga => new MediaSource("MANGA", "Manga", 1);
+            public static MediaSource LightNovel => new MediaSource("LIGHT_NOVEL", "Light Novel", 2);
+            public static MediaSource VisualNovel => new MediaSource("VISUAL_NOVEL", "Visual Novel", 3);
+            public static MediaSource VideoGame => new MediaSource("VIDEO_GAME", "Video Game", 4);
+            public static MediaSource Other => new MediaSource("OTHER", "Other", 5);
         }
 
         public class MediaRelation : AniListEnum
         {
-            private MediaRelation(string val, string displayVal) : base(val, displayVal) { }
+            private MediaRelation(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static MediaRelation Adaptation => new MediaRelation("ADAPTATION", "Adaptation");
-            public static MediaRelation Prequel => new MediaRelation("PREQUEL", "Prequel");
-            public static MediaRelation Sequel => new MediaRelation("SEQUEL", "Sequel");
-            public static MediaRelation Parent => new MediaRelation("PARENT", "Parent");
-            public static MediaRelation SideStory => new MediaRelation("SIDE_STORY", "Side Story");
-            public static MediaRelation Character => new MediaRelation("CHARACTER", "Character");
-            public static MediaRelation Summary => new MediaRelation("SUMMARY", "Summary");
-            public static MediaRelation Alternative => new MediaRelation("ALTERNATIVE", "Alternative");
-            public static MediaRelation SpinOff => new MediaRelation("SPIN_OFF", "Spin-off");
-            public static MediaRelation Other => new MediaRelation("OTHER", "Other");
+            public static MediaRelation Adaptation => new MediaRelation("ADAPTATION", "Adaptation", 0);
+            public static MediaRelation Prequel => new MediaRelation("PREQUEL", "Prequel", 1);
+            public static MediaRelation Sequel => new MediaRelation("SEQUEL", "Sequel", 2);
+            public static MediaRelation Parent => new MediaRelation("PARENT", "Parent", 3);
+            public static MediaRelation SideStory => new MediaRelation("SIDE_STORY", "Side Story", 4);
+            public static MediaRelation Character => new MediaRelation("CHARACTER", "Character", 5);
+            public static MediaRelation Summary => new MediaRelation("SUMMARY", "Summary", 6);
+            public static MediaRelation Alternative => new MediaRelation("ALTERNATIVE", "Alternative", 7);
+            public static MediaRelation SpinOff => new MediaRelation("SPIN_OFF", "Spin-off", 8);
+            public static MediaRelation Other => new MediaRelation("OTHER", "Other", 9);
         }
 
         public class MediaRankType : AniListEnum
         {
-            private MediaRankType(string val, string displayVal) : base(val, displayVal) { }
+            private MediaRankType(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static MediaRankType Rated => new MediaRankType("RATED", "Rated");
-            public static MediaRankType Popular => new MediaRankType("POPULAR", "Popular");
+            public static MediaRankType Rated => new MediaRankType("RATED", "Rated", 0);
+            public static MediaRankType Popular => new MediaRankType("POPULAR", "Popular", 1);
         }
 
         public class MediaListStatus : AniListEnum
         {
-            private MediaListStatus(string val, string displayVal) : base(val, displayVal) { }
+            private MediaListStatus(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static MediaListStatus Current => new MediaListStatus("CURRENT", "Current");
-            public static MediaListStatus Planning => new MediaListStatus("PLANNING", "Planning");
-            public static MediaListStatus Completed => new MediaListStatus("COMPLETED", "Completed");
-            public static MediaListStatus Dropped => new MediaListStatus("DROPPED", "Dropped");
-            public static MediaListStatus Paused => new MediaListStatus("PAUSED", "Paused");
-            public static MediaListStatus Repeating => new MediaListStatus("REPEATING", "Repeating");
+            public static MediaListStatus Current => new MediaListStatus("CURRENT", "Current", 0);
+            public static MediaListStatus Planning => new MediaListStatus("PLANNING", "Planning", 1);
+            public static MediaListStatus Completed => new MediaListStatus("COMPLETED", "Completed", 2);
+            public static MediaListStatus Dropped => new MediaListStatus("DROPPED", "Dropped", 3);
+            public static MediaListStatus Paused => new MediaListStatus("PAUSED", "Paused", 4);
+            public static MediaListStatus Repeating => new MediaListStatus("REPEATING", "Repeating", 5);
         }
 
         #endregion

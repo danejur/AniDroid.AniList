@@ -1,11 +1,10 @@
-﻿using AniDroid.AniList.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AniDroid.AniList.Models
 {
-    public class User : BaseAniListObject
+    public class User : AniListObject
     {
         public string Name { get; set; }
         public string About { get; set; }
@@ -82,13 +81,13 @@ namespace AniDroid.AniList.Models
 
         public class ScoreFormat : AniListEnum
         {
-            protected ScoreFormat(string val, string displayVal) : base(val, displayVal) { }
+            protected ScoreFormat(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static ScoreFormat Hundred => new ScoreFormat("POINT_100", "100");
-            public static ScoreFormat TenDecimal => new ScoreFormat("POINT_10_DECIMAL", "10.0");
-            public static ScoreFormat Ten => new ScoreFormat("POINT_10", "10");
-            public static ScoreFormat FiveStars => new ScoreFormat("POINT_5", "Five Stars");
-            public static ScoreFormat ThreeSmileys => new ScoreFormat("POINT_3", "Three Smileys");
+            public static ScoreFormat Hundred => new ScoreFormat("POINT_100", "100", 0);
+            public static ScoreFormat TenDecimal => new ScoreFormat("POINT_10_DECIMAL", "10.0", 1);
+            public static ScoreFormat Ten => new ScoreFormat("POINT_10", "10", 2);
+            public static ScoreFormat FiveStars => new ScoreFormat("POINT_5", "Five Stars", 3);
+            public static ScoreFormat ThreeSmileys => new ScoreFormat("POINT_3", "Three Smileys", 4);
         }
 
         #endregion

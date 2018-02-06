@@ -1,11 +1,10 @@
-﻿using AniDroid.AniList.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AniDroid.AniList.Models
 {
-    public class Review : BaseAniListObject
+    public class Review : AniListObject
     {
         public int UserId { get; set; }
         public int MediaId { get; set; }
@@ -33,11 +32,11 @@ namespace AniDroid.AniList.Models
 
         public class ReviewRating : AniListEnum
         {
-            private ReviewRating(string val, string displayVal) : base(val, displayVal) { }
+            private ReviewRating(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static ReviewRating NoVote => new ReviewRating("NO_VOTE", "No Vote");
-            public static ReviewRating UpVote => new ReviewRating("UP_VOTE", "Up Vote");
-            public static ReviewRating DownVote => new ReviewRating("DOWN_VOTE", "Down Vote");
+            public static ReviewRating NoVote => new ReviewRating("NO_VOTE", "No Vote", 0);
+            public static ReviewRating UpVote => new ReviewRating("UP_VOTE", "Up Vote", 1);
+            public static ReviewRating DownVote => new ReviewRating("DOWN_VOTE", "Down Vote", 2);
         }
 
         #endregion

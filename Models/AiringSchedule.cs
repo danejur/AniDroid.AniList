@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AniDroid.AniList.Models
 {
-    public class AiringSchedule : BaseAniListObject
+    public class AiringSchedule : AniListObject
     {
         public int AiringAt { get; set; }
         public int TimeUntilAiring { get; set; }
