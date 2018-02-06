@@ -84,6 +84,17 @@ namespace AniDroid.AniList.Service
             return await client.ExecuteTaskAsync<GraphQLResponse<Media.MediaListCollection>>(req, cToken);
         }
 
+        public async Task<IRestResponse<GraphQLResponse<AniListObject.PagedData<List<UserActivity>>>>> GetUserActivity(CancellationToken cToken = default(CancellationToken))
+        {
+            var client = CreateClient();
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.GetUserActivity
+            };
+            var req = CreateRequest(Method.POST, query);
+            return await client.ExecuteTaskAsync<GraphQLResponse<AniListObject.PagedData<List<UserActivity>>>>(req, cToken);
+        }
+
         #endregion
 
         #region Internal

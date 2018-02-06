@@ -17,6 +17,12 @@ namespace AniDroid.AniList.Models
             public bool HasNextPage { get; set; }
         }
 
+        public class PagedData<T>
+        {
+            public PageInfo PageInfo { get; set; }
+            public T Data { get; set; }
+        }
+
         public class AniListImage
         {
             public string Large { get; set; }
