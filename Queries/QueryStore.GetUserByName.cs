@@ -6,7 +6,12 @@ namespace AniDroid.AniList.Queries
 {
     internal static partial class QueryStore
     {
-        public const string GetUserByName = @"
+        /// <summary>
+        /// Parameters: (name: string)
+        /// <para></para>
+        /// Returns: User
+        /// </summary>
+        public static string GetUserByName => @"
 query ($name: String) {
   Data: User(name: $name) {
     id

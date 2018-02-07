@@ -84,16 +84,70 @@ namespace AniDroid.AniList.Service
             return await client.ExecuteTaskAsync<GraphQLResponse<Media.MediaListCollection>>(req, cToken);
         }
 
-        public async Task<IRestResponse<GraphQLResponse<AniListObject.PagedData<List<UserActivity>>>>> GetUserActivity(CancellationToken cToken = default(CancellationToken))
+        public async Task<IRestResponse<GraphQLResponse<List<User>>>> ToggleLike(int id, AniListObject.LikeableType type, CancellationToken cToken = default(CancellationToken))
         {
             var client = CreateClient();
             var query = new GraphQLQuery
             {
-                Query = QueryStore.GetUserActivity
+                Query = QueryStore.ToggleLike,
+                Variables = JsonConvert.SerializeObject(new { id, type = type.Value })
             };
             var req = CreateRequest(Method.POST, query);
-            return await client.ExecuteTaskAsync<GraphQLResponse<AniListObject.PagedData<List<UserActivity>>>>(req, cToken);
+            return await client.ExecuteTaskAsync<GraphQLResponse<List<User>>>(req, cToken);
         }
+
+        #endregion
+
+        #region Activity
+
+        public async Task<IRestResponse<GraphQLResponse<AniListObject.PagedData<List<AniListActivity>>>>> GetAniListActivity(int page, int count, CancellationToken cToken = default(CancellationToken))
+        {
+            var client = CreateClient();
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.GetUserActivity,
+                Variables = JsonConvert.SerializeObject(new { page, count })
+            };
+            var req = CreateRequest(Method.POST, query);
+            return await client.ExecuteTaskAsync<GraphQLResponse<AniListObject.PagedData<List<AniListActivity>>>>(req, cToken);
+        }
+
+        public async Task<IRestResponse<GraphQLResponse<AniListActivity>>> PostTextActivity(string text, CancellationToken cToken = default(CancellationToken))
+        {
+            var client = CreateClient();
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.PostTextActivity,
+                Variables = JsonConvert.SerializeObject(new { text })
+            };
+            var req = CreateRequest(Method.POST, query);
+            return await client.ExecuteTaskAsync<GraphQLResponse<AniListActivity>>(req, cToken);
+        }
+
+        public async Task<IRestResponse<GraphQLResponse<AniListActivity.ActivityReply>>> PostActivityReply(int activityId, string text, CancellationToken cToken = default(CancellationToken))
+        {
+            var client = CreateClient();
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.PostActivityReply,
+                Variables = JsonConvert.SerializeObject(new { activityId, text })
+            };
+            var req = CreateRequest(Method.POST, query);
+            return await client.ExecuteTaskAsync<GraphQLResponse<AniListActivity.ActivityReply>>(req, cToken);
+        }
+
+        public async Task<IRestResponse<GraphQLResponse<AniListActivity>>> GetAniListActivityById(int id, CancellationToken cToken = default(CancellationToken))
+        {
+            var client = CreateClient();
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.GetAniListActivityById,
+                Variables = JsonConvert.SerializeObject(new { id })
+            };
+            var req = CreateRequest(Method.POST, query);
+            return await client.ExecuteTaskAsync<GraphQLResponse<AniListActivity>>(req, cToken);
+        }
+
 
         #endregion
 

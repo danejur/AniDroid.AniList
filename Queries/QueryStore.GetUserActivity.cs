@@ -6,9 +6,14 @@ namespace AniDroid.AniList.Queries
 {
     internal static partial class QueryStore
     {
-        public const string GetUserActivity = @"
-query {
-  Data: Page {
+        /// <summary>
+        /// Parameters: (page: int, count: int)
+        /// <para></para>
+        /// Returns: PagedData of AniListActivity
+        /// </summary>
+        public static string GetUserActivity => @"
+query ($page: Int, $count: Int) {
+  Data: Page(page: $page, perPage: $count) {
     pageInfo {
       total
       perPage
@@ -78,6 +83,9 @@ query {
           title {
             userPreferred
           }
+          coverImage {
+            large
+          }
         }
         likes {
           id
@@ -111,6 +119,7 @@ query {
         type
         replyCount
         createdAt
+        message
         messenger {
           id
           name

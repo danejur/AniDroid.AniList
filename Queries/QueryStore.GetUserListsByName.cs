@@ -6,7 +6,12 @@ namespace AniDroid.AniList.Queries
 {
     internal static partial class QueryStore
     {
-        public const string GetMediaListsByUserNameAndType = @"
+        /// <summary>
+        /// Parameters: (name: string, type: MediaType)
+        /// <para></para>
+        /// Returns: MediaListCollection
+        /// </summary>
+        public static string GetMediaListsByUserNameAndType => @"
 query ($name: String, $type: MediaType) {
   Data: MediaListCollection(userName: $name, type: $type) {
     user {

@@ -6,7 +6,12 @@ namespace AniDroid.AniList.Queries
 {
     internal static partial class QueryStore
     {
-        public const string GetMediaByIdAndType = @"query ($id: Int!, $type: MediaType) {
+        /// <summary>
+        /// Parameters: (id: int, type: MediaType)
+        /// <para></para>
+        /// Returns: Media
+        /// </summary>
+        public static string GetMediaByIdAndType => @"query ($id: Int!, $type: MediaType) {
   Data: Media(id: $id, type: $type) {
     id
     title {

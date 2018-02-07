@@ -62,6 +62,36 @@ namespace AniDroid.AniList.Models
             public NodeType Node { get; set; }
         }
 
+        public DateTimeOffset GetDateTimeOffset(int sec)
+        {
+            return DateTimeOffset.FromUnixTimeSeconds(sec);
+        }
+
+        public string GetAgeString(int sec)
+        {
+            var ageSeconds = DateTimeOffset.Now.ToUnixTimeSeconds() - sec;
+
+            if (ageSeconds < 60)
+            {
+                return $"{ageSeconds} second{(ageSeconds != 1 ? "s" : "")} ago";
+            }
+            else if (ageSeconds < 3600)
+            {
+                var ageMinutes = ageSeconds / 60;
+                return $"{ageMinutes} minute{(ageMinutes != 1 ? "s" : "")} ago";
+            }
+            else if (ageSeconds < 86400)
+            {
+                var ageHours = ageSeconds / 3600;
+                return $"{ageHours} hour{(ageHours != 1 ? "s" : "")} ago";
+            }
+            else
+            {
+                var ageDays = ageSeconds / 86400;
+                return $"{ageDays} day{(ageDays != 1 ? "s" : "")} ago";
+            }
+        }
+
         #region Enum Classes
 
         public class AniListTitleLanguage : AniListEnum
@@ -74,6 +104,16 @@ namespace AniDroid.AniList.Models
             public static AniListTitleLanguage RomajiStylised => new AniListTitleLanguage("ROMAJI_STYLISED", "Romaji Stylised", 3);
             public static AniListTitleLanguage EnglishStylised => new AniListTitleLanguage("ENGLISH_STYLISED", "English Stylised", 4);
             public static AniListTitleLanguage NativeStylised => new AniListTitleLanguage("NATIVE_STYLISED", "Native Stylised", 5);
+        }
+
+        public class LikeableType : AniListEnum
+        {
+            private LikeableType(string val, string displayVal, int index) : base(val, displayVal, index) { }
+
+            public static LikeableType Thread => new LikeableType("THREAD", "Thread", 0);
+            public static LikeableType ThreadComment => new LikeableType("THREAD_COMMENT", "Thread Comment", 1);
+            public static LikeableType Activity => new LikeableType("ACTIVITY", "Activity", 2);
+            public static LikeableType ActivityReply => new LikeableType("ACTIVITY_REPLY", "Activity Reply", 3);
         }
 
         #endregion

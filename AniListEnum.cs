@@ -79,5 +79,10 @@ namespace AniDroid.AniList
             var dict = GetValueDictionary<T>();
             return dict.Select(x => x.Value as T).OrderBy(x => x.Index).ToList();
         }
+
+        public bool Equals(AniListEnum obj)
+        {
+            return ((obj.GetType() == GetType()) && (obj.Value == Value));
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AniDroid.AniList.Models
 {
-    public class UserActivity : AniListObject
+    public class AniListActivity : AniListObject
     {
         public string Type { get; set; }
         public string SiteUrl { get; set; }
@@ -32,9 +32,8 @@ namespace AniDroid.AniList.Models
 
         #region Internal Classes
 
-        public class ActivityReply
+        public class ActivityReply : AniListObject
         {
-            public int Id { get; set; }
             public int UserId { get; set; }
             public int ActivityId { get; set; }
             public string Text { get; set; }
@@ -53,7 +52,7 @@ namespace AniDroid.AniList.Models
 
             public static ActivityType Text => new ActivityType("TEXT", "Text", 0);
             public static ActivityType AnimeList => new ActivityType("ANIME_LIST", "Anime List", 0);
-            public static ActivityType MangaList => new ActivityType("MANGA LIST", "Manga List", 0);
+            public static ActivityType MangaList => new ActivityType("MANGA_LIST", "Manga List", 0);
             public static ActivityType Message => new ActivityType("MESSAGE", "Message", 0);
             public static ActivityType MediaList => new ActivityType("MEDIA_LIST", "Media List", 0);
         }
