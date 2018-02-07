@@ -19,5 +19,6 @@ namespace AniDroid.AniList.Service
         Task<IRestResponse<GraphQLResponse<AniListActivity.ActivityReply>>> PostActivityReply(int activityId, string text, CancellationToken cToken = default(CancellationToken));
         Task<IRestResponse<GraphQLResponse<List<User>>>> ToggleLike(int id, AniListObject.LikeableType type, CancellationToken cToken = default(CancellationToken));
         Task<IRestResponse<GraphQLResponse<AniListActivity>>> GetAniListActivityById(int id, CancellationToken cToken = default(CancellationToken));
+        Task<IRestResponse<GraphQLResponse<AniListObject.PagedData<List<AniListNotification>>>>> GetAniListNotifications(int page, int count, CancellationToken cToken = default(CancellationToken));
     }
 }

@@ -84,6 +84,10 @@ namespace AniDroid.AniList.Service
             return await client.ExecuteTaskAsync<GraphQLResponse<Media.MediaListCollection>>(req, cToken);
         }
 
+        #endregion
+
+        #region Activity
+
         public async Task<IRestResponse<GraphQLResponse<List<User>>>> ToggleLike(int id, AniListObject.LikeableType type, CancellationToken cToken = default(CancellationToken))
         {
             var client = CreateClient();
@@ -95,10 +99,6 @@ namespace AniDroid.AniList.Service
             var req = CreateRequest(Method.POST, query);
             return await client.ExecuteTaskAsync<GraphQLResponse<List<User>>>(req, cToken);
         }
-
-        #endregion
-
-        #region Activity
 
         public async Task<IRestResponse<GraphQLResponse<AniListObject.PagedData<List<AniListActivity>>>>> GetAniListActivity(int page, int count, CancellationToken cToken = default(CancellationToken))
         {
@@ -148,6 +148,17 @@ namespace AniDroid.AniList.Service
             return await client.ExecuteTaskAsync<GraphQLResponse<AniListActivity>>(req, cToken);
         }
 
+        public async Task<IRestResponse<GraphQLResponse<AniListObject.PagedData<List<AniListNotification>>>>> GetAniListNotifications(int page, int count, CancellationToken cToken = default(CancellationToken))
+        {
+            var client = CreateClient();
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.GetUserNotifications,
+                Variables = JsonConvert.SerializeObject(new { page, count })
+            };
+            var req = CreateRequest(Method.POST, query);
+            return await client.ExecuteTaskAsync<GraphQLResponse<AniListObject.PagedData<List<AniListNotification>>>>(req, cToken);
+        }
 
         #endregion
 
