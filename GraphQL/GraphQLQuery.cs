@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AniDroid.AniList.Service
+namespace AniDroid.AniList.GraphQL
 {
     public class GraphQLQuery
     {   

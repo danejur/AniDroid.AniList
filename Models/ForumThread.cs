@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AniDroid.AniList.Models
 {
-    public class Thread : AniListObject
+    public class ForumThread : AniListObject
     {
         public string Title { get; set; }
         public string Body { get; set; }
@@ -23,12 +23,12 @@ namespace AniDroid.AniList.Models
         public User ReplyUser { get; set; }
         public List<User> Likes { get; set; }
         public string SiteUrl { get; set; }
-        public List<ThreadCategory> Categories { get; set; }
+        public List<ForumThreadCategory> Categories { get; set; }
         public List<Media> MediaCategories { get; set; }
 
         #region Internal Classes
 
-        public class ThreadCategory
+        public class ForumThreadCategory
         {
             public int Id { get; set; }
             public string Name { get; set; }

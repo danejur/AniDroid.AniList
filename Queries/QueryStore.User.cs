@@ -143,5 +143,32 @@ query ($name: String, $type: MediaType) {
   }
 }
 ";
+
+        /// <summary>
+        /// Parameters: (queryText: string, page: int, count: int)
+        /// <para></para>
+        /// Returns: PagedData of User
+        /// </summary>
+        public static string SearchUsers => @"
+query ($queryText: String, $page: Int, $count: Int) {
+  Data: Page(page: $page, perPage: $count) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    Data: users(search: $queryText) {
+      id
+      name
+      avatar {
+        large
+      }
+      isFollowing
+    }
+  }
+}
+";
     }
 }

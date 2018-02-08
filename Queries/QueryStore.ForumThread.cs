@@ -9,9 +9,9 @@ namespace AniDroid.AniList.Queries
         /// <summary>
         /// Parameters: (queryText: string, page: int, count: int)
         /// <para></para>
-        /// Returns: PagedData of Character
+        /// Returns: PagedData of ForumThread
         /// </summary>
-        public static string SearchCharacters => @"
+        public static string SearchForumThreads => @"
 query ($queryText: String, $page: Int, $count: Int) {
   Data: Page(page: $page, perPage: $count) {
     pageInfo {
@@ -21,18 +21,19 @@ query ($queryText: String, $page: Int, $count: Int) {
       lastPage
       hasNextPage
     }
-    Data: characters(search: $queryText) {
+    Data: threads(search: $queryText) {
       id
-      name {
-        first
-        last
-        native
-        alternative
+      title
+      replyCount
+      siteUrl
+      updatedAt
+      user {
+        id
+        avatar{
+          large
+        }
+        name
       }
-      image {
-        large
-      }
-      isFavourite
     }
   }
 }

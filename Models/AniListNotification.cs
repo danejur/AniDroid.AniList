@@ -16,7 +16,7 @@ namespace AniDroid.AniList.Models
         public int MyProperty { get; set; }
         public Media Media { get; set; }
         public User User { get; set; }
-        public Thread Thread { get; set; }
+        public ForumThread Thread { get; set; }
 
         #region Display Methods
 

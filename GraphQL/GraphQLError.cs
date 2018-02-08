@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AniDroid.AniList.Service
+namespace AniDroid.AniList.GraphQL
 {
     public class GraphQLError
     {
