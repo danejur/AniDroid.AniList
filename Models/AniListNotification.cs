@@ -43,15 +43,15 @@ namespace AniDroid.AniList.Models
             }
             else if (parsedType.Equals(NotificationType.ThreadCommentMention))
             {
-                notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> mentioned you, in the forum thread <b><font color='{accentColor}'>[THREADNAME]</font></b>.";
+                notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> mentioned you, in the forum thread <b><font color='{accentColor}'>{Thread?.Title}</font></b>.";
             }
             else if (parsedType.Equals(NotificationType.ThreadSubscribed))
             {
-                notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> commented in your subscribed forum thread <b><font color='{accentColor}'>[THREADNAME]</font></b>.";
+                notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> commented in your subscribed forum thread <b><font color='{accentColor}'>{Thread?.Title}</font></b>.";
             }
             else if (parsedType.Equals(NotificationType.ThreadCommentReply))
             {
-                notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> replied to your comment, in the forum thread <b><font color='{accentColor}'>[THREADNAME]</font></b>.";
+                notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> replied to your comment, in the forum thread <b><font color='{accentColor}'>{Thread?.Title}</font></b>.";
             }
             else if (parsedType.Equals(NotificationType.Airing))
             {
@@ -67,11 +67,11 @@ namespace AniDroid.AniList.Models
             }
             else if (parsedType.Equals(NotificationType.ThreadLike))
             {
-                notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> liked your forum thread, <b><font color='{accentColor}'>[THREADNAME]</font></b>.";
+                notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> liked your forum thread, <b><font color='{accentColor}'>{Thread?.Title}</font></b>.";
             }
             else if (parsedType.Equals(NotificationType.ThreadCommentLike))
             {
-                notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> liked your comment, in the forum thread <b><font color='{accentColor}'>[THREADNAME]</font></b>.";
+                notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> liked your comment, in the forum thread <b><font color='{accentColor}'>{Thread?.Title}</font></b>.";
             }
 
             return notificationText;
@@ -80,16 +80,32 @@ namespace AniDroid.AniList.Models
         public string GetImageUri()
         {
             var parsedType = AniListEnum.GetEnum<NotificationType>(Type);
-            string imageUrl = null;
+            string imageUrl = User?.Avatar?.Large;
+
+            if (parsedType.Equals(NotificationType.Airing))
+            {
+                imageUrl = Media?.CoverImage?.Large;
+            }
+
+            return imageUrl;
+        }
+
+        public NotificationActionType GetNotificationActionType()
+        {
+            var parsedType = AniListEnum.GetEnum<NotificationType>(Type);
+            NotificationActionType returnType = null;
 
             if (parsedType.Equals(NotificationType.ActivityMessage) ||
                 parsedType.Equals(NotificationType.ActivityReply) ||
-                parsedType.Equals(NotificationType.Following) ||
                 parsedType.Equals(NotificationType.ActivityMention) ||
                 parsedType.Equals(NotificationType.ActivityLike) ||
                 parsedType.Equals(NotificationType.ActivityReplyLike))
             {
-                imageUrl = User.Avatar.Large;
+                returnType = NotificationActionType.Activity;
+            }
+            else if (parsedType.Equals(NotificationType.Following))
+            {
+                returnType = NotificationActionType.User;
             }
             else if (parsedType.Equals(NotificationType.ThreadCommentMention) ||
                 parsedType.Equals(NotificationType.ThreadSubscribed) ||
@@ -97,19 +113,14 @@ namespace AniDroid.AniList.Models
                 parsedType.Equals(NotificationType.ThreadLike) ||
                 parsedType.Equals(NotificationType.ThreadCommentLike))
             {
-                imageUrl = User.Avatar.Large;
+                returnType = NotificationActionType.Thread;
             }
-            else if (parsedType.Equals(NotificationType.ThreadCommentMention))
+            else if (parsedType.Equals(NotificationType.Airing))
             {
-                imageUrl = User.Avatar.Large;
+                returnType = NotificationActionType.Media;
             }
 
-        }
-
-        public NotificationActionType GetActionType()
-        {
-
-
+            return returnType;
         }
 
         #endregion
@@ -142,6 +153,7 @@ namespace AniDroid.AniList.Models
             public static NotificationActionType User => new NotificationActionType("USER", "User", 1);
             public static NotificationActionType Thread => new NotificationActionType("THREAD", "Thread", 2);
             public static NotificationActionType Comment => new NotificationActionType("COMMENT", "Comment", 3);
+            public static NotificationActionType Activity => new NotificationActionType("ACTIVITY", "Activity", 4);
         }
 
         #endregion
