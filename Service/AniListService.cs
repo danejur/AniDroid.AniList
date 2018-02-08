@@ -19,8 +19,8 @@ namespace AniDroid.AniList.Service
 {
     public class AniListService : IAniListService
     {
-        private IAniListServiceConfig Config { get; }
-        private IAuthCodeResolver AuthCodeResolver { get; }
+        public IAniListServiceConfig Config { get; }
+        public IAuthCodeResolver AuthCodeResolver { get; }
 
         private AniListService() { }
         
@@ -178,6 +178,22 @@ namespace AniDroid.AniList.Service
             };
             var req = CreateRequest(Method.POST, query);
             return await client.ExecuteTaskAsync<GraphQLResponse<AniListObject.PagedData<List<AniListNotification>>>>(req, cToken);
+        }
+
+        #endregion
+
+        #region Character
+
+        public async Task<IRestResponse<GraphQLResponse<AniListObject.PagedData<List<Character>>>>> SearchCharacters(string queryText, int page, int count, CancellationToken cToken = default(CancellationToken))
+        {
+            var client = CreateClient();
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.SearchCharacter,
+                Variables = JsonConvert.SerializeObject(new { queryText, page, count })
+            };
+            var req = CreateRequest(Method.POST, query);
+            return await client.ExecuteTaskAsync<GraphQLResponse<AniListObject.PagedData<List<Character>>>>(req, cToken);
         }
 
         #endregion
