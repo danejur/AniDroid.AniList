@@ -20,5 +20,6 @@ namespace AniDroid.AniList.Service
         Task<IRestResponse<GraphQLResponse<List<User>>>> ToggleLike(int id, AniListObject.LikeableType type, CancellationToken cToken = default(CancellationToken));
         Task<IRestResponse<GraphQLResponse<AniListActivity>>> GetAniListActivityById(int id, CancellationToken cToken = default(CancellationToken));
         Task<IRestResponse<GraphQLResponse<AniListObject.PagedData<List<AniListNotification>>>>> GetAniListNotifications(int page, int count, CancellationToken cToken = default(CancellationToken));
+        Task<IRestResponse<GraphQLResponse<AniListObject.PagedData<List<Media>>>>> SearchMedia(string query, int page, int count, Media.MediaType type = null, CancellationToken cToken = default(CancellationToken));
     }
 }

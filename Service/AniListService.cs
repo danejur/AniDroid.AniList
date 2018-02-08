@@ -13,6 +13,7 @@ using AniDroid.AniList.Authorization;
 using AniDroid.AniList.Interfaces;
 using RestSharp.Deserializers;
 using AniDroid.AniList.Queries;
+using Newtonsoft.Json.Linq;
 
 namespace AniDroid.AniList.Service
 {
@@ -54,6 +55,25 @@ namespace AniDroid.AniList.Service
             };
             var req = CreateRequest(Method.POST, query);
             return await client.ExecuteTaskAsync<GraphQLResponse<Media>>(req, cToken);
+        }
+
+        public async Task<IRestResponse<GraphQLResponse<AniListObject.PagedData<List<Media>>>>> SearchMedia(string queryText, int page, int count, Media.MediaType type = null, CancellationToken cToken = default(CancellationToken))
+        {
+            var variableObj = JObject.FromObject(new { queryText, page, count });
+
+            if (type != null)
+            {
+                variableObj.Add("type", type.Value);
+            }
+
+            var client = CreateClient();
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.SearchMedia,
+                Variables = variableObj.ToString()
+            };
+            var req = CreateRequest(Method.POST, query);
+            return await client.ExecuteTaskAsync<GraphQLResponse<AniListObject.PagedData<List<Media>>>>(req, cToken);
         }
 
         #endregion

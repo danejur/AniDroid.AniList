@@ -66,5 +66,38 @@ namespace AniDroid.AniList.Queries
     }
   }
 }";
+
+        /// <summary>
+        /// Parameters: (queryText: string, page: int, count: int, type?: MediaType)
+        /// <para></para>
+        /// Returns: PagedData of Media
+        /// </summary>
+        public static string SearchMedia => @"
+query ($queryText: String, $page:Int, $count:Int, $type:MediaType) {
+  Data: Page(page:$page, perPage:$count) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    Data: media(search: $queryText, type: $type) {
+      id
+      type
+      format
+      popularity
+      averageScore
+      isFavourite
+      title {
+        userPreferred
+      }
+      coverImage {
+        large
+      }
+    }
+  }
+}
+";
     }
 }
