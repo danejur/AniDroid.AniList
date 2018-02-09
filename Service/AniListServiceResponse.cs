@@ -1,4 +1,5 @@
 ﻿using AniDroid.AniList.GraphQL;
+using AniDroid.AniList.Interfaces;
 using RestSharp;
 using System;
 using System.Collections.Generic;

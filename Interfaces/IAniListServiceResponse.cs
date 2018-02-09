@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace AniDroid.AniList.Service
+namespace AniDroid.AniList.Interfaces
 {
     public interface IAniListServiceResponse<T> where T : class
     {

@@ -9,7 +9,6 @@ using System.IO;
 using Newtonsoft.Json;
 using RestSharp.Serializers;
 using Newtonsoft.Json.Serialization;
-using AniDroid.AniList.Authorization;
 using AniDroid.AniList.Interfaces;
 using RestSharp.Deserializers;
 using AniDroid.AniList.Queries;
@@ -196,6 +195,17 @@ namespace AniDroid.AniList.Service
             };
             var req = CreateRequest(Method.POST, query);
             return await ExecuteRequest<AniListObject.PagedData<List<Character>>>(req, cToken);
+        }
+
+        public async Task<IAniListServiceResponse<Character>> GetCharacterById(int id, CancellationToken cToken = default(CancellationToken))
+        {
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.GetCharacterById,
+                Variables = JsonConvert.SerializeObject(new { id })
+            };
+            var req = CreateRequest(Method.POST, query);
+            return await ExecuteRequest<Character>(req, cToken);
         }
 
         #endregion

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AniDroid.AniList.Service
+namespace AniDroid.AniList.Interfaces
 {
     public interface IAniListService
     {
@@ -43,6 +43,7 @@ namespace AniDroid.AniList.Service
         #region Character
 
         Task<IAniListServiceResponse<AniListObject.PagedData<List<Character>>>> SearchCharacters(string queryText, int page, int count, CancellationToken cToken = default(CancellationToken));
+        Task<IAniListServiceResponse<Character>> GetCharacterById(int id, CancellationToken cToken = default(CancellationToken));
 
         #endregion
 

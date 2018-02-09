@@ -35,6 +35,26 @@ namespace AniDroid.AniList.Models
             public string Last { get; set; }
             public string Native { get; set; }
             public List<string> Alternative { get; set; }
+
+            public string GetFormattedName()
+            {
+                var retName = "(Name Unknown)";
+
+                if (!string.IsNullOrWhiteSpace(First))
+                {
+                    retName = First;
+                }
+                if (!string.IsNullOrWhiteSpace(Last))
+                {
+                    retName += $" {Last}";
+                }
+                if (!string.IsNullOrWhiteSpace(Native))
+                {
+                    retName += $" ({Native})";
+                }
+
+                return retName;
+            }
         }
 
         public class AniListStatusDistribution
