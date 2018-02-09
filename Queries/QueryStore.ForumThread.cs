@@ -27,9 +27,13 @@ query ($queryText: String, $page: Int, $count: Int) {
       replyCount
       siteUrl
       updatedAt
+      createdAt
+      likes {
+        id
+      }
       user {
         id
-        avatar{
+        avatar {
           large
         }
         name
