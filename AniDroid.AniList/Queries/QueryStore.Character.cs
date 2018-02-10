@@ -44,11 +44,11 @@ query ($queryText: String, $page: Int, $count: Int) {
         /// Returns: Character
         /// </summary>
         public static string GetCharacterById => @"
-query ($id:Int) {
-  Data: Character(id:$id) {
+query ($id: Int) {
+  Data: Character(id: $id) {
     id
     name {
-    first
+      first
       last
       native
       alternative
@@ -71,6 +71,9 @@ query ($id:Int) {
           id
           title {
             userPreferred
+          }
+          coverImage {
+            large
           }
           format
           type

@@ -41,7 +41,7 @@ namespace AniDroid.AniList.Service
             authReq.AddParameter("code", code);
 
             var client = new RestClient();
-            return await client.ExecuteTaskAsync<AniListAuthorizationResponse>(authReq, cToken);
+            return await client.ExecuteTaskAsync<AniListAuthorizationResponse>(authReq, cToken).ConfigureAwait(false);
         }
 
         #region Media
@@ -59,7 +59,7 @@ namespace AniDroid.AniList.Service
 
         public async Task<IAniListServiceResponse<AniListObject.PagedData<List<Media>>>> SearchMedia(string queryText, int page, int count, Media.MediaType type = null, CancellationToken cToken = default(CancellationToken))
         {
-            var variableObj = JObject.FromObject(new { queryText, page, count });
+            var variableObj = JObject.FromObject(new { queryText, page, count }, new JsonNetSerializer().Serializer);
 
             if (type != null)
             {

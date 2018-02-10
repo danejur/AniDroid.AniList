@@ -156,10 +156,10 @@ namespace AniDroid.AniList.Models
         {
             public string RelationType { get; set; }
             public bool IsMainStudio { get; set; }
-            public List<Character> Characters { get; set; }
+            public IEnumerable<Character> Characters { get; set; }
             public string CharacterRole { get; set; }
             public string StaffRole { get; set; }
-            public List<Staff> VoiceActors { get; set; }
+            public IEnumerable<Staff> VoiceActors { get; set; }
             public int FavouriteOrder { get; set; }
         }
 

@@ -89,6 +89,7 @@ query ($queryText: String, $page:Int, $count:Int, $type:MediaType) {
       popularity
       averageScore
       isFavourite
+      isAdult
       title {
         userPreferred
       }

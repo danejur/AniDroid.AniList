@@ -36,7 +36,7 @@ namespace AniDroid.AniList.Models
             public string Native { get; set; }
             public List<string> Alternative { get; set; }
 
-            public string GetFormattedName()
+            public string GetFormattedName(bool nativeLineBreak = false)
             {
                 var retName = "(Name Unknown)";
 
@@ -50,7 +50,7 @@ namespace AniDroid.AniList.Models
                 }
                 if (!string.IsNullOrWhiteSpace(Native))
                 {
-                    retName += $" ({Native})";
+                    retName += $"{(nativeLineBreak ? "\n" :" ")}({Native})";
                 }
 
                 return retName;

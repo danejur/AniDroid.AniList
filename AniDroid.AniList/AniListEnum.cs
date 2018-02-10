@@ -84,5 +84,10 @@ namespace AniDroid.AniList
         {
             return ((obj.GetType() == GetType()) && (obj.Value == Value));
         }
+
+        public bool Equals(string val)
+        {
+            return Value == val;
+        }
     }
 }
