@@ -127,7 +127,7 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
-        public class NotificationType : AniListEnum
+        public sealed class NotificationType : AniListEnum
         {
             private NotificationType(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
@@ -145,7 +145,7 @@ namespace AniDroid.AniList.Models
             public static NotificationType ThreadCommentLike => new NotificationType("THREAD_COMMENT_LIKE", "Thread Comment Like", 11);
         }
 
-        public class NotificationActionType : AniListEnum
+        public sealed class NotificationActionType : AniListEnum
         {
             private NotificationActionType(string val, string displayVal, int index) : base(val, displayVal, index) { }
 

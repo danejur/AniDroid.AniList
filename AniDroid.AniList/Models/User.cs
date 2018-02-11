@@ -73,13 +73,13 @@ namespace AniDroid.AniList.Models
             public int Level { get; set; }
         }
 
-        
+
 
         #endregion
 
         #region Enum Classes
 
-        public class ScoreFormat : AniListEnum
+        public sealed class ScoreFormat : AniListEnum
         {
             protected ScoreFormat(string val, string displayVal, int index) : base(val, displayVal, index) { }
 

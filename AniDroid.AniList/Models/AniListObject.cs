@@ -114,7 +114,7 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
-        public class AniListTitleLanguage : AniListEnum
+        public sealed class AniListTitleLanguage : AniListEnum
         {
             private AniListTitleLanguage(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
@@ -126,7 +126,7 @@ namespace AniDroid.AniList.Models
             public static AniListTitleLanguage NativeStylised => new AniListTitleLanguage("NATIVE_STYLISED", "Native Stylised", 5);
         }
 
-        public class LikeableType : AniListEnum
+        public sealed class LikeableType : AniListEnum
         {
             private LikeableType(string val, string displayVal, int index) : base(val, displayVal, index) { }
 

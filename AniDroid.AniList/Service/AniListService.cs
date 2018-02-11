@@ -54,7 +54,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.GetMediaByIdAndType,
                 Variables = JsonConvert.SerializeObject(new { id, type = type.Value })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<Media>(req, cToken);
         }
 
@@ -72,7 +72,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.SearchMedia,
                 Variables = variableObj.ToString()
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<AniListObject.PagedData<List<Media>>>(req, cToken);
         }
 
@@ -118,7 +118,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.GetUserByName,
                 Variables = JsonConvert.SerializeObject(new { name })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<User>(req, cToken);
         }
 
@@ -129,7 +129,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.GetMediaListsByUserNameAndType,
                 Variables = JsonConvert.SerializeObject(new { name = userName, type = type.Value })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<Media.MediaListCollection>(req, cToken);
         }
 
@@ -140,7 +140,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.SearchUsers,
                 Variables = JsonConvert.SerializeObject(new { queryText, page, count })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<AniListObject.PagedData<List<User>>>(req, cToken);
         }
 
@@ -155,7 +155,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.ToggleLike,
                 Variables = JsonConvert.SerializeObject(new { id, type = type.Value })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<List<User>>(req, cToken);
         }
 
@@ -166,7 +166,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.GetUserActivity,
                 Variables = JsonConvert.SerializeObject(new { page, count })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<AniListObject.PagedData<List<AniListActivity>>>(req, cToken);
         }
 
@@ -177,7 +177,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.PostTextActivity,
                 Variables = JsonConvert.SerializeObject(new { text })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<AniListActivity>(req, cToken);
         }
 
@@ -188,7 +188,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.PostActivityReply,
                 Variables = JsonConvert.SerializeObject(new { activityId, text })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<AniListActivity.ActivityReply>(req, cToken);
         }
 
@@ -199,7 +199,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.GetAniListActivityById,
                 Variables = JsonConvert.SerializeObject(new { id })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<AniListActivity>(req, cToken);
         }
 
@@ -210,7 +210,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.GetUserNotifications,
                 Variables = JsonConvert.SerializeObject(new { page, count })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<AniListObject.PagedData<List<AniListNotification>>>(req, cToken);
         }
 
@@ -225,7 +225,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.SearchCharacters,
                 Variables = JsonConvert.SerializeObject(new { queryText, page, count })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<AniListObject.PagedData<List<Character>>>(req, cToken);
         }
 
@@ -236,7 +236,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.GetCharacterById,
                 Variables = JsonConvert.SerializeObject(new { id })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<Character>(req, cToken);
         }
 
@@ -251,7 +251,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.SearchStaff,
                 Variables = JsonConvert.SerializeObject(new { queryText, page, count })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<AniListObject.PagedData<List<Staff>>>(req, cToken);
         }
 
@@ -266,7 +266,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.SearchStudios,
                 Variables = JsonConvert.SerializeObject(new { queryText, page, count })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<AniListObject.PagedData<List<Studio>>>(req, cToken);
         }
 
@@ -281,7 +281,7 @@ namespace AniDroid.AniList.Service
                 Query = QueryStore.SearchForumThreads,
                 Variables = JsonConvert.SerializeObject(new { queryText, page, count })
             };
-            var req = CreateRequest(Method.POST, query);
+            var req = CreateRequest(query);
             return await ExecuteRequest<AniListObject.PagedData<List<ForumThread>>>(req, cToken);
         }
 
@@ -303,7 +303,7 @@ namespace AniDroid.AniList.Service
             return client;
         }
 
-        private IRestRequest CreateRequest(Method method, GraphQLQuery query)
+        private IRestRequest CreateRequest(GraphQLQuery query)
         {
             var req = new RestRequest(Method.POST)
             {

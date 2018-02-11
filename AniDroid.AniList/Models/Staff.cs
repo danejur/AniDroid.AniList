@@ -27,7 +27,7 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
-        public class StaffLanguage : AniListEnum
+        public sealed class StaffLanguage : AniListEnum
         {
             protected StaffLanguage(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
