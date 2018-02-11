@@ -8,7 +8,7 @@ namespace AniDroid.AniList
 {
     public abstract class AniListEnum
     {
-        private static Dictionary<Type, Dictionary<string, AniListEnum>> ValueDictionaries = new Dictionary<Type, Dictionary<string, AniListEnum>>();
+        private static readonly Dictionary<Type, Dictionary<string, AniListEnum>> ValueDictionaries = new Dictionary<Type, Dictionary<string, AniListEnum>>();
 
         private AniListEnum() { }
 
