@@ -30,7 +30,7 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
-        public class ReviewRating : AniListEnum
+        public sealed class ReviewRating : AniListEnum
         {
             private ReviewRating(string val, string displayVal, int index) : base(val, displayVal, index) { }
 

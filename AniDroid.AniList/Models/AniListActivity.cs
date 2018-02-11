@@ -46,7 +46,7 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
-        public class ActivityType : AniListEnum
+        public sealed class ActivityType : AniListEnum
         {
             protected ActivityType(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
