@@ -1,14 +1,17 @@
-﻿using Newtonsoft.Json;
-using RestSharp.Serializers;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AniDroid.AniList.GraphQL
+﻿namespace AniDroid.AniList.GraphQL
 {
     public class GraphQLQuery
-    {   
+    {
         public string Query { get; set; }
-        public string Variables { get; set; }
+        public object Variables { get; set; }
+
+        public GraphQLQuery()
+        { }
+
+        public GraphQLQuery(string query, object variables)
+        {
+            Query = query;
+            Variables = variables;
+        }
     }
 }

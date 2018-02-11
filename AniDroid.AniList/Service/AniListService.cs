@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using RestSharp;
 using System.Threading.Tasks;
 using System.Threading;
@@ -13,7 +12,6 @@ using AniDroid.AniList.Interfaces;
 using RestSharp.Deserializers;
 using AniDroid.AniList.Queries;
 using Newtonsoft.Json.Linq;
-using System.Net;
 using AniDroid.AniList.GraphQL;
 using AniDroid.AniList.Utils;
 
@@ -79,32 +77,14 @@ namespace AniDroid.AniList.Service
         public IAsyncEnumerable<AniListObject.PagedData<ICollection<Media>>> SearchMediaPaging(string queryText,
             Media.MediaType type = null, int perPage = 20)
         {
-            async Task<AniListObject.PagedData<ICollection<Media>>> GetPageAsync(PagingInfo info, CancellationToken ct)
+            var arguments = new 
             {
-                // TODO: Standardize between all GetPageAsync methods
-                var settings = new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore,
-                    DefaultValueHandling = DefaultValueHandling.Include,
-                };
-                var arguments = new
-                {
-                    queryText,
-                    page = info.Page,
-                    count = info.PageSize,
-                    type = type?.Value,
-                };
-
-                var req = CreateRequest(Method.POST, new GraphQLQuery
-                {
-                    Query = QueryStore.SearchMedia,
-                    Variables = JsonConvert.SerializeObject(arguments, settings),
-                });
-
-                return (await ExecuteRequest<AniListObject.PagedData<ICollection<Media>>>(req, ct)
-                    .ConfigureAwait(false)).Data;
-            }
-            return new PagedAsyncEnumerable<ICollection<Media>>(perPage, GetPageAsync, HasNextPage);
+                queryText,
+                type = type?.Value,
+            };
+            return new PagedAsyncEnumerable<ICollection<Media>>(perPage,
+                CreateGetPageFunc<ICollection<Media>>(QueryStore.SearchMedia, arguments),
+                HasNextPage);
         }
 
         #endregion
@@ -316,6 +296,23 @@ namespace AniDroid.AniList.Service
         private async Task<IAniListServiceResponse<T>> ExecuteRequest<T>(IRestRequest req, CancellationToken cToken) where T : class
         {
             return AniListServiceResponse<T>.CreateResponse(await CreateClient().ExecuteTaskAsync<GraphQLResponse<T>>(req, cToken));
+        }
+
+        private Func<PagingInfo, CancellationToken, Task<AniListObject.PagedData<T>>> CreateGetPageFunc<T>(string query,
+            object variables)
+        {
+            async Task<AniListObject.PagedData<T>> GetPageAsync(PagingInfo info, CancellationToken ct)
+            {
+                var vars = JObject.FromObject(variables, JsonNetSerializer.Default.Serializer);
+                vars.Add("page", info.Page);
+                vars.Add("count", info.PageSize);
+
+                var req = CreateRequest(new GraphQLQuery(query, vars));
+                return (await ExecuteRequest<AniListObject.PagedData<T>>(req, ct)
+                    .ConfigureAwait(false)).Data;
+            }
+
+            return GetPageAsync;
         }
 
         private bool HasNextPage<T>(PagingInfo info, AniListObject.PagedData<T> data)
