@@ -9,8 +9,8 @@ namespace AniDroid.AniList.Utils
     // TODO: Use IAsyncEnumerator+IAsyncEnumnerable from C# 8.0 ASAP
     internal class PagedAsyncEnumerable<T> : IAsyncEnumerable<AniListObject.PagedData<T>>
     {
-        private Func<PagingInfo, CancellationToken, Task<AniListObject.PagedData<T>>> _getPage;
-        private Func<PagingInfo, AniListObject.PagedData<T>, bool> _nextPage;
+        private readonly Func<PagingInfo, CancellationToken, Task<AniListObject.PagedData<T>>> _getPage;
+        private readonly Func<PagingInfo, AniListObject.PagedData<T>, bool> _nextPage;
 
         public int PageSize { get; }
 
@@ -40,7 +40,7 @@ namespace AniDroid.AniList.Utils
                 _info = new PagingInfo(source.PageSize);
             }
 
-            public async Task<Boolean> MoveNextAsync(CancellationToken ct = default)
+            public async Task<bool> MoveNextAsync(CancellationToken ct = default)
             {
                 if (_info.Remaining == 0)
                     return false;

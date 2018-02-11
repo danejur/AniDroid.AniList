@@ -22,8 +22,6 @@ namespace AniDroid.AniList.Service
         public IAniListServiceConfig Config { get; }
         public IAuthCodeResolver AuthCodeResolver { get; }
 
-        private AniListService() { }
-
         public AniListService(IAniListServiceConfig config, IAuthCodeResolver auth)
         {
             Config = config;

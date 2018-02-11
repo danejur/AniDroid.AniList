@@ -28,6 +28,6 @@ namespace AniDroid.AniList.Interfaces
         /// enumerator was successfully advanced to the next element; 
         /// false if the enumerator has passed the end of the squence.
         /// </returns>
-        Task<bool> MoveNextAsync(CancellationToken ct);
+        Task<bool> MoveNextAsync(CancellationToken ct = default);
     }
 }
