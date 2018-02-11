@@ -27,7 +27,7 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
-        public class CharacterRole : AniListEnum
+        public sealed class CharacterRole : AniListEnum
         {
             protected CharacterRole(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
