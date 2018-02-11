@@ -3,11 +3,10 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 
 namespace AniDroid.AniList.Interfaces
 {
-    public interface IAniListServiceResponse<T> where T : class
+    public interface IAniListServiceResponse<out T> where T : class
     {
         T Data { get; }
         bool IsSuccessful { get; }

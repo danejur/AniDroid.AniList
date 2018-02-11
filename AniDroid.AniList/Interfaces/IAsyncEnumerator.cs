@@ -6,7 +6,7 @@ namespace AniDroid.AniList.Interfaces
 {
     /// <summary>
     /// Filler interface until C# 8.0
-    /// Asynchronous version of the <see cref="System.Collections.Generic.IEnumerable{T}"/>, 
+    /// Asynchronous version of the <see cref="T:System.Collections.Generic.IEnumerable`1" />, 
     /// allowing elements to be retrieved asychronously.
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -16,6 +16,11 @@ namespace AniDroid.AniList.Interfaces
         /// Gets the current element in the iteration
         /// </summary>
         T Current { get; }
+
+        /// <summary>
+        /// Gets if the last request to <see cref="MoveNextAsync"/> was successful.
+        /// </summary>
+        bool IsSuccessful { get; }
 
         /// <summary>
         /// Advances the enumerator to the next element in the sequence, 

@@ -9,13 +9,13 @@ namespace AniDroid.AniList.Utils
     // TODO: Use IAsyncEnumerator+IAsyncEnumnerable from C# 8.0 ASAP
     internal class PagedAsyncEnumerable<T> : IAsyncEnumerable<AniListObject.PagedData<T>>
     {
-        private readonly Func<PagingInfo, CancellationToken, Task<AniListObject.PagedData<T>>> _getPage;
+        private readonly Func<PagingInfo, CancellationToken, Task<IAniListServiceResponse<AniListObject.PagedData<T>>>> _getPage;
         private readonly Func<PagingInfo, AniListObject.PagedData<T>, bool> _nextPage;
 
         public int PageSize { get; }
 
         public PagedAsyncEnumerable(int pageSize,
-            Func<PagingInfo, CancellationToken, Task<AniListObject.PagedData<T>>> getPage,
+            Func<PagingInfo, CancellationToken, Task<IAniListServiceResponse<AniListObject.PagedData<T>>>> getPage,
             Func<PagingInfo, AniListObject.PagedData<T>, bool> nextPage)
         {
             if (pageSize <= 0) throw new ArgumentException($"Value cannot be less than or equal to zero (0)", nameof(pageSize));
@@ -33,6 +33,7 @@ namespace AniDroid.AniList.Utils
             private readonly PagingInfo _info;
 
             public AniListObject.PagedData<T> Current { get; private set; }
+            public bool IsSuccessful { get; private set; }
 
             public Enumerator(PagedAsyncEnumerable<T> source)
             {
@@ -45,7 +46,9 @@ namespace AniDroid.AniList.Utils
                 if (_info.Remaining == 0)
                     return false;
 
-                Current = await _source._getPage(_info, ct).ConfigureAwait(false);
+                var response = await _source._getPage(_info, ct).ConfigureAwait(false);
+                Current = response.Data;
+                IsSuccessful = response.IsSuccessful;
 
                 if (Current == null)
                     return false;

@@ -296,10 +296,10 @@ namespace AniDroid.AniList.Service
             return AniListServiceResponse<T>.CreateResponse(await CreateClient().ExecuteTaskAsync<GraphQLResponse<T>>(req, cToken));
         }
 
-        private Func<PagingInfo, CancellationToken, Task<AniListObject.PagedData<T>>> CreateGetPageFunc<T>(string query,
+        private Func<PagingInfo, CancellationToken, Task<IAniListServiceResponse<AniListObject.PagedData<T>>>> CreateGetPageFunc<T>(string query,
             object variables)
         {
-            async Task<AniListObject.PagedData<T>> GetPageAsync(PagingInfo info, CancellationToken ct)
+            async Task<IAniListServiceResponse<AniListObject.PagedData<T>>> GetPageAsync(PagingInfo info, CancellationToken ct)
             {
                 var vars = JObject.FromObject(variables, JsonNetSerializer.Default.Serializer);
                 vars.Add("page", info.Page);
@@ -307,7 +307,7 @@ namespace AniDroid.AniList.Service
 
                 var req = CreateRequest(new GraphQLQuery(query, vars));
                 return (await ExecuteRequest<AniListObject.PagedData<T>>(req, ct)
-                    .ConfigureAwait(false)).Data;
+                    .ConfigureAwait(false));
             }
 
             return GetPageAsync;
