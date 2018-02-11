@@ -23,15 +23,13 @@ namespace AniDroid.AniList.Service
         public IAniListServiceConfig Config { get; }
         public IAuthCodeResolver AuthCodeResolver { get; }
 
-        private AniListService() { }
-
         public AniListService(IAniListServiceConfig config, IAuthCodeResolver auth)
         {
             Config = config;
             AuthCodeResolver = auth;
         }
 
-        public static async Task<IRestResponse<AniListAuthorizationResponse>> AuthenticateUser(IAniListServiceConfig config, string code, CancellationToken cToken = default(CancellationToken))
+        public static async Task<IRestResponse<AniListAuthorizationResponse>> AuthenticateUser(IAniListAuthConfig config, string code, CancellationToken cToken = default(CancellationToken))
         {
             var authReq = new RestRequest(config.AuthUrl, Method.POST);
             authReq.AddParameter("client_id", config.ClientId);
@@ -271,7 +269,7 @@ namespace AniDroid.AniList.Service
             return client;
         }
 
-        private IRestRequest CreateRequest(GraphQLQuery query)
+        private static IRestRequest CreateRequest(GraphQLQuery query)
         {
             var req = new RestRequest(Method.POST)
             {
@@ -286,11 +284,11 @@ namespace AniDroid.AniList.Service
             return AniListServiceResponse<T>.CreateResponse(await CreateClient().ExecuteTaskAsync<GraphQLResponse<T>>(req, cToken));
         }
 
-        private interface IJsonSerializer : ISerializer, IDeserializer
+        internal interface IJsonSerializer : ISerializer, IDeserializer
         {
         }
 
-        public class JsonNetSerializer : IJsonSerializer
+        internal class JsonNetSerializer : IJsonSerializer
         {
             public string DateFormat { get; set; }
             public string RootElement { get; set; }
