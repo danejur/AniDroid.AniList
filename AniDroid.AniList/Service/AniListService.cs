@@ -15,6 +15,7 @@ using AniDroid.AniList.Queries;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using AniDroid.AniList.GraphQL;
+using AniDroid.AniList.Utils;
 
 namespace AniDroid.AniList.Service
 {
@@ -73,6 +74,37 @@ namespace AniDroid.AniList.Service
             };
             var req = CreateRequest(Method.POST, query);
             return await ExecuteRequest<AniListObject.PagedData<List<Media>>>(req, cToken);
+        }
+
+        public IAsyncEnumerable<AniListObject.PagedData<ICollection<Media>>> SearchMediaPaging(string queryText,
+            Media.MediaType type = null, int perPage = 20)
+        {
+            async Task<AniListObject.PagedData<ICollection<Media>>> GetPageAsync(PagingInfo info, CancellationToken ct)
+            {
+                // TODO: Standardize between all GetPageAsync methods
+                var settings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    DefaultValueHandling = DefaultValueHandling.Include,
+                };
+                var arguments = new
+                {
+                    queryText,
+                    page = info.Page,
+                    count = info.PageSize,
+                    type = type?.Value,
+                };
+
+                var req = CreateRequest(Method.POST, new GraphQLQuery
+                {
+                    Query = QueryStore.SearchMedia,
+                    Variables = JsonConvert.SerializeObject(arguments, settings),
+                });
+
+                return (await ExecuteRequest<AniListObject.PagedData<ICollection<Media>>>(req, ct)
+                    .ConfigureAwait(false)).Data;
+            }
+            return new PagedAsyncEnumerable<ICollection<Media>>(perPage, GetPageAsync, HasNextPage);
         }
 
         #endregion
@@ -285,6 +317,9 @@ namespace AniDroid.AniList.Service
         {
             return AniListServiceResponse<T>.CreateResponse(await CreateClient().ExecuteTaskAsync<GraphQLResponse<T>>(req, cToken));
         }
+
+        private bool HasNextPage<T>(PagingInfo info, AniListObject.PagedData<T> data)
+            => data.PageInfo.HasNextPage;
 
         private interface IJsonSerializer : ISerializer, IDeserializer
         {
