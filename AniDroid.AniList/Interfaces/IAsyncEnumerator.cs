@@ -18,11 +18,6 @@ namespace AniDroid.AniList.Interfaces
         T Current { get; }
 
         /// <summary>
-        /// Gets if the last request to <see cref="MoveNextAsync"/> was successful.
-        /// </summary>
-        bool IsSuccessful { get; }
-
-        /// <summary>
         /// Advances the enumerator to the next element in the sequence, 
         /// returning the result asyncronously.
         /// </summary>
