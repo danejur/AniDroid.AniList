@@ -28,7 +28,7 @@ namespace AniDroid.AniList.Service
             AuthCodeResolver = auth;
         }
 
-        public static async Task<IRestResponse<AniListAuthorizationResponse>> AuthenticateUser(IAniListServiceConfig config, string code, CancellationToken cToken = default)
+        public static async Task<IRestResponse<AniListAuthorizationResponse>> AuthenticateUser(IAniListAuthConfig config, string code, CancellationToken cToken = default)
         {
             var authReq = new RestRequest(config.AuthUrl, Method.POST);
             authReq.AddParameter("client_id", config.ClientId);
@@ -320,7 +320,7 @@ namespace AniDroid.AniList.Service
         {
         }
 
-        public class JsonNetSerializer : IJsonSerializer
+        internal class JsonNetSerializer : IJsonSerializer
         {
             public string DateFormat { get; set; }
             public string RootElement { get; set; }
