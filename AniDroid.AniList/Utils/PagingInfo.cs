@@ -1,14 +1,12 @@
-﻿using System;
-
-namespace AniDroid.AniList.Utils
+﻿namespace AniDroid.AniList.Utils
 {
     public sealed class PagingInfo
     {
-        public Int32 Page { get; set; } = 1;
-        public Int32 PageSize { get; set; }
-        public Int32? Remaining { get; set; }
+        public int Page { get; set; } = 1;
+        public int PageSize { get; set; }
+        public bool? Remaining { get; set; }
 
-        public PagingInfo(Int32 pageSize)
+        public PagingInfo(int pageSize)
         {
             PageSize = pageSize;
         }

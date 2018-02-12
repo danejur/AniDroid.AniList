@@ -42,7 +42,7 @@ namespace AniDroid.AniList.Utils
 
             public async Task<bool> MoveNextAsync(CancellationToken ct = default)
             {
-                if (_info.Remaining == 0)
+                if (_info.Remaining == false)
                     return false;
 
                 Current = await _source._getPage(_info, ct).ConfigureAwait(false);
@@ -51,13 +51,7 @@ namespace AniDroid.AniList.Utils
                     return false;
 
                 _info.Page++;
-
-                if (!_info.Remaining.HasValue)
-                    _info.Remaining = Current.PageInfo.LastPage - 1;
-                _info.Remaining--;
-
-                if (_info.Remaining != 0 && !_source._nextPage(_info, Current))
-                    _info.Remaining = 0;
+                _info.Remaining = _source._nextPage(_info, Current);
 
                 return true;
             }
