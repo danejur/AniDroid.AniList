@@ -33,7 +33,6 @@ namespace AniDroid.AniList.Utils
             private readonly PagingInfo _info;
 
             public AniListObject.PagedData<T> Current { get; private set; }
-            public bool IsSuccessful { get; private set; }
 
             public Enumerator(PagedAsyncEnumerable<T> source)
             {
