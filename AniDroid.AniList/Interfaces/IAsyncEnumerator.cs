@@ -21,7 +21,7 @@ namespace AniDroid.AniList.Interfaces
         /// Advances the enumerator to the next element in the sequence, 
         /// returning the result asyncronously.
         /// </summary>
-        /// <param name="ct">Cancelllation Token that ccan be used to 
+        /// <param name="ct">Cancelllation Token that can be used to 
         /// cancel the operation</param>
         /// <returns>
         /// Task containing the result of the operation: true if the 
