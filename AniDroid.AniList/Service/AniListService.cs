@@ -157,7 +157,7 @@ namespace AniDroid.AniList.Service
             return await ExecuteRequest<AniListObject.PagedData<List<AniListActivity>>>(req, cToken);
         }
 
-        public IAsyncEnumerable<AniListObject.PagedData<ICollection<AniListActivity>>> SeGetAniListActivityarchUsersPaging(int perPage = 20)
+        public IAsyncEnumerable<AniListObject.PagedData<ICollection<AniListActivity>>> GetAniListActivityPaging(int perPage = 20)
         {
             return new PagedAsyncEnumerable<ICollection<AniListActivity>>(perPage,
                 CreateGetPageFunc<ICollection<AniListActivity>>(QueryStore.GetUserActivity, null),
