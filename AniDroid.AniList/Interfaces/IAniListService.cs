@@ -41,7 +41,7 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<AniListObject.PagedData<List<AniListActivity>>, IAniListError>> GetAniListActivity(int page, int count, CancellationToken cToken);
 
-        IAsyncEnumerable<AniListObject.PagedData<ICollection<AniListActivity>>> SeGetAniListActivityarchUsersPaging(int perPage);
+        IAsyncEnumerable<AniListObject.PagedData<ICollection<AniListActivity>>> GetAniListActivityPaging(int perPage);
 
         Task<OneOf<AniListActivity, IAniListError>> PostTextActivity(string text, CancellationToken cToken);
 

@@ -13,7 +13,6 @@ namespace AniDroid.AniList.Models
         public int Episode { get; set; }
         public int ActivityId { get; set; }
         public int CommentId { get; set; }
-        public int MyProperty { get; set; }
         public Media Media { get; set; }
         public User User { get; set; }
         public ForumThread Thread { get; set; }
