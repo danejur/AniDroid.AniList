@@ -159,7 +159,7 @@ namespace AniDroid.AniList.Service
             return await ExecuteRequestOneOf<AniListObject.PagedData<List<AniListActivity>>>(req, cToken);
         }
 
-        public IAsyncEnumerable<AniListObject.PagedData<ICollection<AniListActivity>>> SeGetAniListActivityarchUsersPaging(int perPage = 20)
+        public IAsyncEnumerable<AniListObject.PagedData<ICollection<AniListActivity>>> GetAniListActivityPaging(int perPage = 20)
         {
             return new PagedAsyncEnumerable<ICollection<AniListActivity>>(perPage,
                 CreateGetPageFunc<ICollection<AniListActivity>>(QueryStore.GetUserActivity, null),
@@ -381,7 +381,7 @@ namespace AniDroid.AniList.Service
         {
             async Task<AniListObject.PagedData<T>> GetPageAsync(PagingInfo info, CancellationToken ct)
             {
-                var vars = JObject.FromObject(variables, JsonNetSerializer.Default.Serializer);
+                var vars = JObject.FromObject(variables ?? new object(), JsonNetSerializer.Default.Serializer);
                 vars.Add("page", info.Page);
                 vars.Add("count", info.PageSize);
 
