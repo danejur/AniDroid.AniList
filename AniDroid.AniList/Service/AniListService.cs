@@ -14,6 +14,7 @@ using AniDroid.AniList.Queries;
 using Newtonsoft.Json.Linq;
 using AniDroid.AniList.GraphQL;
 using AniDroid.AniList.Utils;
+using OneOf;
 
 namespace AniDroid.AniList.Service
 {
@@ -43,7 +44,7 @@ namespace AniDroid.AniList.Service
 
         #region Media
 
-        public async Task<IAniListServiceResponse<Media>> GetMedia(int id, Media.MediaType type, CancellationToken cToken = default)
+        public async Task<OneOf<IAniListError, Media>> GetMedia(int id, Media.MediaType type, CancellationToken cToken = default)
         {
             var query = new GraphQLQuery
             {
@@ -51,8 +52,9 @@ namespace AniDroid.AniList.Service
                 Variables = JsonConvert.SerializeObject(new { id, type = type.Value })
             };
             var req = CreateRequest(query);
-            return await ExecuteRequest<Media>(req, cToken);
+            return await ExecuteRequestTwo<Media>(req, cToken);
         }
+
 
         public async Task<IAniListServiceResponse<AniListObject.PagedData<List<Media>>>> SearchMedia(string queryText, int page, int count, Media.MediaType type = null, CancellationToken cToken = default)
         {
@@ -89,7 +91,7 @@ namespace AniDroid.AniList.Service
 
         #region User
 
-        public async Task<IAniListServiceResponse<User>> GetUser(string name, CancellationToken cToken = default)
+        public async Task<OneOf<IAniListError, User>> GetUser(string name, CancellationToken cToken = default)
         {
             var query = new GraphQLQuery
             {
@@ -97,10 +99,10 @@ namespace AniDroid.AniList.Service
                 Variables = JsonConvert.SerializeObject(new { name })
             };
             var req = CreateRequest(query);
-            return await ExecuteRequest<User>(req, cToken);
+            return await ExecuteRequestTwo<User>(req, cToken);
         }
 
-        public async Task<IAniListServiceResponse<Media.MediaListCollection>> GetUserMediaList(string userName, Media.MediaType type, CancellationToken cToken = default)
+        public async Task<OneOf<IAniListError, Media.MediaListCollection>> GetUserMediaList(string userName, Media.MediaType type, CancellationToken cToken = default)
         {
             var query = new GraphQLQuery
             {
@@ -108,10 +110,10 @@ namespace AniDroid.AniList.Service
                 Variables = JsonConvert.SerializeObject(new { name = userName, type = type.Value })
             };
             var req = CreateRequest(query);
-            return await ExecuteRequest<Media.MediaListCollection>(req, cToken);
+            return await ExecuteRequestTwo<Media.MediaListCollection>(req, cToken);
         }
 
-        public async Task<IAniListServiceResponse<AniListObject.PagedData<List<User>>>> SearchUsers(string queryText, int page, int count, CancellationToken cToken = default)
+        public async Task<OneOf<IAniListError, AniListObject.PagedData<List<User>>>> SearchUsers(string queryText, int page, int count, CancellationToken cToken = default)
         {
             var query = new GraphQLQuery
             {
@@ -119,7 +121,7 @@ namespace AniDroid.AniList.Service
                 Variables = JsonConvert.SerializeObject(new { queryText, page, count })
             };
             var req = CreateRequest(query);
-            return await ExecuteRequest<AniListObject.PagedData<List<User>>>(req, cToken);
+            return await ExecuteRequestTwo<AniListObject.PagedData<List<User>>>(req, cToken);
         }
 
         public IAsyncEnumerable<AniListObject.PagedData<ICollection<User>>> SearchUsersPaging(string queryText,
@@ -359,6 +361,18 @@ namespace AniDroid.AniList.Service
         private async Task<IAniListServiceResponse<T>> ExecuteRequest<T>(IRestRequest req, CancellationToken cToken) where T : class
         {
             return AniListServiceResponse<T>.CreateResponse(await CreateClient().ExecuteTaskAsync<GraphQLResponse<T>>(req, cToken).ConfigureAwait(false));
+        }
+
+        private async Task<OneOf<IAniListError, T>> ExecuteRequestTwo<T>(IRestRequest req, CancellationToken cToken) where T : class
+        {
+            var servResp = await CreateClient().ExecuteTaskAsync<GraphQLResponse<T>>(req, cToken).ConfigureAwait(false);
+
+            if (servResp.IsSuccessful)
+            {
+                return servResp.Data.Value;
+            }
+
+            return new AniListError(servResp.ErrorMessage, servResp.ErrorException, servResp.Data?.Errors);
         }
 
         private Func<PagingInfo, CancellationToken, Task<AniListObject.PagedData<T>>> CreateGetPageFunc<T>(string query,

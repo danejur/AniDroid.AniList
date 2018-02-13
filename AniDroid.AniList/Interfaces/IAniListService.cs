@@ -1,5 +1,6 @@
 ﻿using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using OneOf;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace AniDroid.AniList.Interfaces
 
         #region Media
 
-        Task<IAniListServiceResponse<Media>> GetMedia(int id, Media.MediaType type, CancellationToken cToken);
+        Task<OneOf<IAniListError, Media>> GetMedia(int id, Media.MediaType type, CancellationToken cToken);
 
         Task<IAniListServiceResponse<AniListObject.PagedData<List<Media>>>> SearchMedia(string queryText, int page, int count, Media.MediaType type, CancellationToken cToken);
 
@@ -26,11 +27,11 @@ namespace AniDroid.AniList.Interfaces
 
         #region User
 
-        Task<IAniListServiceResponse<User>> GetUser(string name, CancellationToken cToken);
+        Task<OneOf<IAniListError, User>> GetUser(string name, CancellationToken cToken);
 
-        Task<IAniListServiceResponse<Media.MediaListCollection>> GetUserMediaList(string userName, Media.MediaType type, CancellationToken cToken);
+        Task<OneOf<IAniListError, Media.MediaListCollection>> GetUserMediaList(string userName, Media.MediaType type, CancellationToken cToken);
 
-        Task<IAniListServiceResponse<AniListObject.PagedData<List<User>>>> SearchUsers(string queryText, int page, int count, CancellationToken cToken);
+        Task<OneOf<IAniListError, AniListObject.PagedData<List<User>>>> SearchUsers(string queryText, int page, int count, CancellationToken cToken);
 
         IAsyncEnumerable<AniListObject.PagedData<ICollection<User>>> SearchUsersPaging(string queryText, int perPage);
 
