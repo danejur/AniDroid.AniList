@@ -366,7 +366,7 @@ namespace AniDroid.AniList.Service
         {
             async Task<AniListObject.PagedData<T>> GetPageAsync(PagingInfo info, CancellationToken ct)
             {
-                var vars = JObject.FromObject(variables, JsonNetSerializer.Default.Serializer);
+                var vars = JObject.FromObject(variables ?? new object(), JsonNetSerializer.Default.Serializer);
                 vars.Add("page", info.Page);
                 vars.Add("count", info.PageSize);
 
