@@ -3,19 +3,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using OneOf;
 
 namespace AniDroid.AniList.Utils
 {
     // TODO: Use IAsyncEnumerator+IAsyncEnumnerable from C# 8.0 ASAP
     internal class PagedAsyncEnumerable<T> : IAsyncEnumerable<AniListObject.PagedData<T>>
     {
-        private readonly Func<PagingInfo, CancellationToken, Task<AniListObject.PagedData<T>>> _getPage;
+        private readonly Func<PagingInfo, CancellationToken, Task<OneOf<AniListObject.PagedData<T>, IAniListError>>> _getPage;
         private readonly Func<PagingInfo, AniListObject.PagedData<T>, bool> _nextPage;
 
         public int PageSize { get; }
 
         public PagedAsyncEnumerable(int pageSize,
-            Func<PagingInfo, CancellationToken, Task<AniListObject.PagedData<T>>> getPage,
+            Func<PagingInfo, CancellationToken, Task<OneOf<AniListObject.PagedData<T>, IAniListError>>> getPage,
             Func<PagingInfo, AniListObject.PagedData<T>, bool> nextPage)
         {
             if (pageSize <= 0) throw new ArgumentException($"Value cannot be less than or equal to zero (0)", nameof(pageSize));
@@ -45,7 +46,10 @@ namespace AniDroid.AniList.Utils
                 if (_info.Remaining == false)
                     return false;
 
-                Current = await _source._getPage(_info, ct).ConfigureAwait(false);
+                var pageResult = await _source._getPage(_info, ct).ConfigureAwait(false);
+
+                pageResult.Switch(data => Current = data)
+                    .Switch(error => { });
 
                 if (Current == null)
                     return false;
