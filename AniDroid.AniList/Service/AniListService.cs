@@ -375,7 +375,7 @@ namespace AniDroid.AniList.Service
             return new AniListError(servResp.ErrorMessage, servResp.ErrorException, servResp.Data?.Errors);
         }
 
-        private Func<PagingInfo, CancellationToken, Task<OneOf<AniListObject.PagedData<T>, IAniListError>>> CreateGetPageFunc<T>(string query,
+        private Func<PagingInfo, CancellationToken, Task<OneOf<AniListObject.PagedData<T>, IAniListError>>> CreateGetPageFunc<T>(string queryString,
             object variables)
         {
             Task<OneOf<AniListObject.PagedData<T>, IAniListError>> GetPageAsync(PagingInfo info, CancellationToken ct)
@@ -384,7 +384,13 @@ namespace AniDroid.AniList.Service
                 vars.Add("page", info.Page);
                 vars.Add("count", info.PageSize);
 
-                return GetResponseAsync<AniListObject.PagedData<T>>(CreateRequest(new GraphQLQuery(query, vars)), ct);
+                var query = new GraphQLQuery
+                {
+                    Query = queryString,
+                    Variables = vars,
+
+                };
+                return GetResponseAsync<AniListObject.PagedData<T>>(CreateRequest(query), ct);
             }
 
             return GetPageAsync;
