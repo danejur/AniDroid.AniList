@@ -14,6 +14,7 @@ using AniDroid.AniList.Queries;
 using Newtonsoft.Json.Linq;
 using AniDroid.AniList.GraphQL;
 using AniDroid.AniList.Utils;
+using AniDroid.AniList.Utils.Internal;
 using OneOf;
 
 namespace AniDroid.AniList.Service
@@ -49,7 +50,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.GetMediaByIdAndType,
-                Variables = JsonConvert.SerializeObject(new { id, type = type.Value })
+                Variables = new { id, type = type.Value },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<Media>(req, cToken);
@@ -58,17 +59,10 @@ namespace AniDroid.AniList.Service
 
         public Task<OneOf<AniListObject.PagedData<List<Media>>, IAniListError>> SearchMedia(string queryText, int page, int count, Media.MediaType type = null, CancellationToken cToken = default)
         {
-            var variableObj = JObject.FromObject(new { queryText, page, count }, new JsonNetSerializer().Serializer);
-
-            if (type != null)
-            {
-                variableObj.Add("type", type.Value);
-            }
-
             var query = new GraphQLQuery
             {
                 Query = QueryStore.SearchMedia,
-                Variables = variableObj.ToString()
+                Variables = new { queryText, page, count, type = type?.Value },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<AniListObject.PagedData<List<Media>>>(req, cToken);
@@ -96,7 +90,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.GetUserByName,
-                Variables = JsonConvert.SerializeObject(new { name })
+                Variables = new { name },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<User>(req, cToken);
@@ -107,7 +101,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.GetMediaListsByUserNameAndType,
-                Variables = JsonConvert.SerializeObject(new { name = userName, type = type.Value })
+                Variables = new { name = userName, type = type.Value },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<Media.MediaListCollection>(req, cToken);
@@ -118,7 +112,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.SearchUsers,
-                Variables = JsonConvert.SerializeObject(new { queryText, page, count })
+                Variables = new { queryText, page, count },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<AniListObject.PagedData<List<User>>>(req, cToken);
@@ -142,7 +136,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.ToggleLike,
-                Variables = JsonConvert.SerializeObject(new { id, type = type.Value })
+                Variables = new { id, type = type.Value },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<List<User>>(req, cToken);
@@ -153,7 +147,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.GetUserActivity,
-                Variables = JsonConvert.SerializeObject(new { page, count })
+                Variables = new { page, count },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<AniListObject.PagedData<List<AniListActivity>>>(req, cToken);
@@ -171,7 +165,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.PostTextActivity,
-                Variables = JsonConvert.SerializeObject(new { text })
+                Variables = new { text },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<AniListActivity>(req, cToken);
@@ -182,7 +176,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.PostActivityReply,
-                Variables = JsonConvert.SerializeObject(new { activityId, text })
+                Variables = new { activityId, text },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<AniListActivity.ActivityReply>(req, cToken);
@@ -193,7 +187,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.GetAniListActivityById,
-                Variables = JsonConvert.SerializeObject(new { id })
+                Variables = new { id },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<AniListActivity>(req, cToken);
@@ -204,7 +198,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.GetUserNotifications,
-                Variables = JsonConvert.SerializeObject(new { page, count })
+                Variables = new { page, count },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<AniListObject.PagedData<List<AniListNotification>>>(req, cToken);
@@ -226,7 +220,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.SearchCharacters,
-                Variables = JsonConvert.SerializeObject(new { queryText, page, count })
+                Variables = new { queryText, page, count },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<AniListObject.PagedData<List<Character>>>(req, cToken);
@@ -246,7 +240,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.GetCharacterById,
-                Variables = JsonConvert.SerializeObject(new { id })
+                Variables = new { id },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<Character>(req, cToken);
@@ -261,7 +255,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.SearchStaff,
-                Variables = JsonConvert.SerializeObject(new { queryText, page, count })
+                Variables = new { queryText, page, count },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<AniListObject.PagedData<List<Staff>>>(req, cToken);
@@ -285,7 +279,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.SearchStudios,
-                Variables = JsonConvert.SerializeObject(new { queryText, page, count })
+                Variables = new { queryText, page, count },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<AniListObject.PagedData<List<Studio>>>(req, cToken);
@@ -309,7 +303,7 @@ namespace AniDroid.AniList.Service
             var query = new GraphQLQuery
             {
                 Query = QueryStore.SearchForumThreads,
-                Variables = JsonConvert.SerializeObject(new { queryText, page, count })
+                Variables = new { queryText, page, count },
             };
             var req = CreateRequest(query);
             return GetResponseAsync<AniListObject.PagedData<List<ForumThread>>>(req, cToken);
@@ -381,7 +375,7 @@ namespace AniDroid.AniList.Service
             return new AniListError(servResp.ErrorMessage, servResp.ErrorException, servResp.Data?.Errors);
         }
 
-        private Func<PagingInfo, CancellationToken, Task<OneOf<AniListObject.PagedData<T>, IAniListError>>> CreateGetPageFunc<T>(string query,
+        private Func<PagingInfo, CancellationToken, Task<OneOf<AniListObject.PagedData<T>, IAniListError>>> CreateGetPageFunc<T>(string queryString,
             object variables)
         {
             Task<OneOf<AniListObject.PagedData<T>, IAniListError>> GetPageAsync(PagingInfo info, CancellationToken ct)
@@ -390,7 +384,13 @@ namespace AniDroid.AniList.Service
                 vars.Add("page", info.Page);
                 vars.Add("count", info.PageSize);
 
-                return GetResponseAsync<AniListObject.PagedData<T>>(CreateRequest(new GraphQLQuery(query, vars)), ct);
+                var query = new GraphQLQuery
+                {
+                    Query = queryString,
+                    Variables = vars,
+
+                };
+                return GetResponseAsync<AniListObject.PagedData<T>>(CreateRequest(query), ct);
             }
 
             return GetPageAsync;
@@ -416,7 +416,8 @@ namespace AniDroid.AniList.Service
                 {
                     MissingMemberHandling = MissingMemberHandling.Ignore,
                     NullValueHandling = NullValueHandling.Ignore,
-                    DefaultValueHandling = DefaultValueHandling.Include
+                    DefaultValueHandling = DefaultValueHandling.Include,
+                    ContractResolver = AniListContractResolver.Instance,
                 };
                 ContentType = "application/json";
             }
@@ -430,18 +431,14 @@ namespace AniDroid.AniList.Service
             public string Serialize(object obj)
             {
                 using (var stringWriter = new StringWriter())
+                using (var jsonTextWriter = new JsonTextWriter(stringWriter))
                 {
-                    using (var jsonTextWriter = new JsonTextWriter(stringWriter))
-                    {
-                        jsonTextWriter.Formatting = Formatting.Indented;
-                        jsonTextWriter.QuoteChar = '"';
-                        Serializer.ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() };
+#if DEBUG
+                    jsonTextWriter.Formatting = Formatting.Indented;
+#endif
 
-                        Serializer.Serialize(jsonTextWriter, obj);
-
-                        var result = stringWriter.ToString();
-                        return result;
-                    }
+                    Serializer.Serialize(jsonTextWriter, obj);
+                    return stringWriter.ToString();
                 }
             }
 
@@ -450,17 +447,15 @@ namespace AniDroid.AniList.Service
                 var content = response.Content;
 
                 using (var stringReader = new StringReader(content))
+                using (var jsonTextReader = new JsonTextReader(stringReader))
                 {
-                    using (var jsonTextReader = new JsonTextReader(stringReader))
-                    {
-                        return Serializer.Deserialize<T>(jsonTextReader);
-                    }
+                    return Serializer.Deserialize<T>(jsonTextReader);
                 }
             }
 
             public static JsonNetSerializer Default => new JsonNetSerializer();
         }
 
-        #endregion
+#endregion
     }
 }

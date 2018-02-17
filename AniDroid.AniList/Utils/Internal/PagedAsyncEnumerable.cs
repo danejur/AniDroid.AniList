@@ -5,7 +5,7 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using OneOf;
 
-namespace AniDroid.AniList.Utils
+namespace AniDroid.AniList.Utils.Internal 
 {
     // TODO: Use IAsyncEnumerator+IAsyncEnumnerable from C# 8.0 ASAP
     internal class PagedAsyncEnumerable<T> : IAsyncEnumerable<AniListObject.PagedData<T>>
@@ -20,9 +20,9 @@ namespace AniDroid.AniList.Utils
             Func<PagingInfo, AniListObject.PagedData<T>, bool> nextPage)
         {
             if (pageSize <= 0) throw new ArgumentException($"Value cannot be less than or equal to zero (0)", nameof(pageSize));
-            PageSize = pageSize;
-            _getPage = getPage ?? throw new ArgumentNullException(nameof(getPage));
-            _nextPage = nextPage ?? throw new ArgumentNullException(nameof(nextPage));
+            this.PageSize = pageSize;
+            this._getPage = getPage ?? throw new ArgumentNullException(nameof(getPage));
+            this._nextPage = nextPage ?? throw new ArgumentNullException(nameof(nextPage));
         }
 
         public IAsyncEnumerator<AniListObject.PagedData<T>> GetEnumerator()
@@ -37,32 +37,32 @@ namespace AniDroid.AniList.Utils
 
             public Enumerator(PagedAsyncEnumerable<T> source)
             {
-                _source = source;
-                _info = new PagingInfo(source.PageSize);
+                this._source = source;
+                this._info = new PagingInfo(source.PageSize);
             }
 
             public async Task<bool> MoveNextAsync(CancellationToken ct = default)
             {
-                if (_info.Remaining == false)
+                if (this._info.Remaining == false)
                     return false;
 
-                var pageResult = await _source._getPage(_info, ct).ConfigureAwait(false);
+                var pageResult = await this._source._getPage(this._info, ct).ConfigureAwait(false);
 
-                pageResult.Switch(data => Current = data)
+                pageResult.Switch(data => this.Current = data)
                     .Switch(error => { });
 
-                if (Current == null)
+                if (this.Current == null)
                     return false;
 
-                _info.Page++;
-                _info.Remaining = _source._nextPage(_info, Current);
+                this._info.Page++;
+                this._info.Remaining = this._source._nextPage(this._info, this.Current);
 
                 return true;
             }
 
             public void Dispose()
             {
-                Current = null;
+                this.Current = null;
             }
         }
     }
