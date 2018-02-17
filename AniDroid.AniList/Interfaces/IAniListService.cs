@@ -73,6 +73,8 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<AniListObject.PagedData<ICollection<Staff>>> SearchStaffPaging(string queryText, int perPage);
 
+        Task<OneOf<Staff, IAniListError>> GetStaffById(int id, CancellationToken cToken);
+
         #endregion
 
         #region Studio
