@@ -417,7 +417,8 @@ namespace AniDroid.AniList.Service
                 {
                     MissingMemberHandling = MissingMemberHandling.Ignore,
                     NullValueHandling = NullValueHandling.Ignore,
-                    DefaultValueHandling = DefaultValueHandling.Include
+                    DefaultValueHandling = DefaultValueHandling.Include,
+                    ContractResolver = AniListContractResolver.Instance,
                 };
                 ContentType = "application/json";
             }
@@ -431,18 +432,14 @@ namespace AniDroid.AniList.Service
             public string Serialize(object obj)
             {
                 using (var stringWriter = new StringWriter())
+                using (var jsonTextWriter = new JsonTextWriter(stringWriter))
                 {
-                    using (var jsonTextWriter = new JsonTextWriter(stringWriter))
-                    {
-                        jsonTextWriter.Formatting = Formatting.Indented;
-                        jsonTextWriter.QuoteChar = '"';
-                        Serializer.ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() };
+#if DEBUG
+                    jsonTextWriter.Formatting = Formatting.Indented;
+#endif
 
-                        Serializer.Serialize(jsonTextWriter, obj);
-
-                        var result = stringWriter.ToString();
-                        return result;
-                    }
+                    Serializer.Serialize(jsonTextWriter, obj);
+                    return stringWriter.ToString();
                 }
             }
 
@@ -451,17 +448,15 @@ namespace AniDroid.AniList.Service
                 var content = response.Content;
 
                 using (var stringReader = new StringReader(content))
+                using (var jsonTextReader = new JsonTextReader(stringReader))
                 {
-                    using (var jsonTextReader = new JsonTextReader(stringReader))
-                    {
-                        return Serializer.Deserialize<T>(jsonTextReader);
-                    }
+                    return Serializer.Deserialize<T>(jsonTextReader);
                 }
             }
 
             public static JsonNetSerializer Default => new JsonNetSerializer();
         }
 
-        #endregion
+#endregion
     }
 }
