@@ -14,6 +14,7 @@ using AniDroid.AniList.Queries;
 using Newtonsoft.Json.Linq;
 using AniDroid.AniList.GraphQL;
 using AniDroid.AniList.Utils;
+using AniDroid.AniList.Utils.Internal;
 using OneOf;
 
 namespace AniDroid.AniList.Service
