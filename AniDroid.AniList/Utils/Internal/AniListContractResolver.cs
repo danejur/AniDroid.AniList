@@ -21,6 +21,7 @@ namespace AniDroid.AniList.Utils.Internal
             InterfaceConcreteMap = new Dictionary<Type, Type>
             {
                 { typeof(IList<>), typeof(List<>) },
+                { typeof(ICollection<>), typeof(List<>) },
             };
         }
 
