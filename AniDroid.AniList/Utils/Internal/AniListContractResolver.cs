@@ -9,6 +9,8 @@ namespace AniDroid.AniList.Utils.Internal
     {
         private static AniListContractResolver _instance;
 
+        private readonly Dictionary<Type, JsonConverter> _converterCache;
+
         // Manual Singleton ftw!
         public static AniListContractResolver Instance
             => _instance ?? (_instance = new AniListContractResolver());
@@ -17,6 +19,8 @@ namespace AniDroid.AniList.Utils.Internal
 
         private AniListContractResolver()
         {
+            _converterCache = new Dictionary<Type, JsonConverter>();
+
             NamingStrategy = new CamelCaseNamingStrategy();
             InterfaceConcreteMap = new Dictionary<Type, Type>
             {
@@ -44,9 +48,14 @@ namespace AniDroid.AniList.Utils.Internal
 
             var actualType = InterfaceConcreteMap[interfaceType];
             var concreteGenericType = actualType.MakeGenericType(isGeneric ? objectType.GetGenericArguments() : new Type[0]);
-            var converterType = typeof(AniListJsonConverter<>).MakeGenericType(concreteGenericType);
-            return Activator.CreateInstance(converterType) as JsonConverter;
 
+            if (_converterCache.ContainsKey(concreteGenericType))
+            {
+                return _converterCache[concreteGenericType];
+            }
+
+            var converterType = typeof(AniListJsonConverter<>).MakeGenericType(concreteGenericType);
+            return _converterCache[concreteGenericType] = Activator.CreateInstance(converterType) as JsonConverter;
         }
     }
 }
