@@ -110,11 +110,11 @@ query ($id: Int) {
         /// <summary>
         /// Parameters: (id: int, page: int, perPage: int)
         /// <para></para>
-        /// Returns: Staff with PagedData of Characters
+        /// Returns: Staff with PagedData of Media
         /// </summary>
         public static string GetStaffMedia => @"
-query ($id: Int, $page: Int, $perPage: Int) {
-  Data: Staff(id: $id) {
+query ($staffId: Int, $page: Int, $perPage: Int) {
+  Data: Staff(id: $staffId) {
     staffMedia(page: $page, perPage: $perPage) {
       pageInfo {
         total

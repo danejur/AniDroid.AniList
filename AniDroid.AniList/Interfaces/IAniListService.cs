@@ -65,6 +65,8 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<IPagedData<Character.Edge>> GetStaffCharacters(int staffId, int perPage);
 
+        IAsyncEnumerable<IPagedData<Media.Edge>> GetStaffMedia(int staffId, int perPage);
+
         #endregion
 
         #region Studio

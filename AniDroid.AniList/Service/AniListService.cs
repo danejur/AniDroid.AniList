@@ -210,9 +210,18 @@ namespace AniDroid.AniList.Service
         {
             var arguments = new { staffId };
             return new PagedAsyncEnumerable<Character.Edge>(perPage,
-                CreateGetPageFunc<Character.Edge, Staff>(QueryStore.GetStaffCharacters, arguments, (staff) => staff.Characters),
+                CreateGetPageFunc<Character.Edge, Staff>(QueryStore.GetStaffCharacters, arguments, staff => staff.Characters),
                 HasNextPage);
         }
+
+        public IAsyncEnumerable<IPagedData<Media.Edge>> GetStaffMedia(int staffId, int perPage)
+        {
+            var arguments = new { staffId };
+            return new PagedAsyncEnumerable<Media.Edge>(perPage,
+                CreateGetPageFunc<Media.Edge, Staff>(QueryStore.GetStaffMedia, arguments, staff => staff.StaffMedia),
+                HasNextPage);
+        }
+
 
         #endregion
 
