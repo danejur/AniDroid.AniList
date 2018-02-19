@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using AniDroid.AniList.DataTypes;
+using AniDroid.AniList.Interfaces;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -26,6 +28,7 @@ namespace AniDroid.AniList.Utils.Internal
             {
                 { typeof(IList<>), typeof(List<>) },
                 { typeof(ICollection<>), typeof(List<>) },
+                { typeof(IPagedData<>), typeof(PagedData<>) },
             };
         }
 
