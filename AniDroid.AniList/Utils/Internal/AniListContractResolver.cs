@@ -28,21 +28,25 @@ namespace AniDroid.AniList.Utils.Internal
         protected override JsonConverter ResolveContractConverter(Type objectType)
         {
             if (!objectType.IsInterface)
+            {
                 return base.ResolveContractConverter(objectType);
+            }
 
             var isGeneric = objectType.IsGenericType;
             var interfaceType = isGeneric
                 ? objectType.GetGenericTypeDefinition()
                 : objectType;
 
-            if (InterfaceConcreteMap.ContainsKey(interfaceType))
+            if (!InterfaceConcreteMap.ContainsKey(interfaceType))
             {
-                var actualType = InterfaceConcreteMap[interfaceType];
-                return base.ResolveContractConverter(
-                    actualType.MakeGenericType(isGeneric ? objectType.GetGenericArguments() : new Type[0]));
+                return base.ResolveContractConverter(objectType);
             }
 
-            return base.ResolveContractConverter(objectType);
+            var actualType = InterfaceConcreteMap[interfaceType];
+            var concreteGenericType = actualType.MakeGenericType(isGeneric ? objectType.GetGenericArguments() : new Type[0]);
+            var converterType = typeof(AniListJsonConverter<>).MakeGenericType(concreteGenericType);
+            return Activator.CreateInstance(converterType) as JsonConverter;
+
         }
     }
 }
