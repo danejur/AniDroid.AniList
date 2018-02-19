@@ -9,7 +9,7 @@ namespace AniDroid.AniList.Utils.Internal
 {
     internal class AniListJsonConverter<T> : JsonConverter
     {
-        public override bool CanWrite => false;
+        public override bool CanWrite => true;
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) =>
             serializer.Serialize(writer, value);
