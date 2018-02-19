@@ -252,7 +252,7 @@ namespace AniDroid.AniList.Service
         {
             var client = new RestClient(Config.BaseUrl);
             client.ClearHandlers();
-            client.AddHandler("*", JsonNetSerializer.Default);
+            client.AddHandler("*", AniListJsonSerializer.Default);
 
             if (AuthCodeResolver.IsAuthorized)
             {
@@ -272,7 +272,7 @@ namespace AniDroid.AniList.Service
         {
             var req = new RestRequest(Method.POST)
             {
-                JsonSerializer = JsonNetSerializer.Default
+                JsonSerializer = AniListJsonSerializer.Default
             };
             req.AddJsonBody(query);
             return req;
@@ -320,7 +320,7 @@ namespace AniDroid.AniList.Service
         {
             Task<OneOf<IPagedData<T>, IAniListError>> GetPageAsync(PagingInfo info, CancellationToken ct)
             {
-                var vars = JObject.FromObject(variables ?? new object(), JsonNetSerializer.Default.Serializer);
+                var vars = JObject.FromObject(variables ?? new object(), AniListJsonSerializer.Default.Serializer);
                 vars.Add("page", info.Page);
                 vars.Add("count", info.PageSize);
 
@@ -341,7 +341,7 @@ namespace AniDroid.AniList.Service
         {
             Task<OneOf<IPagedData<T>, IAniListError>> GetPageAsync(PagingInfo info, CancellationToken ct)
             {
-                var vars = JObject.FromObject(variables ?? new object(), JsonNetSerializer.Default.Serializer);
+                var vars = JObject.FromObject(variables ?? new object(), AniListJsonSerializer.Default.Serializer);
                 vars.Add("page", info.Page);
                 vars.Add("count", info.PageSize);
 
@@ -359,11 +359,7 @@ namespace AniDroid.AniList.Service
 
         private static bool HasNextPage<T>(PagingInfo info, IPagedData<T> data) => data.PageInfo.HasNextPage;
 
-        private interface IJsonSerializer : ISerializer, IDeserializer
-        {
-        }
-
-        internal class JsonNetSerializer : IJsonSerializer
+        internal class AniListJsonSerializer : ISerializer, IDeserializer
         {
             public string DateFormat { get; set; }
             public string RootElement { get; set; }
@@ -371,7 +367,7 @@ namespace AniDroid.AniList.Service
             public string ContentType { get; set; }
             public Newtonsoft.Json.JsonSerializer Serializer { get; }
 
-            public JsonNetSerializer()
+            public AniListJsonSerializer()
             {
                 Serializer = new Newtonsoft.Json.JsonSerializer
                 {
@@ -383,7 +379,7 @@ namespace AniDroid.AniList.Service
                 ContentType = "application/json";
             }
 
-            public JsonNetSerializer(Newtonsoft.Json.JsonSerializer serializer)
+            public AniListJsonSerializer(Newtonsoft.Json.JsonSerializer serializer)
             {
                 Serializer = serializer;
                 ContentType = "application/json";
@@ -394,10 +390,6 @@ namespace AniDroid.AniList.Service
                 using (var stringWriter = new StringWriter())
                 using (var jsonTextWriter = new JsonTextWriter(stringWriter))
                 {
-#if DEBUG
-                    jsonTextWriter.Formatting = Formatting.Indented;
-#endif
-
                     Serializer.Serialize(jsonTextWriter, obj);
                     return stringWriter.ToString();
                 }
@@ -414,9 +406,10 @@ namespace AniDroid.AniList.Service
                 }
             }
 
-            public static JsonNetSerializer Default => new JsonNetSerializer();
+            public static AniListJsonSerializer Default => new AniListJsonSerializer();
         }
 
 #endregion
+
     }
 }
