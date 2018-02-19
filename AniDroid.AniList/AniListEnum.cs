@@ -44,7 +44,7 @@ namespace AniDroid.AniList
         {
             var dict = GetValueDictionary<T>();
 
-            if (dict.ContainsKey(value))
+            if (dict.ContainsKey(value ?? ""))
             {
                 return dict[value].DisplayValue;
             }
@@ -66,7 +66,7 @@ namespace AniDroid.AniList
         {
             var dict = GetValueDictionary<T>();
 
-            if (dict.ContainsKey(value))
+            if (dict.ContainsKey(value ?? ""))
             {
                 return dict[value].Index;
             }

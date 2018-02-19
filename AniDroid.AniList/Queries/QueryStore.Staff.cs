@@ -41,7 +41,7 @@ query ($queryText: String, $page: Int, $count: Int) {
         /// <summary>
         /// Parameters: (id: int)
         /// <para></para>
-        /// Returns: Staff
+        /// Returns: Staff with PageInfo for Media and Characters
         /// </summary>
         public static string GetStaffById => @"
 query ($id: Int) {
@@ -60,47 +60,21 @@ query ($id: Int) {
     siteUrl
     language
     staffMedia {
-      edges {
-        node {
-          id
-          title {
-            userPreferred
-          }
-          coverImage {
-            large
-          }
-          format
-          type
-        }
-        staffRole
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
       }
     }
     characters {
-      edges {
-        node {
-          id
-          name {
-            first
-            last
-            alternative
-            native
-          }
-          image {
-            large
-          }
-          isFavourite
-        }
-        role
-        media {
-          id
-          title {
-            userPreferred
-          }
-          format
-          coverImage {
-            large
-          }
-        }
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
       }
     }
   }
