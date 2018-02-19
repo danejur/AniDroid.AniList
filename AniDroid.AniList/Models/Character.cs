@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AniDroid.AniList.Interfaces;
 
 namespace AniDroid.AniList.Models
 {
@@ -18,7 +19,7 @@ namespace AniDroid.AniList.Models
         public class Edge : ConnectionEdge<Character>
         {
             public string Role { get; set; }
-            //TODO: voice actors
+            public List<Staff> VoiceActors { get; set; }
             public List<Media> Media { get; set; }
             public int FavouriteOrder { get; set; }
         }

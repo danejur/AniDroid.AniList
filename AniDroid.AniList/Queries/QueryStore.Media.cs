@@ -11,7 +11,8 @@ namespace AniDroid.AniList.Queries
         /// <para></para>
         /// Returns: Media
         /// </summary>
-        public static string GetMediaByIdAndType => @"query ($id: Int!, $type: MediaType) {
+        public static string GetMediaByIdAndType => @"
+query ($id: Int!, $type: MediaType) {
   Data: Media(id: $id, type: $type) {
     id
     title {
@@ -34,10 +35,18 @@ namespace AniDroid.AniList.Queries
       large
       medium
     }
-    characters{
-        nodes {
+    characters {
+      pageInfo {
+        total
+        perPage
+        hasNextPage
+        currentPage
+        lastPage
+      }
+      edges {
+        role
+        node {
           id
-          description
           name {
             first
             last
@@ -45,6 +54,7 @@ namespace AniDroid.AniList.Queries
             alternative
           }
         }
+      }
     }
     bannerImage
     format
@@ -65,7 +75,8 @@ namespace AniDroid.AniList.Queries
       episode
     }
   }
-}";
+}
+";
 
         /// <summary>
         /// Parameters: (queryText: string, page: int, count: int, type?: MediaType)

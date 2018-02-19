@@ -1,27 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AniDroid.AniList.DataTypes;
+using AniDroid.AniList.Interfaces;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace AniDroid.AniList.Models
 {
     public abstract class AniListObject
     {
         public int Id { get; set; }
-
-        public class PageInfo
-        {
-            public int Total { get; set; }
-            public int PerPage { get; set; }
-            public int CurrentPage { get; set; }
-            public int LastPage { get; set; }
-            public bool HasNextPage { get; set; }
-        }
-
-        public class PagedData<T>
-        {
-            public PageInfo PageInfo { get; set; }
-            public T Data { get; set; }
-        }
 
         public class AniListImage
         {
@@ -46,7 +35,7 @@ namespace AniDroid.AniList.Models
                 }
                 if (!string.IsNullOrWhiteSpace(Last))
                 {
-                    retName += $" {Last}";
+                    retName = string.IsNullOrWhiteSpace(First) ? Last : $"{First} {Last}";
                 }
                 if (!string.IsNullOrWhiteSpace(Native))
                 {
@@ -69,17 +58,18 @@ namespace AniDroid.AniList.Models
             public int Amount { get; set; }
         }
 
-        public class Connection<EdgeType, NodeType> where EdgeType : ConnectionEdge<NodeType> where NodeType : AniListObject
+        public class Connection<TEdgeType, TNodeType> : IPagedData<TEdgeType> where TEdgeType : ConnectionEdge<TNodeType> where TNodeType : AniListObject
         {
-            public List<EdgeType> Edges { get; set; }
-            public List<NodeType> Nodes { get; set; }
+            [JsonProperty("Edges")]
+            public ICollection<TEdgeType> Data { get; set; }
+            public ICollection<TNodeType> Nodes { get; set; }
             public PageInfo PageInfo { get; set; }
         }
 
-        public abstract class ConnectionEdge<NodeType> where NodeType : AniListObject
+        public abstract class ConnectionEdge<TNodeType> where TNodeType : AniListObject
         {
             public int Id { get; set; }
-            public NodeType Node { get; set; }
+            public TNodeType Node { get; set; }
         }
 
         public DateTimeOffset GetDateTimeOffset(int sec)

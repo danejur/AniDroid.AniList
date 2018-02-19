@@ -9,6 +9,6 @@ namespace AniDroid.AniList.GraphQL
     {
         public Dictionary<string, T> Data { get; set; }
         public List<GraphQLError> Errors { get; set; }
-        public T Value { get { return Data?.ContainsKey("Data") == true ? Data["Data"] : null; } }
+        public T Value => Data?.ContainsKey("Data") == true ? Data["Data"] : null;
     }
 }

@@ -37,5 +37,146 @@ query ($queryText: String, $page: Int, $count: Int) {
   }
 }
 ";
+
+        /// <summary>
+        /// Parameters: (id: int)
+        /// <para></para>
+        /// Returns: Staff
+        /// </summary>
+        public static string GetStaffById => @"
+query ($id: Int) {
+  Data: Staff(id: $id) {
+    id
+    name {
+      first
+      last
+      native
+    }
+    image {
+      large
+    }
+    description(asHtml: true)
+    isFavourite
+    siteUrl
+    language
+    staffMedia {
+      edges {
+        node {
+          id
+          title {
+            userPreferred
+          }
+          coverImage {
+            large
+          }
+          format
+          type
+        }
+        staffRole
+      }
+    }
+    characters {
+      edges {
+        node {
+          id
+          name {
+            first
+            last
+            alternative
+            native
+          }
+          image {
+            large
+          }
+          isFavourite
+        }
+        role
+        media {
+          id
+          title {
+            userPreferred
+          }
+          format
+          coverImage {
+            large
+          }
+        }
+      }
+    }
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (id: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: Staff with PagedData of Characters
+        /// </summary>
+        public static string GetStaffMedia => @"
+query ($id: Int, $page: Int, $perPage: Int) {
+  Data: Staff(id: $id) {
+    staffMedia(page: $page, perPage: $perPage) {
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
+      }
+      edges {
+        node {
+          id
+          title {
+            userPreferred
+          }
+          coverImage {
+            large
+          }
+          format
+          type
+        }
+        staffRole
+      }
+    }
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (id: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: Staff with PagedData of Characters
+        /// </summary>
+        public static string GetStaffCharacters => @"
+query ($staffId: Int, $page: Int, $perPage: Int) {
+  Data: Staff(id: $staffId) {
+    characters(page: $page, perPage: $perPage) {
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
+      }
+      edges {
+        node {
+          id
+          name {
+            first
+            last
+            native
+            alternative
+          }
+          image {
+            large
+          }
+          siteUrl
+          isFavourite
+        }
+      }
+    }
+  }
+}
+";
     }
 }
