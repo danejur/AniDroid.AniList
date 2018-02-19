@@ -55,7 +55,7 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<Media>(query, cToken);
         }
 
-        public IAsyncEnumerable<IPagedData<Media>> SearchMediaPaging(string queryText,
+        public IAsyncEnumerable<IPagedData<Media>> SearchMedia(string queryText,
             Media.MediaType type = null, int perPage = 20)
         {
             var arguments = new
@@ -92,7 +92,7 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<Media.MediaListCollection>(query, cToken);
         }
 
-        public IAsyncEnumerable<IPagedData<User>> SearchUsersPaging(string queryText,
+        public IAsyncEnumerable<IPagedData<User>> SearchUsers(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
@@ -113,13 +113,6 @@ namespace AniDroid.AniList.Service
                 Variables = new { id, type = type.Value },
             };
             return GetResponseAsync<List<User>>(query, cToken);
-        }
-
-        public IAsyncEnumerable<IPagedData<AniListActivity>> GetAniListActivityPaging(int perPage = 20)
-        {
-            return new PagedAsyncEnumerable<AniListActivity>(perPage,
-                CreateGetPageFunc<AniListActivity>(QueryStore.GetUserActivity, null),
-                HasNextPage);
         }
 
         public Task<OneOf<AniListActivity, IAniListError>> PostTextActivity(string text, CancellationToken cToken = default)
@@ -152,7 +145,14 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<AniListActivity>(query, cToken);
         }
 
-        public IAsyncEnumerable<IPagedData<AniListNotification>> GetAniListNotificationsPaging(int perPage = 20)
+        public IAsyncEnumerable<IPagedData<AniListActivity>> GetAniListActivity(int perPage = 20)
+        {
+            return new PagedAsyncEnumerable<AniListActivity>(perPage,
+                CreateGetPageFunc<AniListActivity>(QueryStore.GetUserActivity, null),
+                HasNextPage);
+        }
+
+        public IAsyncEnumerable<IPagedData<AniListNotification>> GetAniListNotifications(int perPage = 20)
         {
             return new PagedAsyncEnumerable<AniListNotification>(perPage,
                 CreateGetPageFunc<AniListNotification>(QueryStore.GetUserNotifications, null),
@@ -162,15 +162,6 @@ namespace AniDroid.AniList.Service
         #endregion
 
         #region Character
-
-        public IAsyncEnumerable<IPagedData<Character>> SearchCharactersPaging(string queryText,
-            int perPage = 20)
-        {
-            var arguments = new { queryText };
-            return new PagedAsyncEnumerable<Character>(perPage,
-                CreateGetPageFunc<Character>(QueryStore.SearchCharacters, arguments),
-                HasNextPage);
-        }
 
         public Task<OneOf<Character, IAniListError>> GetCharacterById(int id, CancellationToken cToken = default)
         {
@@ -182,18 +173,18 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<Character>(query, cToken);
         }
 
-        #endregion
-
-        #region Staff
-
-        public IAsyncEnumerable<IPagedData<Staff>> SearchStaffPaging(string queryText,
+        public IAsyncEnumerable<IPagedData<Character>> SearchCharacters(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
-            return new PagedAsyncEnumerable<Staff>(perPage,
-                CreateGetPageFunc<Staff>(QueryStore.SearchStaff, arguments),
+            return new PagedAsyncEnumerable<Character>(perPage,
+                CreateGetPageFunc<Character>(QueryStore.SearchCharacters, arguments),
                 HasNextPage);
         }
+
+        #endregion
+
+        #region Staff
 
         public Task<OneOf<Staff, IAniListError>> GetStaffById(int id, CancellationToken cToken = default)
         {
@@ -205,7 +196,16 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<Staff>(query, cToken);
         }
 
-        public IAsyncEnumerable<IPagedData<Character.Edge>> GetStaffCharactersPaging(int staffId,
+        public IAsyncEnumerable<IPagedData<Staff>> SearchStaff(string queryText,
+            int perPage = 20)
+        {
+            var arguments = new { queryText };
+            return new PagedAsyncEnumerable<Staff>(perPage,
+                CreateGetPageFunc<Staff>(QueryStore.SearchStaff, arguments),
+                HasNextPage);
+        }
+
+        public IAsyncEnumerable<IPagedData<Character.Edge>> GetStaffCharacters(int staffId,
             int perPage)
         {
             var arguments = new { staffId };
@@ -218,7 +218,7 @@ namespace AniDroid.AniList.Service
 
         #region Studio
 
-        public IAsyncEnumerable<IPagedData<Studio>> SearchStudiosPaging(string queryText,
+        public IAsyncEnumerable<IPagedData<Studio>> SearchStudios(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
@@ -231,7 +231,7 @@ namespace AniDroid.AniList.Service
 
         #region ForumThread
 
-        public IAsyncEnumerable<IPagedData<ForumThread>> SearchForumThreadsPaging(string queryText,
+        public IAsyncEnumerable<IPagedData<ForumThread>> SearchForumThreads(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };

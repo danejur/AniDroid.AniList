@@ -19,7 +19,7 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<Media, IAniListError>> GetMedia(int id, Media.MediaType type, CancellationToken cToken);
 
-        IAsyncEnumerable<IPagedData<Media>> SearchMediaPaging(string queryText, Media.MediaType type, int perPage);
+        IAsyncEnumerable<IPagedData<Media>> SearchMedia(string queryText, Media.MediaType type, int perPage);
 
         #endregion
 
@@ -29,13 +29,11 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<Media.MediaListCollection, IAniListError>> GetUserMediaList(string userName, Media.MediaType type, CancellationToken cToken);
 
-        IAsyncEnumerable<IPagedData<User>> SearchUsersPaging(string queryText, int perPage);
+        IAsyncEnumerable<IPagedData<User>> SearchUsers(string queryText, int perPage);
 
         #endregion
 
         #region Activity
-
-        IAsyncEnumerable<IPagedData<AniListActivity>> GetAniListActivityPaging(int perPage);
 
         Task<OneOf<AniListActivity, IAniListError>> PostTextActivity(string text, CancellationToken cToken);
 
@@ -45,37 +43,39 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<AniListActivity, IAniListError>> GetAniListActivityById(int id, CancellationToken cToken);
 
-        IAsyncEnumerable<IPagedData<AniListNotification>> GetAniListNotificationsPaging(int perPage);
+        IAsyncEnumerable<IPagedData<AniListActivity>> GetAniListActivity(int perPage);
+
+        IAsyncEnumerable<IPagedData<AniListNotification>> GetAniListNotifications(int perPage);
 
         #endregion
 
         #region Character
 
-        IAsyncEnumerable<IPagedData<Character>> SearchCharactersPaging(string queryText, int perPage);
-
         Task<OneOf<Character, IAniListError>> GetCharacterById(int id, CancellationToken cToken);
+
+        IAsyncEnumerable<IPagedData<Character>> SearchCharacters(string queryText, int perPage);
 
         #endregion
 
         #region Staff
 
-        IAsyncEnumerable<IPagedData<Staff>> SearchStaffPaging(string queryText, int perPage);
-
         Task<OneOf<Staff, IAniListError>> GetStaffById(int id, CancellationToken cToken);
 
-        IAsyncEnumerable<IPagedData<Character.Edge>> GetStaffCharactersPaging(int staffId, int perPage);
+        IAsyncEnumerable<IPagedData<Staff>> SearchStaff(string queryText, int perPage);
+
+        IAsyncEnumerable<IPagedData<Character.Edge>> GetStaffCharacters(int staffId, int perPage);
 
         #endregion
 
         #region Studio
 
-        IAsyncEnumerable<IPagedData<Studio>> SearchStudiosPaging(string queryText, int perPage);
+        IAsyncEnumerable<IPagedData<Studio>> SearchStudios(string queryText, int perPage);
 
         #endregion
 
         #region ForumThread
 
-        IAsyncEnumerable<IPagedData<ForumThread>> SearchForumThreadsPaging(string queryText, int perPage);
+        IAsyncEnumerable<IPagedData<ForumThread>> SearchForumThreads(string queryText, int perPage);
 
         #endregion
 
