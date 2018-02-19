@@ -182,6 +182,14 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
+        public IAsyncEnumerable<IPagedData<Media.Edge>> GetCharacterMedia(int characterId, int perPage = 20)
+        {
+            var arguments = new { characterId };
+            return new PagedAsyncEnumerable<Media.Edge>(perPage,
+                CreateGetPageFunc<Media.Edge, Character>(QueryStore.GetCharacterMedia, arguments, character => character.Media),
+                HasNextPage);
+        }
+
         #endregion
 
         #region Staff
@@ -205,8 +213,7 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<IPagedData<Character.Edge>> GetStaffCharacters(int staffId,
-            int perPage)
+        public IAsyncEnumerable<IPagedData<Character.Edge>> GetStaffCharacters(int staffId, int perPage = 20)
         {
             var arguments = new { staffId };
             return new PagedAsyncEnumerable<Character.Edge>(perPage,
@@ -214,7 +221,7 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<IPagedData<Media.Edge>> GetStaffMedia(int staffId, int perPage)
+        public IAsyncEnumerable<IPagedData<Media.Edge>> GetStaffMedia(int staffId, int perPage = 20)
         {
             var arguments = new { staffId };
             return new PagedAsyncEnumerable<Media.Edge>(perPage,

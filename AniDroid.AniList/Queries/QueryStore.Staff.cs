@@ -108,7 +108,7 @@ query ($id: Int) {
 ";
 
         /// <summary>
-        /// Parameters: (id: int, page: int, perPage: int)
+        /// Parameters: (staffId: int, page: int, perPage: int)
         /// <para></para>
         /// Returns: Staff with PagedData of Media
         /// </summary>
@@ -143,7 +143,7 @@ query ($staffId: Int, $page: Int, $perPage: Int) {
 ";
 
         /// <summary>
-        /// Parameters: (id: int, page: int, perPage: int)
+        /// Parameters: (staffId: int, page: int, perPage: int)
         /// <para></para>
         /// Returns: Staff with PagedData of Characters
         /// </summary>

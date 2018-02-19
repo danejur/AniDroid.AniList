@@ -55,6 +55,8 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<IPagedData<Character>> SearchCharacters(string queryText, int perPage);
 
+        IAsyncEnumerable<IPagedData<Media.Edge>> GetCharacterMedia(int characterId, int perPage);
+
         #endregion
 
         #region Staff

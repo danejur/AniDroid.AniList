@@ -99,5 +99,52 @@ query ($id: Int) {
   }
 }
 ";
+
+        /// <summary>
+        /// Parameters: (characterId: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: Character with PagedData of Media with Staff
+        /// </summary>
+        public static string GetCharacterMedia => @"
+query ($characterId: Int, $page: Int, $perPage: Int) {
+  Data: Character(id: $characterId) {
+    media(page: $page, perPage: $perPage) {
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
+      }
+      edges {
+        characterRole
+        voiceActors {
+          id
+          name {
+            first
+            last
+            native
+          }
+          image {
+            large
+          }
+          isFavourite
+        }
+        node {
+          id
+          title {
+            userPreferred
+          }
+          coverImage {
+            large
+          }
+          format
+          type
+        }
+      }
+    }
+  }
+}
+";
     }
 }
