@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AniDroid.AniList.Interfaces;
 
 namespace AniDroid.AniList.Models
 {
@@ -12,8 +13,8 @@ namespace AniDroid.AniList.Models
         public string Description { get; set; }
         public bool IsFavourite { get; set; }
         public string SiteUrl { get; set; }
-        public Connection<Media.Edge, Media> StaffMedia { get; set; }
-        public Connection<Character.Edge, Character> Characters { get; set; }
+        public IPagedData<Media.Edge> StaffMedia { get; set; }
+        public IPagedData<Character.Edge> Characters { get; set; }
 
         #region Internal Classes
 

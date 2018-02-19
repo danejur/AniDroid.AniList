@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AniDroid.AniList.Interfaces;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace AniDroid.AniList.Models
 {
@@ -17,10 +20,10 @@ namespace AniDroid.AniList.Models
             public bool HasNextPage { get; set; }
         }
 
-        public class PagedData<T>
+        public class PagedData<T> : IPagedData<T>
         {
             public PageInfo PageInfo { get; set; }
-            public T Data { get; set; }
+            public ICollection<T> Data { get; set; }
         }
 
         public class AniListImage
@@ -46,7 +49,7 @@ namespace AniDroid.AniList.Models
                 }
                 if (!string.IsNullOrWhiteSpace(Last))
                 {
-                    retName += $" {Last}";
+                    retName = string.IsNullOrWhiteSpace(First) ? Last : $"{First} {Last}";
                 }
                 if (!string.IsNullOrWhiteSpace(Native))
                 {
@@ -69,10 +72,11 @@ namespace AniDroid.AniList.Models
             public int Amount { get; set; }
         }
 
-        public class Connection<EdgeType, NodeType> where EdgeType : ConnectionEdge<NodeType> where NodeType : AniListObject
+        public class Connection<EdgeType, NodeType> : IPagedData<EdgeType> where EdgeType : ConnectionEdge<NodeType> where NodeType : AniListObject
         {
-            public List<EdgeType> Edges { get; set; }
-            public List<NodeType> Nodes { get; set; }
+            [JsonProperty("Edges")]
+            public ICollection<EdgeType> Data { get; set; }
+            public ICollection<NodeType> Nodes { get; set; }
             public PageInfo PageInfo { get; set; }
         }
 

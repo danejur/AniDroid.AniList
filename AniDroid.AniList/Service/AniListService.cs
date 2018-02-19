@@ -55,17 +55,7 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<Media>(query, cToken);
         }
 
-        public Task<OneOf<AniListObject.PagedData<List<Media>>, IAniListError>> SearchMedia(string queryText, int page, int count, Media.MediaType type = null, CancellationToken cToken = default)
-        {
-            var query = new GraphQLQuery
-            {
-                Query = QueryStore.SearchMedia,
-                Variables = new { queryText, page, count, type = type?.Value },
-            };
-            return GetResponseAsync<AniListObject.PagedData<List<Media>>>(query, cToken);
-        }
-
-        public IAsyncEnumerable<AniListObject.PagedData<ICollection<Media>>> SearchMediaPaging(string queryText,
+        public IAsyncEnumerable<IPagedData<Media>> SearchMediaPaging(string queryText,
             Media.MediaType type = null, int perPage = 20)
         {
             var arguments = new
@@ -73,8 +63,8 @@ namespace AniDroid.AniList.Service
                 queryText,
                 type = type?.Value,
             };
-            return new PagedAsyncEnumerable<ICollection<Media>>(perPage,
-                CreateGetPageFunc<ICollection<Media>>(QueryStore.SearchMedia, arguments),
+            return new PagedAsyncEnumerable<Media>(perPage,
+                CreateGetPageFunc<Media>(QueryStore.SearchMedia, arguments),
                 HasNextPage);
         }
 
@@ -102,22 +92,12 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<Media.MediaListCollection>(query, cToken);
         }
 
-        public Task<OneOf<AniListObject.PagedData<List<User>>, IAniListError>> SearchUsers(string queryText, int page, int count, CancellationToken cToken = default)
-        {
-            var query = new GraphQLQuery
-            {
-                Query = QueryStore.SearchUsers,
-                Variables = new { queryText, page, count },
-            };
-            return GetResponseAsync<AniListObject.PagedData<List<User>>>(query, cToken);
-        }
-
-        public IAsyncEnumerable<AniListObject.PagedData<ICollection<User>>> SearchUsersPaging(string queryText,
+        public IAsyncEnumerable<IPagedData<User>> SearchUsersPaging(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
-            return new PagedAsyncEnumerable<ICollection<User>>(perPage,
-                CreateGetPageFunc<ICollection<User>>(QueryStore.SearchUsers, arguments),
+            return new PagedAsyncEnumerable<User>(perPage,
+                CreateGetPageFunc<User>(QueryStore.SearchUsers, arguments),
                 HasNextPage);
         }
 
@@ -135,20 +115,10 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<List<User>>(query, cToken);
         }
 
-        public Task<OneOf<AniListObject.PagedData<List<AniListActivity>>, IAniListError>> GetAniListActivity(int page, int count, CancellationToken cToken = default)
+        public IAsyncEnumerable<IPagedData<AniListActivity>> GetAniListActivityPaging(int perPage = 20)
         {
-            var query = new GraphQLQuery
-            {
-                Query = QueryStore.GetUserActivity,
-                Variables = new { page, count },
-            };
-            return GetResponseAsync<AniListObject.PagedData<List<AniListActivity>>>(query, cToken);
-        }
-
-        public IAsyncEnumerable<AniListObject.PagedData<ICollection<AniListActivity>>> GetAniListActivityPaging(int perPage = 20)
-        {
-            return new PagedAsyncEnumerable<ICollection<AniListActivity>>(perPage,
-                CreateGetPageFunc<ICollection<AniListActivity>>(QueryStore.GetUserActivity, null),
+            return new PagedAsyncEnumerable<AniListActivity>(perPage,
+                CreateGetPageFunc<AniListActivity>(QueryStore.GetUserActivity, null),
                 HasNextPage);
         }
 
@@ -182,20 +152,10 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<AniListActivity>(query, cToken);
         }
 
-        public Task<OneOf<AniListObject.PagedData<List<AniListNotification>>, IAniListError>> GetAniListNotifications(int page, int count, CancellationToken cToken = default)
+        public IAsyncEnumerable<IPagedData<AniListNotification>> GetAniListNotificationsPaging(int perPage = 20)
         {
-            var query = new GraphQLQuery
-            {
-                Query = QueryStore.GetUserNotifications,
-                Variables = new { page, count },
-            };
-            return GetResponseAsync<AniListObject.PagedData<List<AniListNotification>>>(query, cToken);
-        }
-
-        public IAsyncEnumerable<AniListObject.PagedData<ICollection<AniListNotification>>> GetAniListNotificationsPaging(int perPage = 20)
-        {
-            return new PagedAsyncEnumerable<ICollection<AniListNotification>>(perPage,
-                CreateGetPageFunc<ICollection<AniListNotification>>(QueryStore.GetUserNotifications, null),
+            return new PagedAsyncEnumerable<AniListNotification>(perPage,
+                CreateGetPageFunc<AniListNotification>(QueryStore.GetUserNotifications, null),
                 HasNextPage);
         }
 
@@ -203,22 +163,12 @@ namespace AniDroid.AniList.Service
 
         #region Character
 
-        public Task<OneOf<AniListObject.PagedData<List<Character>>, IAniListError>> SearchCharacters(string queryText, int page, int count, CancellationToken cToken = default)
-        {
-            var query = new GraphQLQuery
-            {
-                Query = QueryStore.SearchCharacters,
-                Variables = new { queryText, page, count },
-            };
-            return GetResponseAsync<AniListObject.PagedData<List<Character>>>(query, cToken);
-        }
-
-        public IAsyncEnumerable<AniListObject.PagedData<ICollection<Character>>> SearchCharactersPaging(string queryText,
+        public IAsyncEnumerable<IPagedData<Character>> SearchCharactersPaging(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
-            return new PagedAsyncEnumerable<ICollection<Character>>(perPage,
-                CreateGetPageFunc<ICollection<Character>>(QueryStore.SearchCharacters, arguments),
+            return new PagedAsyncEnumerable<Character>(perPage,
+                CreateGetPageFunc<Character>(QueryStore.SearchCharacters, arguments),
                 HasNextPage);
         }
 
@@ -236,22 +186,12 @@ namespace AniDroid.AniList.Service
 
         #region Staff
 
-        public Task<OneOf<AniListObject.PagedData<List<Staff>>, IAniListError>> SearchStaff(string queryText, int page, int count, CancellationToken cToken = default)
-        {
-            var query = new GraphQLQuery
-            {
-                Query = QueryStore.SearchStaff,
-                Variables = new { queryText, page, count },
-            };
-            return GetResponseAsync<AniListObject.PagedData<List<Staff>>>(query, cToken);
-        }
-
-        public IAsyncEnumerable<AniListObject.PagedData<ICollection<Staff>>> SearchStaffPaging(string queryText,
+        public IAsyncEnumerable<IPagedData<Staff>> SearchStaffPaging(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
-            return new PagedAsyncEnumerable<ICollection<Staff>>(perPage,
-                CreateGetPageFunc<ICollection<Staff>>(QueryStore.SearchStaff, arguments),
+            return new PagedAsyncEnumerable<Staff>(perPage,
+                CreateGetPageFunc<Staff>(QueryStore.SearchStaff, arguments),
                 HasNextPage);
         }
 
@@ -259,32 +199,31 @@ namespace AniDroid.AniList.Service
         {
             var query = new GraphQLQuery
             {
-                Query = QueryStore.GetCharacterById,
+                Query = QueryStore.GetStaffById,
                 Variables = new { id },
             };
             return GetResponseAsync<Staff>(query, cToken);
+        }
+
+        public IAsyncEnumerable<IPagedData<Character.Edge>> GetStaffCharactersPaging(int staffId,
+            int perPage)
+        {
+            var arguments = new { staffId };
+            return new PagedAsyncEnumerable<Character.Edge>(perPage,
+                CreateGetPageFunc<Character.Edge, Staff>(QueryStore.GetStaffCharacters, arguments, (staff) => staff.Characters),
+                HasNextPage);
         }
 
         #endregion
 
         #region Studio
 
-        public Task<OneOf<AniListObject.PagedData<List<Studio>>, IAniListError>> SearchStudios(string queryText, int page, int count, CancellationToken cToken = default)
-        {
-            var query = new GraphQLQuery
-            {
-                Query = QueryStore.SearchStudios,
-                Variables = new { queryText, page, count },
-            };
-            return GetResponseAsync<AniListObject.PagedData<List<Studio>>>(query, cToken);
-        }
-
-        public IAsyncEnumerable<AniListObject.PagedData<ICollection<Studio>>> SearchStudiosPaging(string queryText,
+        public IAsyncEnumerable<IPagedData<Studio>> SearchStudiosPaging(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
-            return new PagedAsyncEnumerable<ICollection<Studio>>(perPage,
-                CreateGetPageFunc<ICollection<Studio>>(QueryStore.SearchStudios, arguments),
+            return new PagedAsyncEnumerable<Studio>(perPage,
+                CreateGetPageFunc<Studio>(QueryStore.SearchStudios, arguments),
                 HasNextPage);
         }
 
@@ -292,22 +231,12 @@ namespace AniDroid.AniList.Service
 
         #region ForumThread
 
-        public Task<OneOf<AniListObject.PagedData<List<ForumThread>>, IAniListError>> SearchForumThreads(string queryText, int page, int count, CancellationToken cToken = default)
-        {
-            var query = new GraphQLQuery
-            {
-                Query = QueryStore.SearchForumThreads,
-                Variables = new { queryText, page, count },
-            };
-            return GetResponseAsync<AniListObject.PagedData<List<ForumThread>>>(query, cToken);
-        }
-
-        public IAsyncEnumerable<AniListObject.PagedData<ICollection<ForumThread>>> SearchForumThreadsPaging(string queryText,
+        public IAsyncEnumerable<IPagedData<ForumThread>> SearchForumThreadsPaging(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
-            return new PagedAsyncEnumerable<ICollection<ForumThread>>(perPage,
-                CreateGetPageFunc<ICollection<ForumThread>>(QueryStore.SearchForumThreads, arguments),
+            return new PagedAsyncEnumerable<ForumThread>(perPage,
+                CreateGetPageFunc<ForumThread>(QueryStore.SearchForumThreads, arguments),
                 HasNextPage);
         }
 
@@ -368,16 +297,28 @@ namespace AniDroid.AniList.Service
             return new AniListError(servResp.ErrorMessage, servResp.ErrorException, servResp.Data?.Errors);
         }
 
+        private async Task<OneOf<T, IAniListError>> GetResponseAsync<TResponse, T>(IRestRequest req, Func<TResponse, T> getCollection, CancellationToken cToken) where T : class where TResponse : class
+        {
+            var servResp = await CreateClient().ExecuteTaskAsync<GraphQLResponse<TResponse>>(req, cToken).ConfigureAwait(false);
+
+            if (servResp.IsSuccessful)
+            {
+                return getCollection(servResp.Data.Value);
+            }
+
+            return new AniListError(servResp.ErrorMessage, servResp.ErrorException, servResp.Data?.Errors);
+        }
+
         private Task<OneOf<T, IAniListError>> GetResponseAsync<T>(GraphQLQuery query, CancellationToken cToken)
             where T : class
         {
             return GetResponseAsync<T>(CreateRequest(query), cToken);
         }
 
-        private Func<PagingInfo, CancellationToken, Task<OneOf<AniListObject.PagedData<T>, IAniListError>>> CreateGetPageFunc<T>(string queryString,
+        private Func<PagingInfo, CancellationToken, Task<OneOf<IPagedData<T>, IAniListError>>> CreateGetPageFunc<T>(string queryString,
             object variables)
         {
-            Task<OneOf<AniListObject.PagedData<T>, IAniListError>> GetPageAsync(PagingInfo info, CancellationToken ct)
+            Task<OneOf<IPagedData<T>, IAniListError>> GetPageAsync(PagingInfo info, CancellationToken ct)
             {
                 var vars = JObject.FromObject(variables ?? new object(), JsonNetSerializer.Default.Serializer);
                 vars.Add("page", info.Page);
@@ -389,13 +330,34 @@ namespace AniDroid.AniList.Service
                     Variables = vars,
 
                 };
-                return GetResponseAsync<AniListObject.PagedData<T>>(CreateRequest(query), ct);
+                return GetResponseAsync<IPagedData<T>>(CreateRequest(query), ct);
             }
 
             return GetPageAsync;
         }
 
-        private static bool HasNextPage<T>(PagingInfo info, AniListObject.PagedData<T> data) => data.PageInfo.HasNextPage;
+        private Func<PagingInfo, CancellationToken, Task<OneOf<IPagedData<T>, IAniListError>>> CreateGetPageFunc<T, TResponse>(string queryString,
+            object variables, Func<TResponse, IPagedData<T>> responseSelector) where TResponse : class
+        {
+            Task<OneOf<IPagedData<T>, IAniListError>> GetPageAsync(PagingInfo info, CancellationToken ct)
+            {
+                var vars = JObject.FromObject(variables ?? new object(), JsonNetSerializer.Default.Serializer);
+                vars.Add("page", info.Page);
+                vars.Add("count", info.PageSize);
+
+                var query = new GraphQLQuery
+                {
+                    Query = queryString,
+                    Variables = vars,
+
+                };
+                return GetResponseAsync(CreateRequest(query), responseSelector, ct);
+            }
+
+            return GetPageAsync;
+        }
+
+        private static bool HasNextPage<T>(PagingInfo info, IPagedData<T> data) => data.PageInfo.HasNextPage;
 
         private interface IJsonSerializer : ISerializer, IDeserializer
         {
