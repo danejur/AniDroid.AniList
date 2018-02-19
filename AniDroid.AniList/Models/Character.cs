@@ -12,7 +12,7 @@ namespace AniDroid.AniList.Models
         public string Description { get; set; }
         public bool IsFavourite { get; set; }
         public string SiteUrl { get; set; }
-        public IPagedData<Media.Edge> Media { get; set; }
+        public Connection<Media.Edge, Media> Media { get; set; }
 
         #region Internal Classes
 
