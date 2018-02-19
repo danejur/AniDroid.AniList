@@ -25,25 +25,8 @@ namespace AniDroid.AniList.Models
             public string Native { get; set; }
             public List<string> Alternative { get; set; }
 
-            public string GetFormattedName(bool nativeLineBreak = false)
-            {
-                var retName = "(Name Unknown)";
-
-                if (!string.IsNullOrWhiteSpace(First))
-                {
-                    retName = First;
-                }
-                if (!string.IsNullOrWhiteSpace(Last))
-                {
-                    retName = string.IsNullOrWhiteSpace(First) ? Last : $"{First} {Last}";
-                }
-                if (!string.IsNullOrWhiteSpace(Native))
-                {
-                    retName += $"{(nativeLineBreak ? "\n" :" ")}({Native})";
-                }
-
-                return retName;
-            }
+            public string GetFormattedName(bool nativeLineBreak = false) =>
+                $"{$"{First} {Last}".Trim()}{(string.IsNullOrWhiteSpace(Native) ? "" : ($"{(nativeLineBreak ? "\n" : " ")}({Native})"))}";
         }
 
         public class AniListStatusDistribution
