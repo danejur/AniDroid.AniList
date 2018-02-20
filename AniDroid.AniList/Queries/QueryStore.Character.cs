@@ -41,7 +41,7 @@ query ($queryText: String, $page: Int, $count: Int) {
         /// <summary>
         /// Parameters: (id: int)
         /// <para></para>
-        /// Returns: Character
+        /// Returns: Character with PageInfo for Media
         /// </summary>
         public static string GetCharacterById => @"
 query ($id: Int) {
@@ -65,35 +65,10 @@ query ($id: Int) {
         total
         perPage
         currentPage
+        lastPage
       }
       edges {
-        node {
-          id
-          title {
-            userPreferred
-          }
-          coverImage {
-            large
-          }
-          format
-          type
-        }
-        relationType
-        isMainStudio
-        characterRole
-        voiceActors {
-          id
-          name {
-            first
-            last
-            native
-          }
-          language
-          image {
-            large
-          }
-          isFavourite
-        }
+        id
       }
     }
   }
