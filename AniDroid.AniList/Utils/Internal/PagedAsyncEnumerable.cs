@@ -20,9 +20,9 @@ namespace AniDroid.AniList.Utils.Internal
             Func<PagingInfo, IPagedData<T>, bool> nextPage)
         {
             if (pageSize <= 0) throw new ArgumentException($"Value cannot be less than or equal to zero (0)", nameof(pageSize));
-            this.PageSize = pageSize;
-            this._getPage = getPage ?? throw new ArgumentNullException(nameof(getPage));
-            this._nextPage = nextPage ?? throw new ArgumentNullException(nameof(nextPage));
+            PageSize = pageSize;
+            _getPage = getPage ?? throw new ArgumentNullException(nameof(getPage));
+            _nextPage = nextPage ?? throw new ArgumentNullException(nameof(nextPage));
         }
 
         public IAsyncEnumerator<IPagedData<T>> GetEnumerator()
