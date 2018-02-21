@@ -75,7 +75,11 @@ namespace AniDroid.AniList.Interfaces
 
         #region Studio
 
+        Task<OneOf<Studio, IAniListError>> GetStudioById(int studioId, CancellationToken cToken);
+
         IAsyncEnumerable<IPagedData<Studio>> SearchStudios(string queryText, int perPage);
+
+        IAsyncEnumerable<IPagedData<Media.Edge>> GetStudioMedia(int studioId, int perPage);
 
         #endregion
 

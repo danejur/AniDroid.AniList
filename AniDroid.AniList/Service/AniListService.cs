@@ -246,12 +246,30 @@ namespace AniDroid.AniList.Service
 
         #region Studio
 
+        public Task<OneOf<Studio, IAniListError>> GetStudioById(int studioId, CancellationToken cToken = default)
+        {
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.GetStudioById,
+                Variables = new { studioId },
+            };
+            return GetResponseAsync<Studio>(query, cToken);
+        }
+
         public IAsyncEnumerable<IPagedData<Studio>> SearchStudios(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
             return new PagedAsyncEnumerable<Studio>(perPage,
                 CreateGetPageFunc<Studio>(QueryStore.SearchStudios, arguments),
+                HasNextPage);
+        }
+
+        public IAsyncEnumerable<IPagedData<Media.Edge>> GetStudioMedia(int studioId, int perPage = 20)
+        {
+            var arguments = new { studioId };
+            return new PagedAsyncEnumerable<Media.Edge>(perPage,
+                CreateGetPageFunc<Media.Edge, Studio>(QueryStore.GetStudioMedia, arguments, studio => studio.Media),
                 HasNextPage);
         }
 

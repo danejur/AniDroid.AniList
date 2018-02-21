@@ -29,5 +29,66 @@ query ($queryText: String, $page: Int, $count: Int) {
   }
 }
 ";
+
+        /// <summary>
+        /// Parameters: (studioId: int)
+        /// <para></para>
+        /// Returns: Studio
+        /// </summary>
+        public static string GetStudioById => @"
+query ($studioId: Int) {
+  Data: Studio(id: $studioId) {
+    id
+    name
+    siteUrl
+    isFavourite
+    media {
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
+      }
+    }
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (studioId: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: Studio
+        /// </summary>
+        public static string GetStudioMedia => @"
+query ($studioId: Int, $page: Int, $perPage: Int) {
+  Data: Studio(id: $studioId) {
+    media(page: $page, perPage: $perPage) {
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
+      }
+      edges {
+        isMainStudio
+        node {
+          id
+          title {
+            userPreferred
+          }
+          coverImage {
+            large
+          }
+          type
+          format
+          isFavourite
+        }
+      }
+    }
+  }
+}
+";
     }
 }
