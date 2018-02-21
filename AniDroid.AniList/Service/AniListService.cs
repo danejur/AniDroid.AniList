@@ -295,13 +295,13 @@ namespace AniDroid.AniList.Service
         }
 
         // TODO: Document
-        private async Task<OneOf<T, IAniListError>> GetResponseAsync<TResponse, T>(IRestRequest req, Func<TResponse, T> getCollection, CancellationToken cToken) where T : class where TResponse : class
+        private async Task<OneOf<T, IAniListError>> GetResponseAsync<TResponse, T>(IRestRequest req, Func<TResponse, T> getObjectFunc, CancellationToken cToken) where T : class where TResponse : class
         {
             var servResp = await CreateClient().ExecuteTaskAsync<GraphQLResponse<TResponse>>(req, cToken).ConfigureAwait(false);
 
             if (servResp.IsSuccessful)
             {
-                return getCollection(servResp.Data.Value);
+                return getObjectFunc(servResp.Data.Value);
             }
 
             return new AniListError(servResp.ErrorMessage, servResp.ErrorException, servResp.Data?.Errors);
@@ -323,7 +323,7 @@ namespace AniDroid.AniList.Service
 
         // TODO: Document
         private Func<PagingInfo, CancellationToken, Task<OneOf<IPagedData<T>, IAniListError>>> CreateGetPageFunc<T, TResponse>(string queryString,
-            object variables, Func<TResponse, IPagedData<T>> responseSelector) where TResponse : class
+            object variables, Func<TResponse, IPagedData<T>> getPagedDataFunc) where TResponse : class
         {
             Task<OneOf<IPagedData<T>, IAniListError>> GetPageAsync(PagingInfo info, CancellationToken ct)
             {
@@ -337,7 +337,7 @@ namespace AniDroid.AniList.Service
                     Variables = vars,
 
                 };
-                return GetResponseAsync(CreateRequest(query), responseSelector, ct);
+                return GetResponseAsync(CreateRequest(query), getPagedDataFunc, ct);
             }
 
             return GetPageAsync;
