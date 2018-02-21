@@ -51,23 +51,23 @@ namespace AniDroid.AniList.Interfaces
 
         #region Character
 
-        Task<OneOf<Character, IAniListError>> GetCharacterById(int id, CancellationToken cToken);
+        Task<OneOf<Character, IAniListError>> GetCharacterById(int characterId, CancellationToken cToken);
 
         IAsyncEnumerable<IPagedData<Character>> SearchCharacters(string queryText, int perPage);
 
-        IAsyncEnumerable<IPagedData<Media.Edge>> GetCharacterMedia(int characterId, int perPage);
+        IAsyncEnumerable<IPagedData<Media.Edge>> GetCharacterMedia(int characterId, Media.MediaType mediaType, int perPage);
 
         #endregion
 
         #region Staff
 
-        Task<OneOf<Staff, IAniListError>> GetStaffById(int id, CancellationToken cToken);
+        Task<OneOf<Staff, IAniListError>> GetStaffById(int staffId, CancellationToken cToken);
 
         IAsyncEnumerable<IPagedData<Staff>> SearchStaff(string queryText, int perPage);
 
         IAsyncEnumerable<IPagedData<Character.Edge>> GetStaffCharacters(int staffId, int perPage);
 
-        IAsyncEnumerable<IPagedData<Media.Edge>> GetStaffMedia(int staffId, int perPage);
+        IAsyncEnumerable<IPagedData<Media.Edge>> GetStaffMedia(int staffId, Media.MediaType mediaType, int perPage);
 
         #endregion
 

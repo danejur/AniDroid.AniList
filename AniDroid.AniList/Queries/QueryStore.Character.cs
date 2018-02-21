@@ -39,13 +39,13 @@ query ($queryText: String, $page: Int, $count: Int) {
 ";
 
         /// <summary>
-        /// Parameters: (id: int)
+        /// Parameters: (characterId: int)
         /// <para></para>
-        /// Returns: Character with PageInfo for Media
+        /// Returns: Character with PageInfo for Anime and PageInfo for Manga
         /// </summary>
         public static string GetCharacterById => @"
-query ($id: Int) {
-  Data: Character(id: $id) {
+query ($characterId: Int) {
+  Data: Character(id: $characterId) {
     id
     name {
       first
@@ -60,7 +60,18 @@ query ($id: Int) {
     description(asHtml: true)
     isFavourite
     siteUrl
-    media(perPage: 25) {
+    Anime: media(perPage: 1, type: ANIME) {
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+      }
+      edges {
+        id
+      }
+    }
+    Manga: media(perPage: 1, type: MANGA) {
       pageInfo {
         total
         perPage
@@ -76,14 +87,14 @@ query ($id: Int) {
 ";
 
         /// <summary>
-        /// Parameters: (characterId: int, page: int, perPage: int)
+        /// Parameters: (characterId: int, mediaType: MediaType, page: int, perPage: int)
         /// <para></para>
         /// Returns: Character with PagedData of Media with Staff
         /// </summary>
         public static string GetCharacterMedia => @"
-query ($characterId: Int, $page: Int, $perPage: Int) {
+query ($characterId: Int!, $mediaType: MediaType!, $page: Int, $perPage: Int) {
   Data: Character(id: $characterId) {
-    media(page: $page, perPage: $perPage) {
+    media(page: $page, perPage: $perPage, type: $mediaType) {
       pageInfo {
         total
         perPage

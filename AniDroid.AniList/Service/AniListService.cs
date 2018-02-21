@@ -163,12 +163,12 @@ namespace AniDroid.AniList.Service
 
         #region Character
 
-        public Task<OneOf<Character, IAniListError>> GetCharacterById(int id, CancellationToken cToken = default)
+        public Task<OneOf<Character, IAniListError>> GetCharacterById(int characterId, CancellationToken cToken = default)
         {
             var query = new GraphQLQuery
             {
                 Query = QueryStore.GetCharacterById,
-                Variables = new { id },
+                Variables = new { characterId },
             };
             return GetResponseAsync<Character>(query, cToken);
         }
@@ -182,9 +182,9 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<IPagedData<Media.Edge>> GetCharacterMedia(int characterId, int perPage = 20)
+        public IAsyncEnumerable<IPagedData<Media.Edge>> GetCharacterMedia(int characterId, Media.MediaType mediaType, int perPage = 20)
         {
-            var arguments = new { characterId };
+            var arguments = new { characterId, mediaType = mediaType?.Value };
             return new PagedAsyncEnumerable<Media.Edge>(perPage,
                 CreateGetPageFunc<Media.Edge, Character>(QueryStore.GetCharacterMedia, arguments, character => character.Media),
                 HasNextPage);
@@ -194,12 +194,12 @@ namespace AniDroid.AniList.Service
 
         #region Staff
 
-        public Task<OneOf<Staff, IAniListError>> GetStaffById(int id, CancellationToken cToken = default)
+        public Task<OneOf<Staff, IAniListError>> GetStaffById(int staffId, CancellationToken cToken = default)
         {
             var query = new GraphQLQuery
             {
                 Query = QueryStore.GetStaffById,
-                Variables = new { id },
+                Variables = new { staffId },
             };
             return GetResponseAsync<Staff>(query, cToken);
         }
@@ -221,9 +221,9 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<IPagedData<Media.Edge>> GetStaffMedia(int staffId, int perPage = 20)
+        public IAsyncEnumerable<IPagedData<Media.Edge>> GetStaffMedia(int staffId, Media.MediaType mediaType, int perPage = 20)
         {
-            var arguments = new { staffId };
+            var arguments = new { staffId, mediaType = mediaType.Value };
             return new PagedAsyncEnumerable<Media.Edge>(perPage,
                 CreateGetPageFunc<Media.Edge, Staff>(QueryStore.GetStaffMedia, arguments, staff => staff.StaffMedia),
                 HasNextPage);

@@ -39,13 +39,13 @@ query ($queryText: String, $page: Int, $count: Int) {
 ";
 
         /// <summary>
-        /// Parameters: (id: int)
+        /// Parameters: (staffId: int)
         /// <para></para>
-        /// Returns: Staff with PageInfo for Media and Characters
+        /// Returns: Staff with PageInfo for Anime, Manga, and Characters
         /// </summary>
         public static string GetStaffById => @"
-query ($id: Int) {
-  Data: Staff(id: $id) {
+query ($staffId: Int) {
+  Data: Staff(id: $staffId) {
     id
     name {
       first
@@ -59,7 +59,16 @@ query ($id: Int) {
     isFavourite
     siteUrl
     language
-    staffMedia {
+    Anime: staffMedia(type: ANIME) {
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
+      }
+    }
+    Manga: staffMedia(type: MANGA) {
       pageInfo {
         total
         perPage
@@ -82,14 +91,14 @@ query ($id: Int) {
 ";
 
         /// <summary>
-        /// Parameters: (staffId: int, page: int, perPage: int)
+        /// Parameters: (staffId: int, mediaType: MediaType, page: int, perPage: int)
         /// <para></para>
         /// Returns: Staff with PagedData of Media
         /// </summary>
         public static string GetStaffMedia => @"
-query ($staffId: Int, $page: Int, $perPage: Int) {
+query ($staffId: Int!, $mediaType: MediaType!, $page: Int, $perPage: Int) {
   Data: Staff(id: $staffId) {
-    staffMedia(page: $page, perPage: $perPage) {
+    staffMedia(page: $page, type: $mediaType, perPage: $perPage) {
       pageInfo {
         total
         perPage

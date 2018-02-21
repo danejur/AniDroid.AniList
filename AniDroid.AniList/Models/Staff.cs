@@ -15,6 +15,8 @@ namespace AniDroid.AniList.Models
         public string SiteUrl { get; set; }
         public Connection<Media.Edge, Media> StaffMedia { get; set; }
         public Connection<Character.Edge, Character> Characters { get; set; }
+        public IPagedData<Media.Edge> Anime { get; set; }
+        public IPagedData<Media.Edge> Manga { get; set; }
 
         #region Internal Classes
 

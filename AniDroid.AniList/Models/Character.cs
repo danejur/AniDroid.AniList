@@ -13,6 +13,8 @@ namespace AniDroid.AniList.Models
         public bool IsFavourite { get; set; }
         public string SiteUrl { get; set; }
         public Connection<Media.Edge, Media> Media { get; set; }
+        public IPagedData<Media.Edge> Anime { get; set; }
+        public IPagedData<Media.Edge> Manga { get; set; }
 
         #region Internal Classes
 
