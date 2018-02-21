@@ -170,5 +170,42 @@ query ($queryText: String, $page: Int, $count: Int) {
   }
 }
 ";
+
+        /// <summary>
+        /// Parameters: (animeId: int, mangaId: int, characterId: int, staffId: int, studioId: int)
+        /// <para></para>
+        /// Returns: UserFavourites
+        /// </summary>
+        public static string ToggleUserFavorite => @"
+mutation ($animeId: Int, $mangaId: Int, $characterId: Int, $staffId: Int, $studioId: Int) {
+  Data: ToggleFavourite(animeId: $animeId, mangaId: $mangaId, characterId: $characterId, staffId: $staffId, studioId: $studioId) {
+    anime {
+      nodes {
+        id
+      }
+    }
+    manga {
+      nodes {
+        id
+      }
+    }
+    characters {
+      nodes {
+        id
+      }
+    }
+    staff {
+      nodes {
+        id
+      }
+    }
+    studios {
+      nodes {
+        id
+      }
+    }
+  }
+}
+";
     }
 }

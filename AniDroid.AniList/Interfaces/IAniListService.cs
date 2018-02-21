@@ -31,6 +31,8 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<IPagedData<User>> SearchUsers(string queryText, int perPage);
 
+        Task<OneOf<User.UserFavourites, IAniListError>> ToggleFavorite(int id, User.FavoriteType favoriteType, CancellationToken cToken);
+
         #endregion
 
         #region Activity
