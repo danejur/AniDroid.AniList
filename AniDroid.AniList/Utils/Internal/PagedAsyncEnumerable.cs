@@ -37,32 +37,32 @@ namespace AniDroid.AniList.Utils.Internal
 
             public Enumerator(PagedAsyncEnumerable<T> source)
             {
-                this._source = source;
-                this._info = new PagingInfo(source.PageSize);
+                _source = source;
+                _info = new PagingInfo(source.PageSize);
             }
 
             public async Task<bool> MoveNextAsync(CancellationToken ct = default)
             {
-                if (this._info.Remaining == false)
+                if (_info.Remaining == false)
                     return false;
 
-                var pageResult = await this._source._getPage(this._info, ct).ConfigureAwait(false);
+                var pageResult = await _source._getPage(_info, ct).ConfigureAwait(false);
 
-                pageResult.Switch(data => this.Current = data)
+                pageResult.Switch(data => Current = data)
                     .Switch(error => { });
 
-                if (this.Current == null)
+                if (Current == null)
                     return false;
 
-                this._info.Page++;
-                this._info.Remaining = this._source._nextPage(this._info, this.Current);
+                _info.Page++;
+                _info.Remaining = _source._nextPage(_info, Current);
 
                 return true;
             }
 
             public void Dispose()
             {
-                this.Current = null;
+                Current = null;
             }
         }
     }
