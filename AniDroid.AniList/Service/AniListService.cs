@@ -294,25 +294,7 @@ namespace AniDroid.AniList.Service
             return req;
         }
 
-        /// <summary>
-        /// Asynchronously processes the provided IRestRequest, returning a discriminated union of the deserialized object (according to the type parameter), and an IAniListError.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="req"></param>
-        /// <param name="cToken"></param>
-        /// <returns></returns>
-        private async Task<OneOf<T, IAniListError>> GetResponseAsync<T>(IRestRequest req, CancellationToken cToken) where T : class
-        {
-            var servResp = await CreateClient().ExecuteTaskAsync<GraphQLResponse<T>>(req, cToken).ConfigureAwait(false);
-
-            if (servResp.IsSuccessful)
-            {
-                return servResp.Data.Value;
-            }
-
-            return new AniListError(servResp.ErrorMessage, servResp.ErrorException, servResp.Data?.Errors);
-        }
-
+        // TODO: Document
         private async Task<OneOf<T, IAniListError>> GetResponseAsync<TResponse, T>(IRestRequest req, Func<TResponse, T> getCollection, CancellationToken cToken) where T : class where TResponse : class
         {
             var servResp = await CreateClient().ExecuteTaskAsync<GraphQLResponse<TResponse>>(req, cToken).ConfigureAwait(false);
@@ -325,33 +307,21 @@ namespace AniDroid.AniList.Service
             return new AniListError(servResp.ErrorMessage, servResp.ErrorException, servResp.Data?.Errors);
         }
 
+        // TODO: Document
         private Task<OneOf<T, IAniListError>> GetResponseAsync<T>(GraphQLQuery query, CancellationToken cToken)
             where T : class
         {
-            return GetResponseAsync<T>(CreateRequest(query), cToken);
+            return GetResponseAsync<T, T>(CreateRequest(query), obj => obj, cToken);
         }
 
+        // TODO: Document
         private Func<PagingInfo, CancellationToken, Task<OneOf<IPagedData<T>, IAniListError>>> CreateGetPageFunc<T>(string queryString,
             object variables)
         {
-            Task<OneOf<IPagedData<T>, IAniListError>> GetPageAsync(PagingInfo info, CancellationToken ct)
-            {
-                var vars = JObject.FromObject(variables ?? new object(), AniListJsonSerializer.Default.Serializer);
-                vars.Add("page", info.Page);
-                vars.Add("count", info.PageSize);
-
-                var query = new GraphQLQuery
-                {
-                    Query = queryString,
-                    Variables = vars,
-
-                };
-                return GetResponseAsync<IPagedData<T>>(CreateRequest(query), ct);
-            }
-
-            return GetPageAsync;
+            return CreateGetPageFunc<T, IPagedData<T>>(queryString, variables, obj => obj);
         }
 
+        // TODO: Document
         private Func<PagingInfo, CancellationToken, Task<OneOf<IPagedData<T>, IAniListError>>> CreateGetPageFunc<T, TResponse>(string queryString,
             object variables, Func<TResponse, IPagedData<T>> responseSelector) where TResponse : class
         {
