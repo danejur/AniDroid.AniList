@@ -114,6 +114,7 @@ query ($characterId: Int!, $mediaType: MediaType!, $page: Int, $perPage: Int) {
           image {
             large
           }
+          language
           isFavourite
         }
         node {
