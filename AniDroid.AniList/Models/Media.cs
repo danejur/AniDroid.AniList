@@ -185,12 +185,12 @@ namespace AniDroid.AniList.Models
         {
             private MediaFormat(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static MediaFormat Tv => new MediaFormat("TV", "Tv", 0);
-            public static MediaFormat TvShort => new MediaFormat("TV_SHORT", "Tv Short", 1);
+            public static MediaFormat Tv => new MediaFormat("TV", "TV", 0);
+            public static MediaFormat TvShort => new MediaFormat("TV_SHORT", "TV Short", 1);
             public static MediaFormat Movie => new MediaFormat("MOVIE", "Movie", 2);
             public static MediaFormat Special => new MediaFormat("SPECIAL", "Special", 3);
-            public static MediaFormat Ova => new MediaFormat("OVA", "Ova", 4);
-            public static MediaFormat Ona => new MediaFormat("ONA", "Ona", 5);
+            public static MediaFormat Ova => new MediaFormat("OVA", "OVA", 4);
+            public static MediaFormat Ona => new MediaFormat("ONA", "ONA", 5);
             public static MediaFormat Music => new MediaFormat("MUSIC", "Music", 6);
             public static MediaFormat Manga => new MediaFormat("MANGA", "Manga", 7);
             public static MediaFormat Novel => new MediaFormat("NOVEL", "Novel", 8);
