@@ -7,13 +7,13 @@ namespace AniDroid.AniList.Queries
     internal static partial class QueryStore
     {
         /// <summary>
-        /// Parameters: (id: int, type: MediaType)
+        /// Parameters: (mediaId: int)
         /// <para></para>
         /// Returns: Media
         /// </summary>
-        public static string GetMediaByIdAndType => @"
-query ($id: Int!, $type: MediaType) {
-  Data: Media(id: $id, type: $type) {
+        public static string GetMediaById => @"
+query ($mediaId: Int!) {
+  Data: Media(id: $mediaId) {
     id
     title {
       romaji
@@ -42,18 +42,6 @@ query ($id: Int!, $type: MediaType) {
         hasNextPage
         currentPage
         lastPage
-      }
-      edges {
-        role
-        node {
-          id
-          name {
-            first
-            last
-            native
-            alternative
-          }
-        }
       }
     }
     bannerImage

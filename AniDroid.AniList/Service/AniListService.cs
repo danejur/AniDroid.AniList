@@ -45,12 +45,12 @@ namespace AniDroid.AniList.Service
 
         #region Media
 
-        public Task<OneOf<Media, IAniListError>> GetMediaByIdAndType(int id, Media.MediaType type, CancellationToken cToken = default)
+        public Task<OneOf<Media, IAniListError>> GetMediaById(int mediaId, CancellationToken cToken = default)
         {
             var query = new GraphQLQuery
             {
-                Query = QueryStore.GetMediaByIdAndType,
-                Variables = new { id, type = type.Value },
+                Query = QueryStore.GetMediaById,
+                Variables = new { mediaId },
             };
             return GetResponseAsync<Media>(query, cToken);
         }

@@ -17,7 +17,7 @@ namespace AniDroid.AniList.Interfaces
 
         #region Media
 
-        Task<OneOf<Media, IAniListError>> GetMediaByIdAndType(int id, Media.MediaType type, CancellationToken cToken);
+        Task<OneOf<Media, IAniListError>> GetMediaById(int mediaId, CancellationToken cToken);
 
         IAsyncEnumerable<IPagedData<Media>> SearchMedia(string queryText, Media.MediaType type, int perPage);
 
