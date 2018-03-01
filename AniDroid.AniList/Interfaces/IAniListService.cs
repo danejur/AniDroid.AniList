@@ -21,6 +21,8 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<IPagedData<Media>> SearchMedia(string queryText, Media.MediaType type, int perPage);
 
+        IAsyncEnumerable<IPagedData<Character.Edge>> GetMediaCharacters(int mediaId, int perPage);
+
         #endregion
 
         #region User

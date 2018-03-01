@@ -7,6 +7,40 @@ namespace AniDroid.AniList.Queries
     internal static partial class QueryStore
     {
         /// <summary>
+        /// Parameters: (queryText: string, page: int, count: int, type?: MediaType)
+        /// <para></para>
+        /// Returns: PagedData of Media
+        /// </summary>
+        public static string SearchMedia => @"
+query ($queryText: String, $page:Int, $count:Int, $type:MediaType) {
+  Data: Page(page:$page, perPage:$count) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    Data: media(search: $queryText, type: $type) {
+      id
+      type
+      format
+      popularity
+      averageScore
+      isFavourite
+      isAdult
+      title {
+        userPreferred
+      }
+      coverImage {
+        large
+      }
+    }
+  }
+}
+";
+
+        /// <summary>
         /// Parameters: (mediaId: int)
         /// <para></para>
         /// Returns: Media
@@ -56,6 +90,7 @@ query ($mediaId: Int!) {
     averageScore
     meanScore
     genres
+    siteUrl
     synonyms
     nextAiringEpisode {
       airingAt
@@ -67,33 +102,52 @@ query ($mediaId: Int!) {
 ";
 
         /// <summary>
-        /// Parameters: (queryText: string, page: int, count: int, type?: MediaType)
+        /// Parameters: (mediaId: int, page: int, perPage: int)
         /// <para></para>
-        /// Returns: PagedData of Media
+        /// Returns: Media with PagedData of Characters with Staff
         /// </summary>
-        public static string SearchMedia => @"
-query ($queryText: String, $page:Int, $count:Int, $type:MediaType) {
-  Data: Page(page:$page, perPage:$count) {
-    pageInfo {
-      total
-      perPage
-      currentPage
-      lastPage
-      hasNextPage
-    }
-    Data: media(search: $queryText, type: $type) {
-      id
-      type
-      format
-      popularity
-      averageScore
-      isFavourite
-      isAdult
-      title {
-        userPreferred
+        public static string GetMediaCharacters => @"
+query ($mediaId: Int!, $page: Int, $perPage: Int) {
+  Data: Media(id: $mediaId) {
+    id
+    type
+    characters(page: $page, perPage: $perPage) {
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
       }
-      coverImage {
-        large
+      edges {
+        role
+        voiceActors {
+          id
+          name {
+            first
+            last
+            native
+          }
+          image {
+            large
+          }
+          language
+          isFavourite
+        }
+        node {
+          id
+          name {
+            first
+            last
+            native
+            alternative
+          }
+          image {
+            large
+          }
+          siteUrl
+          isFavourite
+        }
       }
     }
   }
