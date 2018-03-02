@@ -34,7 +34,7 @@ namespace AniDroid.AniList.Models
         public int MeanScore { get; set; }
         public int Popularity { get; set; }
         public List<MediaTag> Tags { get; set; }
-        public MediaRelation Relations { get; set; }
+        public Connection<Edge, Media> Relations { get; set; }
         public Connection<Character.Edge, Character> Characters { get; set; }
         public Connection<Staff.Edge, Staff> Staff { get; set; }
         public Connection<Studio.Edge, Studio> Studios { get; set; }

@@ -67,7 +67,6 @@ query ($mediaId: Int!) {
     }
     coverImage {
       large
-      medium
     }
     characters {
       pageInfo {
@@ -87,14 +86,24 @@ query ($mediaId: Int!) {
         lastPage
       }
     }
-    studios {
-      pageInfo {
-        total
-        perPage
-        hasNextPage
-        currentPage
-        lastPage
+    relations {
+      edges {
+        relationType
+        node {
+          id
+          isAdult
+          title {
+            userPreferred
+          }
+          format
+          type
+          coverImage {
+            large
+          }
+        }
       }
+    }
+    studios {
       edges {
         node {
           id
