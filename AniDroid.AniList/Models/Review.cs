@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace AniDroid.AniList.Models
 {
@@ -8,12 +9,12 @@ namespace AniDroid.AniList.Models
     {
         public int UserId { get; set; }
         public int MediaId { get; set; }
-        public string MediaType { get; set; }
+        public Media.MediaType MediaType { get; set; }
         public string Summary { get; set; }
         public string Body { get; set; }
         public int Rating { get; set; }
         public int RatingAmount { get; set; }
-        public string UserRating { get; set; }
+        public ReviewRating UserRating { get; set; }
         public int Score { get; set; }
         public bool Private { get; set; }
         public string SiteUrl { get; set; }
@@ -30,6 +31,7 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
+        [JsonConverter(typeof(AniListEnumConverter<ReviewRating>))]
         public sealed class ReviewRating : AniListEnum
         {
             private ReviewRating(string val, string displayVal, int index) : base(val, displayVal, index) { }

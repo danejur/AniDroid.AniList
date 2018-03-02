@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using AniDroid.AniList.Interfaces;
+using Newtonsoft.Json;
 
 namespace AniDroid.AniList.Models
 {
     public class Staff : AniListObject
     {
         public AniListName Name { get; set; }
-        public string Language { get; set; }
+        public StaffLanguage Language { get; set; }
         public AniListImage Image { get; set; }
         public string Description { get; set; }
         public bool IsFavourite { get; set; }
@@ -30,9 +31,10 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
+        [JsonConverter(typeof(AniListEnumConverter<StaffLanguage>))]
         public sealed class StaffLanguage : AniListEnum
         {
-            protected StaffLanguage(string val, string displayVal, int index) : base(val, displayVal, index) { }
+            private StaffLanguage(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
             public static StaffLanguage Japanese => new StaffLanguage("JAPANESE", "Japanese", 0);
             public static StaffLanguage English => new StaffLanguage("ENGLISH", "English", 1);

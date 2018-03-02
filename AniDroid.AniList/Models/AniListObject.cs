@@ -68,25 +68,26 @@ namespace AniDroid.AniList.Models
             {
                 return $"{ageSeconds} second{(ageSeconds != 1 ? "s" : "")} ago";
             }
-            else if (ageSeconds < 3600)
+
+            if (ageSeconds < 3600)
             {
                 var ageMinutes = ageSeconds / 60;
                 return $"{ageMinutes} minute{(ageMinutes != 1 ? "s" : "")} ago";
             }
-            else if (ageSeconds < 86400)
+
+            if (ageSeconds < 86400)
             {
                 var ageHours = ageSeconds / 3600;
                 return $"{ageHours} hour{(ageHours != 1 ? "s" : "")} ago";
             }
-            else
-            {
-                var ageDays = ageSeconds / 86400;
-                return $"{ageDays} day{(ageDays != 1 ? "s" : "")} ago";
-            }
+
+            var ageDays = ageSeconds / 86400;
+            return $"{ageDays} day{(ageDays != 1 ? "s" : "")} ago";
         }
 
         #region Enum Classes
 
+        [JsonConverter(typeof(AniListEnumConverter<AniListTitleLanguage>))]
         public sealed class AniListTitleLanguage : AniListEnum
         {
             private AniListTitleLanguage(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -99,6 +100,7 @@ namespace AniDroid.AniList.Models
             public static AniListTitleLanguage NativeStylised => new AniListTitleLanguage("NATIVE_STYLISED", "Native Stylised", 5);
         }
 
+        [JsonConverter(typeof(AniListEnumConverter<LikeableType>))]
         public sealed class LikeableType : AniListEnum
         {
             private LikeableType(string val, string displayVal, int index) : base(val, displayVal, index) { }

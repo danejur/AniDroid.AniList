@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace AniDroid.AniList.Models
 {
     public class AniListNotification : AniListObject
     {
-        public string Type { get; set; }
+        public NotificationType Type { get; set; }
         public string Context { get; set; }
         public List<string> Contexts { get; set; }
         public int CreatedAt { get; set; }
@@ -21,54 +22,53 @@ namespace AniDroid.AniList.Models
 
         public string GetNotificationHtml(string accentColor)
         {
-            var parsedType = AniListEnum.GetEnum<NotificationType>(Type);
             var notificationText = "Error occurred while parsing notification.";
 
-            if (parsedType.Equals(NotificationType.ActivityMessage))
+            if (Type.Equals(NotificationType.ActivityMessage))
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> sent you a message.";
             }
-            else if (parsedType.Equals(NotificationType.ActivityReply))
+            else if (Type.Equals(NotificationType.ActivityReply))
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> replied to your activity.";
             }
-            else if (parsedType.Equals(NotificationType.Following))
+            else if (Type.Equals(NotificationType.Following))
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> started following you.";
             }
-            else if (parsedType.Equals(NotificationType.ActivityMention))
+            else if (Type.Equals(NotificationType.ActivityMention))
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> mentioned you in their activity.";
             }
-            else if (parsedType.Equals(NotificationType.ThreadCommentMention))
+            else if (Type.Equals(NotificationType.ThreadCommentMention))
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> mentioned you, in the forum thread <b><font color='{accentColor}'>{Thread?.Title}</font></b>.";
             }
-            else if (parsedType.Equals(NotificationType.ThreadSubscribed))
+            else if (Type.Equals(NotificationType.ThreadSubscribed))
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> commented in your subscribed forum thread <b><font color='{accentColor}'>{Thread?.Title}</font></b>.";
             }
-            else if (parsedType.Equals(NotificationType.ThreadCommentReply))
+            else if (Type.Equals(NotificationType.ThreadCommentReply))
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> replied to your comment, in the forum thread <b><font color='{accentColor}'>{Thread?.Title}</font></b>.";
             }
-            else if (parsedType.Equals(NotificationType.Airing))
+            else if (Type.Equals(NotificationType.Airing))
             {
                 notificationText = $"Episode <b><font color='{accentColor}'>{Episode}</font></b> of <b><font color='{accentColor}'>{Media?.Title?.UserPreferred}</font></b> aired.";
             }
-            else if (parsedType.Equals(NotificationType.ActivityLike))
+            else if (Type.Equals(NotificationType.ActivityLike))
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> liked your activity.";
             }
-            else if (parsedType.Equals(NotificationType.ActivityReplyLike))
+            else if (Type.Equals(NotificationType.ActivityReplyLike))
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> liked your activity reply.";
             }
-            else if (parsedType.Equals(NotificationType.ThreadLike))
+            else if (Type.Equals(NotificationType.ThreadLike))
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> liked your forum thread, <b><font color='{accentColor}'>{Thread?.Title}</font></b>.";
             }
-            else if (parsedType.Equals(NotificationType.ThreadCommentLike))
+            else if (Type.Equals(NotificationType.ThreadCommentLike))
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> liked your comment, in the forum thread <b><font color='{accentColor}'>{Thread?.Title}</font></b>.";
             }
@@ -78,10 +78,9 @@ namespace AniDroid.AniList.Models
 
         public string GetImageUri()
         {
-            var parsedType = AniListEnum.GetEnum<NotificationType>(Type);
-            string imageUrl = User?.Avatar?.Large;
+            var imageUrl = User?.Avatar?.Large;
 
-            if (parsedType.Equals(NotificationType.Airing))
+            if (Type.Equals(NotificationType.Airing))
             {
                 imageUrl = Media?.CoverImage?.Large;
             }
@@ -91,30 +90,29 @@ namespace AniDroid.AniList.Models
 
         public NotificationActionType GetNotificationActionType()
         {
-            var parsedType = AniListEnum.GetEnum<NotificationType>(Type);
             NotificationActionType returnType = null;
 
-            if (parsedType.Equals(NotificationType.ActivityMessage) ||
-                parsedType.Equals(NotificationType.ActivityReply) ||
-                parsedType.Equals(NotificationType.ActivityMention) ||
-                parsedType.Equals(NotificationType.ActivityLike) ||
-                parsedType.Equals(NotificationType.ActivityReplyLike))
+            if (Type.Equals(NotificationType.ActivityMessage) ||
+                Type.Equals(NotificationType.ActivityReply) ||
+                Type.Equals(NotificationType.ActivityMention) ||
+                Type.Equals(NotificationType.ActivityLike) ||
+                Type.Equals(NotificationType.ActivityReplyLike))
             {
                 returnType = NotificationActionType.Activity;
             }
-            else if (parsedType.Equals(NotificationType.Following))
+            else if (Type.Equals(NotificationType.Following))
             {
                 returnType = NotificationActionType.User;
             }
-            else if (parsedType.Equals(NotificationType.ThreadCommentMention) ||
-                parsedType.Equals(NotificationType.ThreadSubscribed) ||
-                parsedType.Equals(NotificationType.ThreadCommentReply) ||
-                parsedType.Equals(NotificationType.ThreadLike) ||
-                parsedType.Equals(NotificationType.ThreadCommentLike))
+            else if (Type.Equals(NotificationType.ThreadCommentMention) ||
+                     Type.Equals(NotificationType.ThreadSubscribed) ||
+                     Type.Equals(NotificationType.ThreadCommentReply) ||
+                     Type.Equals(NotificationType.ThreadLike) ||
+                     Type.Equals(NotificationType.ThreadCommentLike))
             {
                 returnType = NotificationActionType.Thread;
             }
-            else if (parsedType.Equals(NotificationType.Airing))
+            else if (Type.Equals(NotificationType.Airing))
             {
                 returnType = NotificationActionType.Media;
             }
@@ -126,6 +124,7 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
+        [JsonConverter(typeof(AniListEnumConverter<NotificationType>))]
         public sealed class NotificationType : AniListEnum
         {
             private NotificationType(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -144,6 +143,7 @@ namespace AniDroid.AniList.Models
             public static NotificationType ThreadCommentLike => new NotificationType("THREAD_COMMENT_LIKE", "Thread Comment Like", 11);
         }
 
+        [JsonConverter(typeof(AniListEnumConverter<NotificationActionType>))]
         public sealed class NotificationActionType : AniListEnum
         {
             private NotificationActionType(string val, string displayVal, int index) : base(val, displayVal, index) { }

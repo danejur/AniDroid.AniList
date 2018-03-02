@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace AniDroid.AniList.Models
 {
     public class AniListActivity : AniListObject
     {
-        public string Type { get; set; }
+        public ActivityType Type { get; set; }
         public string SiteUrl { get; set; }
         public int CreatedAt { get; set; }
         public int ReplyCount { get; set; }
@@ -46,9 +47,10 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
+        [JsonConverter(typeof(AniListEnumConverter<ActivityType>))]
         public sealed class ActivityType : AniListEnum
         {
-            protected ActivityType(string val, string displayVal, int index) : base(val, displayVal, index) { }
+            private ActivityType(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
             public static ActivityType Text => new ActivityType("TEXT", "Text", 0);
             public static ActivityType AnimeList => new ActivityType("ANIME_LIST", "Anime List", 0);

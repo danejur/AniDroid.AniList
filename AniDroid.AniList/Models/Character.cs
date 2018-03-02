@@ -34,7 +34,7 @@ namespace AniDroid.AniList.Models
         [JsonConverter(typeof(AniListEnumConverter<CharacterRole>))]
         public sealed class CharacterRole : AniListEnum
         {
-            protected CharacterRole(string val, string displayVal, int index) : base(val, displayVal, index) { }
+            private CharacterRole(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
             public static CharacterRole Main => new CharacterRole("MAIN", "Main", 0);
             public static CharacterRole Supporting => new CharacterRole("SUPPORTING", "Supporting", 1);

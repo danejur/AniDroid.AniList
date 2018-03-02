@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace AniDroid.AniList.Models
 {
@@ -9,13 +10,13 @@ namespace AniDroid.AniList.Models
     {
         public int IdMal { get; set; }
         public MediaTitle Title { get; set; }
-        public string Type { get; set; }
-        public string Format { get; set; }
-        public string Status { get; set; }
+        public MediaType Type { get; set; }
+        public MediaFormat Format { get; set; }
+        public MediaStatus Status { get; set; }
         public string Description { get; set; }
         public FuzzyDate StartDate { get; set; }
         public FuzzyDate EndDate { get; set; }
-        public string Season { get; set; }
+        public MediaSeason Season { get; set; }
         public int Episodes { get; set; }
         public int Duration { get; set; }
         public int Chapters { get; set; }
@@ -98,10 +99,10 @@ namespace AniDroid.AniList.Models
         {
             public int Id { get; set; }
             public int Rank { get; set; }
-            public string Type { get; set; }
-            public string Format { get; set; }
+            public MediaRankType Type { get; set; }
+            public MediaFormat Format { get; set; }
             public int Year { get; set; }
-            public string Season { get; set; }
+            public MediaSeason Season { get; set; }
             public bool AllTime { get; set; }
             public string Context { get; set; }
         }
@@ -111,7 +112,7 @@ namespace AniDroid.AniList.Models
             public int Id { get; set; }
             public int UserId { get; set; }
             public int MediaId { get; set; }
-            public string Status { get; set; }
+            public MediaListStatus Status { get; set; }
             public float Score { get; set; }
             public int Progress { get; set; }
             public int ProgressVolumes { get; set; }
@@ -154,10 +155,10 @@ namespace AniDroid.AniList.Models
 
         public class Edge : ConnectionEdge<Media>
         {
-            public string RelationType { get; set; }
+            public MediaRelation RelationType { get; set; }
             public bool IsMainStudio { get; set; }
             public IEnumerable<Character> Characters { get; set; }
-            public string CharacterRole { get; set; }
+            public Character.CharacterRole CharacterRole { get; set; }
             public string StaffRole { get; set; }
             public IEnumerable<Staff> VoiceActors { get; set; }
             public int FavouriteOrder { get; set; }
@@ -170,6 +171,7 @@ namespace AniDroid.AniList.Models
         /// <summary>
         /// Describes the type of Media (e.g. Anime or Manga)
         /// </summary>
+        [JsonConverter(typeof(AniListEnumConverter<MediaType>))]
         public sealed class MediaType : AniListEnum
         {
             private MediaType(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -181,6 +183,7 @@ namespace AniDroid.AniList.Models
         /// <summary>
         /// Describes the format of Media (e.g. Tv, Manga, etc.)
         /// </summary>
+        [JsonConverter(typeof(AniListEnumConverter<MediaFormat>))]
         public sealed class MediaFormat : AniListEnum
         {
             private MediaFormat(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -200,6 +203,7 @@ namespace AniDroid.AniList.Models
         /// <summary>
         /// Describes the satus of the Media (e.g. Finished, Releasing, etc.)
         /// </summary>
+        [JsonConverter(typeof(AniListEnumConverter<MediaStatus>))]
         public sealed class MediaStatus : AniListEnum
         {
             private MediaStatus(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -213,6 +217,7 @@ namespace AniDroid.AniList.Models
         /// <summary>
         /// Describes the season of the Media (e.g. Winter, Summer, etc.)
         /// </summary>
+        [JsonConverter(typeof(AniListEnumConverter<MediaSeason>))]
         public sealed class MediaSeason : AniListEnum
         {
             private MediaSeason(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -226,6 +231,7 @@ namespace AniDroid.AniList.Models
         /// <summary>
         /// Describes the source of the Media (e.g. Original, Light Novel, etc.)
         /// </summary>
+        [JsonConverter(typeof(AniListEnumConverter<MediaSource>))]
         public sealed class MediaSource : AniListEnum
         {
             private MediaSource(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -241,6 +247,7 @@ namespace AniDroid.AniList.Models
         /// <summary>
         /// Describes the relation of the Media to a related Media (e.g. Adaptation, Sequel, etc.)
         /// </summary>
+        [JsonConverter(typeof(AniListEnumConverter<MediaRelation>))]
         public sealed class MediaRelation : AniListEnum
         {
             private MediaRelation(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -260,6 +267,7 @@ namespace AniDroid.AniList.Models
         /// <summary>
         /// Describes the ranking type of the Media (e.g. Rated, Popular)
         /// </summary>
+        [JsonConverter(typeof(AniListEnumConverter<MediaRankType>))]
         public sealed class MediaRankType : AniListEnum
         {
             private MediaRankType(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -271,6 +279,7 @@ namespace AniDroid.AniList.Models
         /// <summary>
         /// Describes the list status of the Media (e.g. Current, Completed, etc.)
         /// </summary>
+        [JsonConverter(typeof(AniListEnumConverter<MediaListStatus>))]
         public sealed class MediaListStatus : AniListEnum
         {
             private MediaListStatus(string val, string displayVal, int index) : base(val, displayVal, index) { }

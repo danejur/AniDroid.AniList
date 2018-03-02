@@ -25,13 +25,13 @@ namespace AniDroid.AniList.Models
 
         public class UserOptions
         {
-            public string TitleLanguage { get; set; }
+            public AniListTitleLanguage TitleLanguage { get; set; }
             public bool DisplayAdultContent { get; set; }
         }
 
         public class UserMediaListOptions
         {
-            public string ScoreFormat { get; set; }
+            public ScoreFormat ScoreFormat { get; set; }
             public string RowOrder { get; set; }
             public bool UseLegacyLists { get; set; }
             public MediaListTypeOptions AnimeList { get; set; }
