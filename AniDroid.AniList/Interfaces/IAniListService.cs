@@ -29,7 +29,7 @@ namespace AniDroid.AniList.Interfaces
 
         #region User
 
-        Task<OneOf<User, IAniListError>> GetUser(string name, CancellationToken cToken);
+        Task<OneOf<User, IAniListError>> GetUser(string userName, int? userId, CancellationToken cToken);
 
         Task<OneOf<Media.MediaListCollection, IAniListError>> GetUserMediaList(string userName, Media.MediaType type, CancellationToken cToken);
 

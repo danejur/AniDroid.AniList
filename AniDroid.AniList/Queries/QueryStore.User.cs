@@ -7,13 +7,13 @@ namespace AniDroid.AniList.Queries
     internal static partial class QueryStore
     {
         /// <summary>
-        /// Parameters: (name: string)
+        /// Parameters: (userName?: string, userId?: int)
         /// <para></para>
         /// Returns: User
         /// </summary>
-        public static string GetUserByName => @"
-query ($name: String) {
-  Data: User(name: $name) {
+        public static string GetUser => @"
+query ($userId: Int, $userName: String) {
+  Data: User(id: $userId, name: $userName) {
     id
     name
     about(asHtml: true)
@@ -63,7 +63,6 @@ query ($name: String) {
     updatedAt
   }
 }
-
 ";
 
         /// <summary>

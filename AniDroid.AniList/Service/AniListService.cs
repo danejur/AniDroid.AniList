@@ -88,12 +88,12 @@ namespace AniDroid.AniList.Service
 
         #region User
 
-        public Task<OneOf<User, IAniListError>> GetUser(string name, CancellationToken cToken = default)
+        public Task<OneOf<User, IAniListError>> GetUser(string userName, int? userId, CancellationToken cToken)
         {
             var query = new GraphQLQuery
             {
-                Query = QueryStore.GetUserByName,
-                Variables = new { name },
+                Query = QueryStore.GetUser,
+                Variables = new { userName, userId },
             };
             return GetResponseAsync<User>(query, cToken);
         }
