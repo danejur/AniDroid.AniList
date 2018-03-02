@@ -148,7 +148,7 @@ namespace AniDroid.AniList.Models
         public class MediaAiringProgression
         {
             public float Episode { get; set; }
-            public int Score { get; set; }
+            public float Score { get; set; }
             public int Watching { get; set; }
         }
 

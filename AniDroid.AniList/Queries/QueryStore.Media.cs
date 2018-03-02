@@ -129,6 +129,21 @@ query ($mediaId: Int!) {
     siteUrl
     isFavourite
     synonyms
+    stats {
+      scoreDistribution {
+        score
+        amount
+      }
+      statusDistribution {
+        status
+        amount
+      }
+      airingProgression {
+        episode
+        score
+        watching
+      }
+    }
     nextAiringEpisode {
       airingAt
       timeUntilAiring
