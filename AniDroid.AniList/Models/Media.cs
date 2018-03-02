@@ -1,6 +1,7 @@
 ﻿using AniDroid.AniList.DataTypes;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace AniDroid.AniList.Models
@@ -104,6 +105,17 @@ namespace AniDroid.AniList.Models
             public string Season { get; set; }
             public bool AllTime { get; set; }
             public string Context { get; set; }
+
+            public string GetFormattedRankString()
+            {
+                return $@"#{Rank} {CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Context)}{
+                        (string.IsNullOrEmpty(Season) ? "" : $" {AniListEnum.GetDisplayValue<MediaSeason>(Season)}")
+                    }{
+                        (Year == 0 ? "" : $" {Year}")
+                    }{
+                        (string.IsNullOrEmpty(Format) ? "" : $" ({AniListEnum.GetDisplayValue<MediaFormat>(Format)})")
+                    }";
+            }
         }
 
         public class MediaList
