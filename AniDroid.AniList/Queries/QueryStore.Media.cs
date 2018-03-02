@@ -100,6 +100,7 @@ query ($mediaId: Int!) {
     meanScore
     genres
     siteUrl
+    isFavourite
     synonyms
     nextAiringEpisode {
       airingAt
