@@ -87,6 +87,24 @@ query ($mediaId: Int!) {
         lastPage
       }
     }
+    studios {
+      pageInfo {
+        total
+        perPage
+        hasNextPage
+        currentPage
+        lastPage
+      }
+      edges {
+        node {
+          id
+          name
+          siteUrl
+          isFavourite
+        }
+        isMain
+      }
+    }
     bannerImage
     format
     type
