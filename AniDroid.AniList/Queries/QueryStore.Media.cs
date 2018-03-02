@@ -78,6 +78,15 @@ query ($mediaId: Int!) {
         lastPage
       }
     }
+    staff {
+      pageInfo {
+        total
+        perPage
+        hasNextPage
+        currentPage
+        lastPage
+      }
+    }
     bannerImage
     format
     type
@@ -146,6 +155,46 @@ query ($mediaId: Int!, $page: Int, $perPage: Int) {
             large
           }
           siteUrl
+          isFavourite
+        }
+      }
+    }
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (mediaId: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: Media with PagedData of Staff sorted by language
+        /// </summary>
+        public static string GetMediaStaff => @"
+query ($mediaId: Int!, $page: Int, $perPage: Int) {
+  Data: Media(id: $mediaId) {
+    id
+    type
+    staff(page: $page, perPage: $perPage, sort: LANGUAGE) {
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
+      }
+      edges {
+        role
+        node {
+          id
+          name {
+            first
+            last
+            native
+          }
+          image {
+            large
+          }
+          siteUrl
+          language
           isFavourite
         }
       }

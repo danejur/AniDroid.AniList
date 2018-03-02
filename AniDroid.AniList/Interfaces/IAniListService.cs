@@ -23,6 +23,8 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<IPagedData<Character.Edge>> GetMediaCharacters(int mediaId, int perPage);
 
+        IAsyncEnumerable<IPagedData<Staff.Edge>> GetMediaStaff(int mediaId, int perPage);
+
         #endregion
 
         #region User

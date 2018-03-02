@@ -76,6 +76,14 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
+        public IAsyncEnumerable<IPagedData<Staff.Edge>> GetMediaStaff(int mediaId, int perPage)
+        {
+            var arguments = new { mediaId };
+            return new PagedAsyncEnumerable<Staff.Edge>(perPage,
+                CreateGetPageFunc<Staff.Edge, Media>(QueryStore.GetMediaStaff, arguments, media => media.Staff),
+                HasNextPage);
+        }
+
         #endregion
 
         #region User
