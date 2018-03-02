@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AniDroid.AniList.Interfaces;
+using Newtonsoft.Json;
 
 namespace AniDroid.AniList.Models
 {
@@ -20,7 +21,7 @@ namespace AniDroid.AniList.Models
 
         public class Edge : ConnectionEdge<Character>
         {
-            public string Role { get; set; }
+            public CharacterRole Role { get; set; }
             public List<Staff> VoiceActors { get; set; }
             public List<Media> Media { get; set; }
             public int FavouriteOrder { get; set; }
@@ -30,6 +31,7 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
+        [JsonConverter(typeof(AniListEnumConverter<CharacterRole>))]
         public sealed class CharacterRole : AniListEnum
         {
             protected CharacterRole(string val, string displayVal, int index) : base(val, displayVal, index) { }

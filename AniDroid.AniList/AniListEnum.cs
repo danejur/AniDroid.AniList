@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace AniDroid.AniList
 {
     public abstract class AniListEnum
     {
         private static readonly Dictionary<Type, Dictionary<string, AniListEnum>> ValueDictionaries = new Dictionary<Type, Dictionary<string, AniListEnum>>();
-
-        private AniListEnum() { }
 
         protected AniListEnum(string val, string displayVal, int index)
         {
@@ -88,6 +87,25 @@ namespace AniDroid.AniList
         public bool Equals(string val)
         {
             return Value == val;
+        }
+
+        protected class AniListEnumConverter<T> : JsonConverter where T : AniListEnum
+        {
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                writer.WriteValue((value as AniListEnum)?.Value);
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                var strVal = reader.Value as string;
+                return GetEnum<T>(strVal);
+            }
+
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType.IsSubclassOf(typeof(AniListEnum));
+            }
         }
     }
 }
