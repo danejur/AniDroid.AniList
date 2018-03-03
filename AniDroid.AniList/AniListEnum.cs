@@ -24,17 +24,15 @@ namespace AniDroid.AniList
 
         private static Dictionary<string, AniListEnum> GetValueDictionary<T>() where T : AniListEnum
         {
-            if (ValueDictionaries.ContainsKey(typeof(T)))
+            var type = typeof(T);
+
+            if (!ValueDictionaries.TryGetValue(type, out var dict))
             {
-                return ValueDictionaries[typeof(T)];
+                dict = ValueDictionaries[type] = type.GetProperties(BindingFlags.Public | BindingFlags.Static)
+                    .Where(x => x.PropertyType == type)
+                    .Select(x => x.GetValue(x) as T)
+                    .ToDictionary(x => x?.Value, y => y as AniListEnum);
             }
-
-            var dict = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Static)
-                .Where(x => x.PropertyType == typeof(T))
-                .Select(x => x.GetValue(x) as T)
-                .ToDictionary(x => x.Value, y => y as AniListEnum);
-
-            ValueDictionaries.Add(typeof(T), dict);
 
             return dict;
         }
@@ -68,7 +66,7 @@ namespace AniDroid.AniList
 
         public bool Equals(AniListEnum obj)
         {
-            return ((obj.GetType() == GetType()) && (obj.Value == Value));
+            return obj.GetType() == GetType() && obj.Value == Value;
         }
 
         public bool Equals(string val)
