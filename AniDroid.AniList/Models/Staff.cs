@@ -36,16 +36,16 @@ namespace AniDroid.AniList.Models
         {
             private StaffLanguage(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static StaffLanguage Japanese => new StaffLanguage("JAPANESE", "Japanese", 0);
-            public static StaffLanguage English => new StaffLanguage("ENGLISH", "English", 1);
-            public static StaffLanguage Korean => new StaffLanguage("KOREAN", "Korean", 2);
-            public static StaffLanguage Italian => new StaffLanguage("ITALIAN", "Japanese", 3);
-            public static StaffLanguage Spanish => new StaffLanguage("SPANISH", "Spanish", 4);
-            public static StaffLanguage Portuguese => new StaffLanguage("PORTUGUESE", "Portuguese", 5);
-            public static StaffLanguage French => new StaffLanguage("FRENCH", "French", 6);
-            public static StaffLanguage German => new StaffLanguage("GERMAN", "German", 7);
-            public static StaffLanguage Hebrew => new StaffLanguage("HEBREW", "Hebrew", 8);
-            public static StaffLanguage Hungarian => new StaffLanguage("HUNGARIAN", "Hungarian", 9);
+            public static StaffLanguage Japanese { get; } = new StaffLanguage("JAPANESE", "Japanese", 0);
+            public static StaffLanguage English { get; } = new StaffLanguage("ENGLISH", "English", 1);
+            public static StaffLanguage Korean { get; } = new StaffLanguage("KOREAN", "Korean", 2);
+            public static StaffLanguage Italian { get; } = new StaffLanguage("ITALIAN", "Japanese", 3);
+            public static StaffLanguage Spanish { get; } = new StaffLanguage("SPANISH", "Spanish", 4);
+            public static StaffLanguage Portuguese { get; } = new StaffLanguage("PORTUGUESE", "Portuguese", 5);
+            public static StaffLanguage French { get; } = new StaffLanguage("FRENCH", "French", 6);
+            public static StaffLanguage German { get; } = new StaffLanguage("GERMAN", "German", 7);
+            public static StaffLanguage Hebrew { get; } = new StaffLanguage("HEBREW", "Hebrew", 8);
+            public static StaffLanguage Hungarian { get; } = new StaffLanguage("HUNGARIAN", "Hungarian", 9);
         }
 
         #endregion

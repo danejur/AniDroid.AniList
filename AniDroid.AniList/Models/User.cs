@@ -84,22 +84,22 @@ namespace AniDroid.AniList.Models
         {
             private ScoreFormat(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static ScoreFormat Hundred => new ScoreFormat("POINT_100", "100", 0);
-            public static ScoreFormat TenDecimal => new ScoreFormat("POINT_10_DECIMAL", "10.0", 1);
-            public static ScoreFormat Ten => new ScoreFormat("POINT_10", "10", 2);
-            public static ScoreFormat FiveStars => new ScoreFormat("POINT_5", "Five Stars", 3);
-            public static ScoreFormat ThreeSmileys => new ScoreFormat("POINT_3", "Three Smileys", 4);
+            public static ScoreFormat Hundred { get; } = new ScoreFormat("POINT_100", "100", 0);
+            public static ScoreFormat TenDecimal { get; } = new ScoreFormat("POINT_10_DECIMAL", "10.0", 1);
+            public static ScoreFormat Ten { get; } = new ScoreFormat("POINT_10", "10", 2);
+            public static ScoreFormat FiveStars { get; } = new ScoreFormat("POINT_5", "Five Stars", 3);
+            public static ScoreFormat ThreeSmileys { get; } = new ScoreFormat("POINT_3", "Three Smileys", 4);
         }
 
         public sealed class FavoriteType : AniListEnum
         {
             private FavoriteType(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static FavoriteType Anime => new FavoriteType("ANIME", "Anime", 0);
-            public static FavoriteType Manga => new FavoriteType("MANGA", "Manga", 1);
-            public static FavoriteType Character => new FavoriteType("CHARACTER", "Character", 2);
-            public static FavoriteType Staff => new FavoriteType("STAFF", "Staff", 3);
-            public static FavoriteType Studio => new FavoriteType("STUDIO", "Studio", 4);
+            public static FavoriteType Anime { get; } = new FavoriteType("ANIME", "Anime", 0);
+            public static FavoriteType Manga { get; } = new FavoriteType("MANGA", "Manga", 1);
+            public static FavoriteType Character { get; } = new FavoriteType("CHARACTER", "Character", 2);
+            public static FavoriteType Staff { get; } = new FavoriteType("STAFF", "Staff", 3);
+            public static FavoriteType Studio { get; } = new FavoriteType("STUDIO", "Studio", 4);
         }
 
         #endregion

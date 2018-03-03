@@ -52,11 +52,11 @@ namespace AniDroid.AniList.Models
         {
             private ActivityType(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static ActivityType Text => new ActivityType("TEXT", "Text", 0);
-            public static ActivityType AnimeList => new ActivityType("ANIME_LIST", "Anime List", 0);
-            public static ActivityType MangaList => new ActivityType("MANGA_LIST", "Manga List", 0);
-            public static ActivityType Message => new ActivityType("MESSAGE", "Message", 0);
-            public static ActivityType MediaList => new ActivityType("MEDIA_LIST", "Media List", 0);
+            public static ActivityType Text { get; } = new ActivityType("TEXT", "Text", 0);
+            public static ActivityType AnimeList { get; } = new ActivityType("ANIME_LIST", "Anime List", 0);
+            public static ActivityType MangaList { get; } = new ActivityType("MANGA_LIST", "Manga List", 0);
+            public static ActivityType Message { get; } = new ActivityType("MESSAGE", "Message", 0);
+            public static ActivityType MediaList { get; } = new ActivityType("MEDIA_LIST", "Media List", 0);
         }
 
         #endregion

@@ -36,9 +36,9 @@ namespace AniDroid.AniList.Models
         {
             private CharacterRole(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static CharacterRole Main => new CharacterRole("MAIN", "Main", 0);
-            public static CharacterRole Supporting => new CharacterRole("SUPPORTING", "Supporting", 1);
-            public static CharacterRole Background => new CharacterRole("BACKGROUND", "Background", 2);
+            public static CharacterRole Main { get; } = new CharacterRole("MAIN", "Main", 0);
+            public static CharacterRole Supporting { get; } = new CharacterRole("SUPPORTING", "Supporting", 1);
+            public static CharacterRole Background { get; } = new CharacterRole("BACKGROUND", "Background", 2);
         }
 
         #endregion

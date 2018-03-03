@@ -92,12 +92,12 @@ namespace AniDroid.AniList.Models
         {
             private AniListTitleLanguage(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static AniListTitleLanguage Romaji => new AniListTitleLanguage("ROMAJI", "Romaji", 0);
-            public static AniListTitleLanguage English => new AniListTitleLanguage("ENGLISH", "English", 1);
-            public static AniListTitleLanguage Native => new AniListTitleLanguage("NATIVE", "Native", 2);
-            public static AniListTitleLanguage RomajiStylised => new AniListTitleLanguage("ROMAJI_STYLISED", "Romaji Stylised", 3);
-            public static AniListTitleLanguage EnglishStylised => new AniListTitleLanguage("ENGLISH_STYLISED", "English Stylised", 4);
-            public static AniListTitleLanguage NativeStylised => new AniListTitleLanguage("NATIVE_STYLISED", "Native Stylised", 5);
+            public static AniListTitleLanguage Romaji { get; } = new AniListTitleLanguage("ROMAJI", "Romaji", 0);
+            public static AniListTitleLanguage English { get; } = new AniListTitleLanguage("ENGLISH", "English", 1);
+            public static AniListTitleLanguage Native { get; } = new AniListTitleLanguage("NATIVE", "Native", 2);
+            public static AniListTitleLanguage RomajiStylised { get; } = new AniListTitleLanguage("ROMAJI_STYLISED", "Romaji Stylised", 3);
+            public static AniListTitleLanguage EnglishStylised { get; } = new AniListTitleLanguage("ENGLISH_STYLISED", "English Stylised", 4);
+            public static AniListTitleLanguage NativeStylised { get; } = new AniListTitleLanguage("NATIVE_STYLISED", "Native Stylised", 5);
         }
 
         [JsonConverter(typeof(AniListEnumConverter<LikeableType>))]
@@ -105,10 +105,10 @@ namespace AniDroid.AniList.Models
         {
             private LikeableType(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static LikeableType Thread => new LikeableType("THREAD", "Thread", 0);
-            public static LikeableType ThreadComment => new LikeableType("THREAD_COMMENT", "Thread Comment", 1);
-            public static LikeableType Activity => new LikeableType("ACTIVITY", "Activity", 2);
-            public static LikeableType ActivityReply => new LikeableType("ACTIVITY_REPLY", "Activity Reply", 3);
+            public static LikeableType Thread { get; } = new LikeableType("THREAD", "Thread", 0);
+            public static LikeableType ThreadComment { get; } = new LikeableType("THREAD_COMMENT", "Thread Comment", 1);
+            public static LikeableType Activity { get; } = new LikeableType("ACTIVITY", "Activity", 2);
+            public static LikeableType ActivityReply { get; } = new LikeableType("ACTIVITY_REPLY", "Activity Reply", 3);
         }
 
         #endregion
