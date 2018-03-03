@@ -46,13 +46,16 @@ namespace AniDroid.AniList
         public static T GetEnum<T>(string value) where T : AniListEnum =>
             (GetValueDictionary<T>().TryGetValue(value, out var retEnum) ? retEnum : null) as T;
 
-        public static int GetIndex<T>(string value) where T : AniListEnum => GetEnum<T>(value)?.Index ?? -1;
+        public static int GetIndex<T>(string value) where T : AniListEnum =>
+            GetEnum<T>(value)?.Index ?? -1;
 
         public static List<T> GetEnumValues<T>() where T : AniListEnum =>
             GetValueDictionary<T>().Select(x => x.Value as T).OrderBy(x => x.Index).ToList();
 
-        public bool Equals(AniListEnum obj) => obj.GetType() == GetType() && obj.Value == Value;
+        public bool Equals(AniListEnum obj) =>
+            obj.GetType() == GetType() && obj.Value == Value;
 
-        public bool Equals(string val) => Value == val;
+        public bool Equals(string val) =>
+            Value == val;
     }
 }
