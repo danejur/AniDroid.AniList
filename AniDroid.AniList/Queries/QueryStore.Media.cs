@@ -129,6 +129,16 @@ query ($mediaId: Int!) {
     siteUrl
     isFavourite
     synonyms
+    rankings {
+      id
+      rank
+      type
+      format
+      year
+      season
+      allTime
+      context
+    }
     stats {
       scoreDistribution {
         score

@@ -41,14 +41,7 @@ namespace AniDroid.AniList
 
         public static string GetDisplayValue<T>(string value, string defaultValue = "") where T : AniListEnum
         {
-            var dict = GetValueDictionary<T>();
-
-            if (dict.ContainsKey(value ?? ""))
-            {
-                return dict[value].DisplayValue;
-            }
-
-            return defaultValue;
+            return GetEnum<T>(value)?.DisplayValue ?? defaultValue;
         }
 
         public static string GetDisplayValue<T>(int index, string defaultValue = "") where T : AniListEnum
@@ -58,19 +51,13 @@ namespace AniDroid.AniList
 
         public static T GetEnum<T>(string value) where T : AniListEnum
         {
-            return GetEnumValues<T>().FirstOrDefault(x => x.Value == value);
+            return (GetValueDictionary<T>().TryGetValue(value, out var retEnum) ? retEnum : null) as T;
         }
 
         public static int GetIndex<T>(string value) where T : AniListEnum
         {
-            var dict = GetValueDictionary<T>();
+            return GetEnum<T>(value)?.Index ?? -1;
 
-            if (dict.ContainsKey(value ?? ""))
-            {
-                return dict[value].Index;
-            }
-
-            return -1;
         }
 
         public static List<T> GetEnumValues<T>() where T : AniListEnum
