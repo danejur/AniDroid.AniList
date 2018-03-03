@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using AniDroid.AniList.Interfaces;
 
 namespace AniDroid.AniList.Models
@@ -20,7 +18,7 @@ namespace AniDroid.AniList.Models
 
         public class Edge : ConnectionEdge<Character>
         {
-            public string Role { get; set; }
+            public CharacterRole Role { get; set; }
             public List<Staff> VoiceActors { get; set; }
             public List<Media> Media { get; set; }
             public int FavouriteOrder { get; set; }
@@ -32,11 +30,11 @@ namespace AniDroid.AniList.Models
 
         public sealed class CharacterRole : AniListEnum
         {
-            protected CharacterRole(string val, string displayVal, int index) : base(val, displayVal, index) { }
+            private CharacterRole(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static CharacterRole Main => new CharacterRole("MAIN", "Main", 0);
-            public static CharacterRole Supporting => new CharacterRole("SUPPORTING", "Supporting", 1);
-            public static CharacterRole Background => new CharacterRole("BACKGROUND", "Background", 2);
+            public static CharacterRole Main { get; } = new CharacterRole("MAIN", "Main", 0);
+            public static CharacterRole Supporting { get; } = new CharacterRole("SUPPORTING", "Supporting", 1);
+            public static CharacterRole Background { get; } = new CharacterRole("BACKGROUND", "Background", 2);
         }
 
         #endregion

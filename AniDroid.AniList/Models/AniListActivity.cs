@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace AniDroid.AniList.Models
 {
     public class AniListActivity : AniListObject
     {
-        public string Type { get; set; }
+        public ActivityType Type { get; set; }
         public string SiteUrl { get; set; }
         public int CreatedAt { get; set; }
         public int ReplyCount { get; set; }
@@ -48,13 +46,13 @@ namespace AniDroid.AniList.Models
 
         public sealed class ActivityType : AniListEnum
         {
-            protected ActivityType(string val, string displayVal, int index) : base(val, displayVal, index) { }
+            private ActivityType(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static ActivityType Text => new ActivityType("TEXT", "Text", 0);
-            public static ActivityType AnimeList => new ActivityType("ANIME_LIST", "Anime List", 0);
-            public static ActivityType MangaList => new ActivityType("MANGA_LIST", "Manga List", 0);
-            public static ActivityType Message => new ActivityType("MESSAGE", "Message", 0);
-            public static ActivityType MediaList => new ActivityType("MEDIA_LIST", "Media List", 0);
+            public static ActivityType Text { get; } = new ActivityType("TEXT", "Text", 0);
+            public static ActivityType AnimeList { get; } = new ActivityType("ANIME_LIST", "Anime List", 0);
+            public static ActivityType MangaList { get; } = new ActivityType("MANGA_LIST", "Manga List", 0);
+            public static ActivityType Message { get; } = new ActivityType("MESSAGE", "Message", 0);
+            public static ActivityType MediaList { get; } = new ActivityType("MEDIA_LIST", "Media List", 0);
         }
 
         #endregion
