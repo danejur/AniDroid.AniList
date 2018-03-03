@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
-
-namespace AniDroid.AniList.Models
+﻿namespace AniDroid.AniList.Models
 {
     public class Review : AniListObject
     {
@@ -31,7 +26,6 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
-        [JsonConverter(typeof(AniListEnumConverter<ReviewRating>))]
         public sealed class ReviewRating : AniListEnum
         {
             private ReviewRating(string val, string displayVal, int index) : base(val, displayVal, index) { }

@@ -34,23 +34,33 @@ namespace AniDroid.AniList.Utils.Internal
 
         protected override JsonConverter ResolveContractConverter(Type objectType)
         {
-            if (!objectType.IsInterface)
+            if (objectType.IsSubclassOf(typeof(AniListEnum)))
             {
-                return base.ResolveContractConverter(objectType);
+                return GetAniListEnumConverter(objectType);
             }
 
-            var isGeneric = objectType.IsGenericType;
-            var interfaceType = isGeneric
-                ? objectType.GetGenericTypeDefinition()
-                : objectType;
-
-            if (!InterfaceConcreteMap.ContainsKey(interfaceType))
+            if (objectType.IsInterface)
             {
-                return base.ResolveContractConverter(objectType);
+                return GetInterfaceConverter(objectType);
             }
 
-            var actualType = InterfaceConcreteMap[interfaceType];
-            var concreteGenericType = actualType.MakeGenericType(isGeneric ? objectType.GetGenericArguments() : new Type[0]);
+            return base.ResolveContractConverter(objectType);
+        }
+
+        private JsonConverter GetInterfaceConverter(Type interfaceType)
+        {
+            var isGeneric = interfaceType.IsGenericType;
+            var refinedType = isGeneric
+                ? interfaceType.GetGenericTypeDefinition()
+                : interfaceType;
+
+            if (!InterfaceConcreteMap.ContainsKey(refinedType))
+            {
+                return base.ResolveContractConverter(interfaceType);
+            }
+
+            var actualType = InterfaceConcreteMap[refinedType];
+            var concreteGenericType = actualType.MakeGenericType(isGeneric ? interfaceType.GetGenericArguments() : new Type[0]);
 
             if (_converterCache.ContainsKey(concreteGenericType))
             {
@@ -59,6 +69,17 @@ namespace AniDroid.AniList.Utils.Internal
 
             var converterType = typeof(AniListJsonConverter<>).MakeGenericType(concreteGenericType);
             return _converterCache[concreteGenericType] = Activator.CreateInstance(converterType) as JsonConverter;
+        }
+
+        private JsonConverter GetAniListEnumConverter(Type enumType)
+        {
+            if (_converterCache.ContainsKey(enumType))
+            {
+                return _converterCache[enumType];
+            }
+
+            var converterType = typeof(AniListEnumConverter<>).MakeGenericType(enumType);
+            return _converterCache[enumType] = Activator.CreateInstance(converterType) as JsonConverter;
         }
     }
 }

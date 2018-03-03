@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using AniDroid.AniList.Interfaces;
-using Newtonsoft.Json;
 
 namespace AniDroid.AniList.Models
 {
@@ -31,7 +28,6 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
-        [JsonConverter(typeof(AniListEnumConverter<CharacterRole>))]
         public sealed class CharacterRole : AniListEnum
         {
             private CharacterRole(string val, string displayVal, int index) : base(val, displayVal, index) { }

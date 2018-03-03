@@ -4,7 +4,6 @@ using System.Text;
 using AniDroid.AniList.DataTypes;
 using AniDroid.AniList.Interfaces;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace AniDroid.AniList.Models
 {
@@ -87,7 +86,6 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
-        [JsonConverter(typeof(AniListEnumConverter<AniListTitleLanguage>))]
         public sealed class AniListTitleLanguage : AniListEnum
         {
             private AniListTitleLanguage(string val, string displayVal, int index) : base(val, displayVal, index) { }
@@ -100,7 +98,6 @@ namespace AniDroid.AniList.Models
             public static AniListTitleLanguage NativeStylised { get; } = new AniListTitleLanguage("NATIVE_STYLISED", "Native Stylised", 5);
         }
 
-        [JsonConverter(typeof(AniListEnumConverter<LikeableType>))]
         public sealed class LikeableType : AniListEnum
         {
             private LikeableType(string val, string displayVal, int index) : base(val, displayVal, index) { }

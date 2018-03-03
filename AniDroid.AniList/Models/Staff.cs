@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AniDroid.AniList.Interfaces;
-using Newtonsoft.Json;
+﻿using AniDroid.AniList.Interfaces;
 
 namespace AniDroid.AniList.Models
 {
@@ -31,7 +27,6 @@ namespace AniDroid.AniList.Models
 
         #region Enum Classes
 
-        [JsonConverter(typeof(AniListEnumConverter<StaffLanguage>))]
         public sealed class StaffLanguage : AniListEnum
         {
             private StaffLanguage(string val, string displayVal, int index) : base(val, displayVal, index) { }
