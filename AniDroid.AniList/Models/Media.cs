@@ -107,13 +107,10 @@ namespace AniDroid.AniList.Models
 
             public string GetFormattedRankString()
             {
-                return $@"#{Rank} {CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Context)}{
-                        (string.IsNullOrEmpty(Season) ? "" : $" {AniListEnum.GetDisplayValue<MediaSeason>(Season)}")
-                    }{
-                        (Year == 0 ? "" : $" {Year}")
-                    }{
-                        (string.IsNullOrEmpty(Format) ? "" : $" ({AniListEnum.GetDisplayValue<MediaFormat>(Format)})")
-                    }";
+                return $"#{Rank} {CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Context)}" +
+                       (Season != null ? $" {AniListEnum.GetDisplayValue<MediaSeason>(Season.DisplayValue)}" : "") +
+                       (Year > 0 ? $" {Year}" : "") +
+                       (Format != null ? $" ({AniListEnum.GetDisplayValue<MediaFormat>(Format.DisplayValue)})" : "");
             }
         }
 
