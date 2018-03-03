@@ -154,6 +154,13 @@ query ($mediaId: Int!) {
         watching
       }
     }
+    tags {
+      id
+      name
+      description
+      isGeneralSpoiler
+      isMediaSpoiler
+    }
     nextAiringEpisode {
       airingAt
       timeUntilAiring
