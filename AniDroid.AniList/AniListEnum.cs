@@ -37,41 +37,22 @@ namespace AniDroid.AniList
             return dict;
         }
 
-        public static string GetDisplayValue<T>(string value, string defaultValue = "") where T : AniListEnum
-        {
-            return GetEnum<T>(value)?.DisplayValue ?? defaultValue;
-        }
+        public static string GetDisplayValue<T>(string value, string defaultValue = "") where T : AniListEnum =>
+            GetEnum<T>(value)?.DisplayValue ?? defaultValue;
 
-        public static string GetDisplayValue<T>(int index, string defaultValue = "") where T : AniListEnum
-        {
-            return GetEnumValues<T>().FirstOrDefault(x => x.Index == index)?.DisplayValue ?? defaultValue;
-        }
+        public static string GetDisplayValue<T>(int index, string defaultValue = "") where T : AniListEnum =>
+            GetEnumValues<T>().FirstOrDefault(x => x.Index == index)?.DisplayValue ?? defaultValue;
 
-        public static T GetEnum<T>(string value) where T : AniListEnum
-        {
-            return (GetValueDictionary<T>().TryGetValue(value, out var retEnum) ? retEnum : null) as T;
-        }
+        public static T GetEnum<T>(string value) where T : AniListEnum =>
+            (GetValueDictionary<T>().TryGetValue(value, out var retEnum) ? retEnum : null) as T;
 
-        public static int GetIndex<T>(string value) where T : AniListEnum
-        {
-            return GetEnum<T>(value)?.Index ?? -1;
+        public static int GetIndex<T>(string value) where T : AniListEnum => GetEnum<T>(value)?.Index ?? -1;
 
-        }
+        public static List<T> GetEnumValues<T>() where T : AniListEnum =>
+            GetValueDictionary<T>().Select(x => x.Value as T).OrderBy(x => x.Index).ToList();
 
-        public static List<T> GetEnumValues<T>() where T : AniListEnum
-        {
-            var dict = GetValueDictionary<T>();
-            return dict.Select(x => x.Value as T).OrderBy(x => x.Index).ToList();
-        }
+        public bool Equals(AniListEnum obj) => obj.GetType() == GetType() && obj.Value == Value;
 
-        public bool Equals(AniListEnum obj)
-        {
-            return obj.GetType() == GetType() && obj.Value == Value;
-        }
-
-        public bool Equals(string val)
-        {
-            return Value == val;
-        }
+        public bool Equals(string val) => Value == val;
     }
 }
