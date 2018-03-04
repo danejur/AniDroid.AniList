@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace AniDroid.AniList.DataTypes
@@ -18,6 +19,19 @@ namespace AniDroid.AniList.DataTypes
             }
 
             return null;
+        }
+
+        public string GetFuzzyDateString()
+        {
+            if (!Month.HasValue)
+            {
+                return Year?.ToString();
+            }
+
+            var retString = DateTimeFormatInfo.CurrentInfo.GetMonthName(Month.Value);
+            retString += Day.HasValue ? $" {Day.Value}" : "";
+            retString += Year.HasValue ? $", {Year.Value}" : "";
+            return retString;
         }
     }
 }
