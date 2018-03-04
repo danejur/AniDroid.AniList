@@ -30,7 +30,7 @@ namespace AniDroid.AniList.Models
 
         public class AniListStatusDistribution
         {
-            public string Status { get; set; }
+            public Media.MediaListStatus Status { get; set; }
             public int Amount { get; set; }
         }
 

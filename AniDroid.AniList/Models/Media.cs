@@ -108,9 +108,9 @@ namespace AniDroid.AniList.Models
             public string GetFormattedRankString()
             {
                 return $"#{Rank} {CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Context)}" +
-                       (Season != null ? $" {AniListEnum.GetDisplayValue<MediaSeason>(Season.DisplayValue)}" : "") +
+                       (Season != null ? $" {Season.DisplayValue}" : "") +
                        (Year > 0 ? $" {Year}" : "") +
-                       (Format != null ? $" ({AniListEnum.GetDisplayValue<MediaFormat>(Format.DisplayValue)})" : "");
+                       (Format != null ? $" ({Format.DisplayValue})" : "");
             }
         }
 
