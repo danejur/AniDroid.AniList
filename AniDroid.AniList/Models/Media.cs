@@ -51,6 +51,26 @@ namespace AniDroid.AniList.Models
         public string SiteUrl { get; set; }
         public bool AutoCreateForumThread { get; set; }
 
+        public string GetFormattedDateRangeString()
+        {
+            var retString = "";
+
+            if (StartDate.IsValid() && EndDate.IsValid())
+            {
+                retString = StartDate.Equals(EndDate) ? StartDate.GetFuzzyDateString() : $"{StartDate.GetFuzzyDateString()} to {EndDate.GetFuzzyDateString()}";
+            }
+            else if (StartDate.IsValid())
+            {
+                retString = $"{(Status == MediaStatus.NotYetReleased ? "Starts" : "Started")} {StartDate.GetFuzzyDateString()}";
+            }
+            else if (EndDate.IsValid())
+            {
+                retString = $"{(Status == MediaStatus.Finished || Status == MediaStatus.Cancelled ? "Ended" : "Ending")} {EndDate.GetFuzzyDateString()}";
+            }
+
+            return retString;
+        }
+
         #region Internal Classes
 
         public class MediaTitle
