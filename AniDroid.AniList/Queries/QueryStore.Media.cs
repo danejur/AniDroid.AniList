@@ -115,6 +115,7 @@ query ($mediaId: Int!) {
       }
     }
     bannerImage
+    duration
     format
     type
     status
