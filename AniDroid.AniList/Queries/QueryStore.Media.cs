@@ -166,6 +166,12 @@ query ($mediaId: Int!) {
       timeUntilAiring
       episode
     }
+    streamingEpisodes {
+      title
+      thumbnail
+      url
+      site
+    }
   }
 }
 ";
