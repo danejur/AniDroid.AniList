@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using AniDroid.AniList.Interfaces;
@@ -49,7 +50,10 @@ namespace AniDroid.AniList.Utils.Internal
                 var pageResult = await _source._getPage(_info, ct).ConfigureAwait(false);
 
                 pageResult.Switch(data => Current = data)
-                    .Switch(error => { });
+                    .Switch(error =>
+                        {
+                            Trace.WriteLine($"Error occured while attempting MoveNextAsync. Error message: {error.ErrorMessage}, Error stack: {error.ErrorException?.StackTrace}");
+                        });
 
                 if (Current == null)
                     return false;

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AniDroid.AniList.Dto;
 
 namespace AniDroid.AniList.Interfaces
 {
@@ -20,6 +21,8 @@ namespace AniDroid.AniList.Interfaces
         Task<OneOf<Media, IAniListError>> GetMediaById(int mediaId, CancellationToken cToken);
 
         IAsyncEnumerable<IPagedData<Media>> SearchMedia(string queryText, Media.MediaType type, int perPage);
+
+        IAsyncEnumerable<IPagedData<Media>> BrowseMedia(BrowseMediaDto browseDto, int perPage);
 
         IAsyncEnumerable<IPagedData<Character.Edge>> GetMediaCharacters(int mediaId, int perPage);
 

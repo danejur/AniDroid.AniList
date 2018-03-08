@@ -120,7 +120,7 @@ namespace AniDroid.AniList.Models
             public int Rank { get; set; }
             public MediaRankType Type { get; set; }
             public MediaFormat Format { get; set; }
-            public int Year { get; set; }
+            public int? Year { get; set; }
             public MediaSeason Season { get; set; }
             public bool AllTime { get; set; }
             public string Context { get; set; }
@@ -129,7 +129,7 @@ namespace AniDroid.AniList.Models
             {
                 return $"#{Rank} {CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Context)}" +
                        (Season != null ? $" {Season.DisplayValue}" : "") +
-                       (Year > 0 ? $" {Year}" : "") +
+                       (Year.HasValue ? $" {Year}" : "") +
                        (Format != null ? $" ({Format.DisplayValue})" : "");
             }
         }
@@ -309,6 +309,35 @@ namespace AniDroid.AniList.Models
             public static MediaListStatus Dropped { get; } = new MediaListStatus("DROPPED", "Dropped", 3);
             public static MediaListStatus Paused { get; } = new MediaListStatus("PAUSED", "Paused", 4);
             public static MediaListStatus Repeating { get; } = new MediaListStatus("REPEATING", "Repeating", 5);
+        }
+
+        /// <summary>
+        /// Describes the sort method used for browsing (e.g. Score, Id, etc.)
+        /// </summary>
+        public sealed class MediaSort : AniListEnum
+        {
+            private MediaSort(string val, string displayVal, int index) : base(val, displayVal, index) { }
+
+            public static MediaSort Id { get; } = new MediaSort("ID", "Id", 0);
+            public static MediaSort IdDesc { get; } = new MediaSort("ID_DESC", "Id (Desc)", 1);
+            public static MediaSort TitleRomaji { get; } = new MediaSort("TITLE_ROMAJI", "Title - Romaji", 2);
+            public static MediaSort TitleRomajiDesc { get; } = new MediaSort("TITLE_ROMAJI_DESC", "Title - Romaji (Desc)", 3);
+            public static MediaSort TitleEnglish { get; } = new MediaSort("TITLE_ENGLISH", "Title - English", 4);
+            public static MediaSort TitleEnglishDesc { get; } = new MediaSort("TITLE_ENGLISH_DESC", "Title - English (Desc)", 5);
+            public static MediaSort TitleNative { get; } = new MediaSort("TITLE_NATIVE", "Title - Native", 6);
+            public static MediaSort TitleNativeDesc { get; } = new MediaSort("TITLE_NATIVE_DESC", "Title - Native (Desc)", 7);
+            public static MediaSort Type { get; } = new MediaSort("TYPE", "Type", 8);
+            public static MediaSort TypeDesc { get; } = new MediaSort("TYPE_DESC", "Type (Desc)", 9);
+            public static MediaSort Format { get; } = new MediaSort("FORMAT", "Format", 10);
+            public static MediaSort FormatDesc { get; } = new MediaSort("FORMAT_DESC", "Format (Desc)", 11);
+            public static MediaSort StartDate { get; } = new MediaSort("START_DATE", "Start Date", 12);
+            public static MediaSort StartDateDesc { get; } = new MediaSort("START_DATE_DESC", "Start Date (Desc)", 13);
+            public static MediaSort EndDate { get; } = new MediaSort("END_DATE", "End Date", 14);
+            public static MediaSort EndDateDesc { get; } = new MediaSort("END_DATE_DESC", "End Date (Desc)", 15);
+            public static MediaSort Score { get; } = new MediaSort("SCORE", "Score", 16);
+            public static MediaSort ScoreDesc { get; } = new MediaSort("SCORE_DESC", "Score (Desc)", 17);
+            public static MediaSort Popularity { get; } = new MediaSort("POPULARITY", "Popularity", 18);
+            public static MediaSort PopularityDesc { get; } = new MediaSort("POPULARITY_DESC", "Popularity (Desc)", 19);
         }
 
         #endregion

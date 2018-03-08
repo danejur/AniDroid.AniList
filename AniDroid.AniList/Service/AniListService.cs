@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using AniDroid.AniList.Models;
 using System.IO;
+using AniDroid.AniList.Dto;
 using Newtonsoft.Json;
 using RestSharp.Serializers;
 using Newtonsoft.Json.Serialization;
@@ -65,6 +66,13 @@ namespace AniDroid.AniList.Service
             };
             return new PagedAsyncEnumerable<Media>(perPage,
                 CreateGetPageFunc<Media>(QueryStore.SearchMedia, arguments),
+                HasNextPage);
+        }
+
+        public IAsyncEnumerable<IPagedData<Media>> BrowseMedia(BrowseMediaDto browseDto, int perPage)
+        {
+            return new PagedAsyncEnumerable<Media>(perPage,
+                CreateGetPageFunc<Media>(QueryStore.BrowseMedia, browseDto),
                 HasNextPage);
         }
 
@@ -390,56 +398,6 @@ namespace AniDroid.AniList.Service
         }
 
         private static bool HasNextPage<T>(PagingInfo info, IPagedData<T> data) => data.PageInfo.HasNextPage;
-
-        internal class AniListJsonSerializer : ISerializer, IDeserializer
-        {
-            public string DateFormat { get; set; }
-            public string RootElement { get; set; }
-            public string Namespace { get; set; }
-            public string ContentType { get; set; }
-            public Newtonsoft.Json.JsonSerializer Serializer { get; }
-
-            public AniListJsonSerializer()
-            {
-                Serializer = new Newtonsoft.Json.JsonSerializer
-                {
-                    MissingMemberHandling = MissingMemberHandling.Ignore,
-                    NullValueHandling = NullValueHandling.Ignore,
-                    DefaultValueHandling = DefaultValueHandling.Include,
-                    ContractResolver = AniListContractResolver.Instance,
-                };
-                ContentType = "application/json";
-            }
-
-            public AniListJsonSerializer(Newtonsoft.Json.JsonSerializer serializer)
-            {
-                Serializer = serializer;
-                ContentType = "application/json";
-            }
-
-            public string Serialize(object obj)
-            {
-                using (var stringWriter = new StringWriter())
-                using (var jsonTextWriter = new JsonTextWriter(stringWriter))
-                {
-                    Serializer.Serialize(jsonTextWriter, obj);
-                    return stringWriter.ToString();
-                }
-            }
-
-            public T Deserialize<T>(IRestResponse response)
-            {
-                var content = response.Content;
-
-                using (var stringReader = new StringReader(content))
-                using (var jsonTextReader = new JsonTextReader(stringReader))
-                {
-                    return Serializer.Deserialize<T>(jsonTextReader);
-                }
-            }
-
-            public static AniListJsonSerializer Default => new AniListJsonSerializer();
-        }
 
 #endregion
 

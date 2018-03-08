@@ -41,6 +41,40 @@ query ($queryText: String, $page:Int, $count:Int, $type:MediaType) {
 ";
 
         /// <summary>
+        /// Parameters: (page: int, count: int, type?: MediaType, season?: MediaSeason, seasonYear?: int, format?: MediaFormat, status?: MediaStatus, isAdult?: bool, includedGenres?: [string], excludedGenres?: [string], includedTags?: [string], excludedTags?: [string], yearLike: string)
+        /// <para></para>
+        /// Returns: PagedData of Media
+        /// </summary>
+        public static string BrowseMedia => @"
+query ($page: Int, $count: Int, $sort: [MediaSort], $type: MediaType, $season: MediaSeason, $seasonYear: Int, $format: MediaFormat, $status: MediaStatus, $isAdult: Boolean, $includedGenres: [String], $excludedGenres: [String], $includedTags: [String], $excludedTags: [String], $yearLike: String) {
+  Data: Page(page: $page, perPage: $count) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    Data: media(sort: $sort, type: $type, season: $season, seasonYear: $seasonYear, format: $format, status: $status, isAdult: $isAdult, genre_in: $includedGenres, genre_not_in: $excludedGenres, tag_in: $includedTags, tag_not_in: $excludedTags, startDate_like: $yearLike) {
+      id
+      type
+      format
+      popularity
+      averageScore
+      isFavourite
+      isAdult
+      title {
+        userPreferred
+      }
+      coverImage {
+        large
+      }
+    }
+  }
+}
+";
+
+        /// <summary>
         /// Parameters: (mediaId: int)
         /// <para></para>
         /// Returns: Media
