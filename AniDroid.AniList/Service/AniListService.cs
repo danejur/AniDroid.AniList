@@ -358,7 +358,7 @@ namespace AniDroid.AniList.Service
                 return getObjectFunc(servResp.Data.Value);
             }
 
-            return new AniListError(servResp.ErrorMessage, servResp.ErrorException, servResp.Data?.Errors);
+            return new AniListError((int)servResp.StatusCode, servResp.ErrorMessage, servResp.ErrorException, servResp.Data?.Errors);
         }
 
         // TODO: Document
