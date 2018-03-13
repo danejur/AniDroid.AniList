@@ -9,16 +9,16 @@ using OneOf;
 namespace AniDroid.AniList.Utils.Internal 
 {
     // TODO: Use IAsyncEnumerator+IAsyncEnumnerable from C# 8.0 ASAP
-    internal class PagedAsyncEnumerable<T> : IAsyncEnumerable<IPagedData<T>>
+    internal class PagedAsyncEnumerable<T> : IAsyncEnumerable<OneOf<IPagedData<T>, IAniListError>>
     {
         private readonly Func<PagingInfo, CancellationToken, Task<OneOf<IPagedData<T>, IAniListError>>> _getPage;
-        private readonly Func<PagingInfo, IPagedData<T>, bool> _nextPage;
+        private readonly Func<PagingInfo, OneOf<IPagedData<T>, IAniListError>, bool> _nextPage;
 
         public int PageSize { get; }
 
         public PagedAsyncEnumerable(int pageSize,
             Func<PagingInfo, CancellationToken, Task<OneOf<IPagedData<T>, IAniListError>>> getPage,
-            Func<PagingInfo, IPagedData<T>, bool> nextPage)
+            Func<PagingInfo, OneOf<IPagedData<T>, IAniListError>, bool> nextPage)
         {
             if (pageSize <= 0) throw new ArgumentException($"Value cannot be less than or equal to zero (0)", nameof(pageSize));
             PageSize = pageSize;
@@ -26,15 +26,15 @@ namespace AniDroid.AniList.Utils.Internal
             _nextPage = nextPage ?? throw new ArgumentNullException(nameof(nextPage));
         }
 
-        public IAsyncEnumerator<IPagedData<T>> GetEnumerator()
+        public IAsyncEnumerator<OneOf<IPagedData<T>, IAniListError>> GetEnumerator()
             => new Enumerator(this);
 
-        public class Enumerator : IAsyncEnumerator<IPagedData<T>>
+        public class Enumerator : IAsyncEnumerator<OneOf<IPagedData<T>, IAniListError>>
         {
             private readonly PagedAsyncEnumerable<T> _source;
             private readonly PagingInfo _info;
 
-            public IPagedData<T> Current { get; private set; }
+            public OneOf<IPagedData<T>, IAniListError> Current { get; private set; }
 
             public Enumerator(PagedAsyncEnumerable<T> source)
             {
@@ -49,14 +49,13 @@ namespace AniDroid.AniList.Utils.Internal
 
                 var pageResult = await _source._getPage(_info, ct).ConfigureAwait(false);
 
-                pageResult.Switch(data => Current = data)
-                    .Switch(error =>
-                        {
-                            Trace.WriteLine($"Error occured while attempting MoveNextAsync. Error message: {error.ErrorMessage}, Error stack: {error.ErrorException?.StackTrace}");
-                        });
+                Current = pageResult;
 
-                if (Current == null)
+                if (Current.Match((IAniListError error) => true)
+                    .Match(data => (data.PageInfo?.CurrentPage ?? 0) == 0))
+                {
                     return false;
+                }
 
                 _info.Page++;
                 _info.Remaining = _source._nextPage(_info, Current);

@@ -56,7 +56,7 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<Media>(query, cToken);
         }
 
-        public IAsyncEnumerable<IPagedData<Media>> SearchMedia(string queryText,
+        public IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> SearchMedia(string queryText,
             Media.MediaType type = null, int perPage = 20)
         {
             var arguments = new
@@ -69,14 +69,14 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<IPagedData<Media>> BrowseMedia(BrowseMediaDto browseDto, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> BrowseMedia(BrowseMediaDto browseDto, int perPage)
         {
             return new PagedAsyncEnumerable<Media>(perPage,
                 CreateGetPageFunc<Media>(QueryStore.BrowseMedia, browseDto),
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<IPagedData<Character.Edge>> GetMediaCharacters(int mediaId, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<Character.Edge>, IAniListError>> GetMediaCharacters(int mediaId, int perPage)
         {
             var arguments = new { mediaId };
             return new PagedAsyncEnumerable<Character.Edge>(perPage,
@@ -84,7 +84,7 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<IPagedData<Staff.Edge>> GetMediaStaff(int mediaId, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<Staff.Edge>, IAniListError>> GetMediaStaff(int mediaId, int perPage)
         {
             var arguments = new { mediaId };
             return new PagedAsyncEnumerable<Staff.Edge>(perPage,
@@ -116,7 +116,7 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<Media.MediaListCollection>(query, cToken);
         }
 
-        public IAsyncEnumerable<IPagedData<User>> SearchUsers(string queryText,
+        public IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> SearchUsers(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
@@ -181,14 +181,14 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<AniListActivity>(query, cToken);
         }
 
-        public IAsyncEnumerable<IPagedData<AniListActivity>> GetAniListActivity(int perPage = 20)
+        public IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> GetAniListActivity(int perPage = 20)
         {
             return new PagedAsyncEnumerable<AniListActivity>(perPage,
                 CreateGetPageFunc<AniListActivity>(QueryStore.GetUserActivity, null),
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<IPagedData<AniListNotification>> GetAniListNotifications(int perPage = 20)
+        public IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> GetAniListNotifications(int perPage = 20)
         {
             return new PagedAsyncEnumerable<AniListNotification>(perPage,
                 CreateGetPageFunc<AniListNotification>(QueryStore.GetUserNotifications, null),
@@ -209,7 +209,7 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<Character>(query, cToken);
         }
 
-        public IAsyncEnumerable<IPagedData<Character>> SearchCharacters(string queryText,
+        public IAsyncEnumerable<OneOf<IPagedData<Character>, IAniListError>> SearchCharacters(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
@@ -218,7 +218,7 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<IPagedData<Media.Edge>> GetCharacterMedia(int characterId, Media.MediaType mediaType, int perPage = 20)
+        public IAsyncEnumerable<OneOf<IPagedData<Media.Edge>, IAniListError>> GetCharacterMedia(int characterId, Media.MediaType mediaType, int perPage = 20)
         {
             var arguments = new { characterId, mediaType = mediaType?.Value };
             return new PagedAsyncEnumerable<Media.Edge>(perPage,
@@ -240,7 +240,7 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<Staff>(query, cToken);
         }
 
-        public IAsyncEnumerable<IPagedData<Staff>> SearchStaff(string queryText,
+        public IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> SearchStaff(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
@@ -249,7 +249,7 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<IPagedData<Character.Edge>> GetStaffCharacters(int staffId, int perPage = 20)
+        public IAsyncEnumerable<OneOf<IPagedData<Character.Edge>, IAniListError>> GetStaffCharacters(int staffId, int perPage = 20)
         {
             var arguments = new { staffId };
             return new PagedAsyncEnumerable<Character.Edge>(perPage,
@@ -257,7 +257,7 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<IPagedData<Media.Edge>> GetStaffMedia(int staffId, Media.MediaType mediaType, int perPage = 20)
+        public IAsyncEnumerable<OneOf<IPagedData<Media.Edge>, IAniListError>> GetStaffMedia(int staffId, Media.MediaType mediaType, int perPage = 20)
         {
             var arguments = new { staffId, mediaType = mediaType.Value };
             return new PagedAsyncEnumerable<Media.Edge>(perPage,
@@ -280,7 +280,7 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<Studio>(query, cToken);
         }
 
-        public IAsyncEnumerable<IPagedData<Studio>> SearchStudios(string queryText,
+        public IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> SearchStudios(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
@@ -289,7 +289,7 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<IPagedData<Media.Edge>> GetStudioMedia(int studioId, int perPage = 20)
+        public IAsyncEnumerable<OneOf<IPagedData<Media.Edge>, IAniListError>> GetStudioMedia(int studioId, int perPage = 20)
         {
             var arguments = new { studioId };
             return new PagedAsyncEnumerable<Media.Edge>(perPage,
@@ -301,7 +301,7 @@ namespace AniDroid.AniList.Service
 
         #region ForumThread
 
-        public IAsyncEnumerable<IPagedData<ForumThread>> SearchForumThreads(string queryText,
+        public IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> SearchForumThreads(string queryText,
             int perPage = 20)
         {
             var arguments = new { queryText };
@@ -351,14 +351,23 @@ namespace AniDroid.AniList.Service
         // TODO: Document
         private async Task<OneOf<T, IAniListError>> GetResponseAsync<TResponse, T>(IRestRequest req, Func<TResponse, T> getObjectFunc, CancellationToken cToken) where T : class where TResponse : class
         {
-            var servResp = await CreateClient().ExecuteTaskAsync<GraphQLResponse<TResponse>>(req, cToken).ConfigureAwait(false);
-
-            if (servResp.IsSuccessful)
+            try
             {
-                return getObjectFunc(servResp.Data.Value);
-            }
+                var servResp = await CreateClient().ExecuteTaskAsync<GraphQLResponse<TResponse>>(req, cToken)
+                    .ConfigureAwait(false);
 
-            return new AniListError((int)servResp.StatusCode, servResp.ErrorMessage, servResp.ErrorException, servResp.Data?.Errors);
+                if (servResp.IsSuccessful)
+                {
+                    return getObjectFunc(servResp.Data.Value);
+                }
+
+                return new AniListError((int)servResp.StatusCode, servResp.ErrorMessage, servResp.ErrorException,
+                    servResp.Data?.Errors);
+            }
+            catch (Exception e)
+            {
+                return new AniListError(0, e.Message, e, null);
+            }
         }
 
         // TODO: Document
@@ -397,7 +406,8 @@ namespace AniDroid.AniList.Service
             return GetPageAsync;
         }
 
-        private static bool HasNextPage<T>(PagingInfo info, IPagedData<T> data) => data.PageInfo.HasNextPage;
+        private static bool HasNextPage<T>(PagingInfo info, OneOf<IPagedData<T>, IAniListError> data) => data.Match((IAniListError error) => false)
+            .Match(pagedData => pagedData?.PageInfo?.HasNextPage == true);
 
 #endregion
 

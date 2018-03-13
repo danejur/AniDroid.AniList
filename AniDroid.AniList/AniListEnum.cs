@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,7 +10,7 @@ namespace AniDroid.AniList
 {
     public abstract class AniListEnum
     {
-        private static readonly Dictionary<Type, Dictionary<string, AniListEnum>> ValueDictionaries = new Dictionary<Type, Dictionary<string, AniListEnum>>();
+        private static readonly ConcurrentDictionary<Type, Dictionary<string, AniListEnum>> ValueDictionaries = new ConcurrentDictionary<Type, Dictionary<string, AniListEnum>>();
 
         protected AniListEnum(string val, string displayVal, int index)
         {
