@@ -46,7 +46,7 @@ query ($queryText: String, $page:Int, $count:Int, $type:MediaType) {
         /// Returns: PagedData of Media
         /// </summary>
         public static string BrowseMedia => @"
-query ($page: Int, $count: Int, $sort: [MediaSort], $type: MediaType, $season: MediaSeason, $seasonYear: Int, $format: MediaFormat, $status: MediaStatus, $isAdult: Boolean, $includedGenres: [String], $excludedGenres: [String], $includedTags: [String], $excludedTags: [String], $yearLike: String) {
+query ($page: Int, $count: Int, $sort: [MediaSort], $type: MediaType, $season: MediaSeason, $seasonYear: Int, $format: MediaFormat, $status: MediaStatus, $isAdult: Boolean, $includedGenres: [String], $excludedGenres: [String], $includedTags: [String], $excludedTags: [String], $yearLike: String, $popularityGreaterThan: Int, $averageGreaterThan: Int) {
   Data: Page(page: $page, perPage: $count) {
     pageInfo {
       total
@@ -55,7 +55,7 @@ query ($page: Int, $count: Int, $sort: [MediaSort], $type: MediaType, $season: M
       lastPage
       hasNextPage
     }
-    Data: media(sort: $sort, type: $type, season: $season, seasonYear: $seasonYear, format: $format, status: $status, isAdult: $isAdult, genre_in: $includedGenres, genre_not_in: $excludedGenres, tag_in: $includedTags, tag_not_in: $excludedTags, startDate_like: $yearLike) {
+    Data: media(sort: $sort, type: $type, season: $season, seasonYear: $seasonYear, format: $format, status: $status, isAdult: $isAdult, genre_in: $includedGenres, genre_not_in: $excludedGenres, tag_in: $includedTags, tag_not_in: $excludedTags, startDate_like: $yearLike, popularity_greater: $popularityGreaterThan, averageScore_greater: $averageGreaterThan) {
       id
       type
       format
@@ -160,6 +160,7 @@ query ($mediaId: Int!) {
     description
     averageScore
     meanScore
+    popularity
     genres
     siteUrl
     isFavourite
