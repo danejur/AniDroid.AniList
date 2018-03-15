@@ -175,6 +175,9 @@ query ($mediaId: Int!) {
       allTime
       context
     }
+    mediaListEntry {
+      status
+    }
     stats {
       scoreDistribution {
         score
