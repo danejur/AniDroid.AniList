@@ -16,6 +16,7 @@ query {
   Data: Viewer {
     id
     name
+    bannerImage
     avatar {
       large
     }
