@@ -7,6 +7,23 @@ namespace AniDroid.AniList.Queries
     internal static partial class QueryStore
     {
         /// <summary>
+        /// Returns: User
+        /// <para></para>
+        /// (Must be authorized)
+        /// </summary>
+        public static string GetCurrentUser => @"
+query {
+  Data: Viewer {
+    id
+    name
+    avatar {
+      large
+    }
+  }
+}
+";
+
+        /// <summary>
         /// Parameters: (userName?: string, userId?: int)
         /// <para></para>
         /// Returns: User

@@ -100,6 +100,15 @@ namespace AniDroid.AniList.Service
 
         #region User
 
+        public Task<OneOf<User, IAniListError>> GetCurrentUser(CancellationToken cToken)
+        {
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.GetCurrentUser
+            };
+            return GetResponseAsync<User>(query, cToken);
+        }
+
         public Task<OneOf<User, IAniListError>> GetUser(string userName, int? userId, CancellationToken cToken)
         {
             var query = new GraphQLQuery
