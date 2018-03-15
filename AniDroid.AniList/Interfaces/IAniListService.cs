@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Service;
 
 namespace AniDroid.AniList.Interfaces
 {
@@ -15,6 +16,12 @@ namespace AniDroid.AniList.Interfaces
     {
         IAniListServiceConfig Config { get; }
         IAuthCodeResolver AuthCodeResolver { get; }
+
+        #region Authorization
+
+        Task<IRestResponse<AniListAuthorizationResponse>> AuthenticateUser(IAniListAuthConfig config, string code, CancellationToken cToken);
+
+        #endregion
 
         #region Media
 

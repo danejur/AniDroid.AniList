@@ -4,7 +4,7 @@
     {
         string ClientId { get; }
         string ClientSecret { get; }
-        string RedirectUrl { get; }
-        string AuthUrl { get; }
+        string RedirectUri { get; }
+        string AuthTokenUri { get; }
     }
 }

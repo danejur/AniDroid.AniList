@@ -31,18 +31,22 @@ namespace AniDroid.AniList.Service
             AuthCodeResolver = auth;
         }
 
-        public static Task<IRestResponse<AniListAuthorizationResponse>> AuthenticateUser(IAniListAuthConfig config, string code, CancellationToken cToken = default)
+        #region Authorization
+
+        public Task<IRestResponse<AniListAuthorizationResponse>> AuthenticateUser(IAniListAuthConfig config, string code, CancellationToken cToken)
         {
-            var authReq = new RestRequest(config.AuthUrl, Method.POST);
+            var authReq = new RestRequest(Method.POST);
             authReq.AddParameter("client_id", config.ClientId);
             authReq.AddParameter("client_secret", config.ClientSecret);
-            authReq.AddParameter("grant_type", "refresh_token");
-            authReq.AddParameter("redirect_uri", config.RedirectUrl);
+            authReq.AddParameter("grant_type", "authorization_code");
+            authReq.AddParameter("redirect_uri", config.RedirectUri);
             authReq.AddParameter("code", code);
 
-            var client = new RestClient();
+            var client = new RestClient(config.AuthTokenUri);
             return client.ExecuteTaskAsync<AniListAuthorizationResponse>(authReq, cToken);
         }
+
+        #endregion
 
         #region Media
 
