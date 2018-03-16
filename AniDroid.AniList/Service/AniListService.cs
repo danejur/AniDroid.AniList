@@ -138,13 +138,12 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public Task<OneOf<User.UserFavourites, IAniListError>> ToggleFavorite(int id, User.FavoriteType favoriteType, CancellationToken cToken = default)
+        public Task<OneOf<User.UserFavourites, IAniListError>> ToggleFavorite(FavoriteDto favoriteDto, CancellationToken cToken = default)
         {
-            var variableObject = new JObject {{$"{favoriteType.Value.ToLower()}Id", id}};
             var mutation = new GraphQLQuery
             {
                 Query = QueryStore.ToggleUserFavorite,
-                Variables = variableObject,
+                Variables = favoriteDto,
             };
             return GetResponseAsync<User.UserFavourites>(mutation, cToken);
         }
