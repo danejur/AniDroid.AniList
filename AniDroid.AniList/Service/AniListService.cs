@@ -33,7 +33,7 @@ namespace AniDroid.AniList.Service
 
         #region Authorization
 
-        public Task<IRestResponse<AniListAuthorizationResponse>> AuthenticateUser(IAniListAuthConfig config, string code, CancellationToken cToken)
+        public async Task<OneOf<IRestResponse<AniListAuthorizationResponse>, IAniListError>> AuthenticateUser(IAniListAuthConfig config, string code, CancellationToken cToken)
         {
             var authReq = new RestRequest(Method.POST);
             authReq.AddParameter("client_id", config.ClientId);
@@ -43,7 +43,16 @@ namespace AniDroid.AniList.Service
             authReq.AddParameter("code", code);
 
             var client = new RestClient(config.AuthTokenUri);
-            return client.ExecuteTaskAsync<AniListAuthorizationResponse>(authReq, cToken);
+
+            try
+            {
+                return new OneOf<IRestResponse<AniListAuthorizationResponse>, IAniListError>(
+                    await client.ExecuteTaskAsync<AniListAuthorizationResponse>(authReq, cToken));
+            }
+            catch (Exception e)
+            {
+                return new AniListError(0, e.Message, e, null);
+            }
         }
 
         #endregion
