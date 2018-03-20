@@ -273,7 +273,7 @@ query ($page: Int, $count: Int) {
       lastPage
       hasNextPage
     }
-    Data: notifications {
+    Data: notifications(resetNotificationCount: true) {
       ... on AiringNotification {
         id
         type
@@ -464,7 +464,6 @@ query ($page: Int, $count: Int) {
     }
   }
 }
-
 ";
 
         /// <summary>
