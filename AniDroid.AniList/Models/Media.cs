@@ -50,6 +50,7 @@ namespace AniDroid.AniList.Models
         public MediaStats Stats { get; set; }
         public string SiteUrl { get; set; }
         public bool AutoCreateForumThread { get; set; }
+        public int Trending { get; set; }
 
         public string GetFormattedDateRangeString()
         {
@@ -338,6 +339,8 @@ namespace AniDroid.AniList.Models
             public static MediaSort ScoreDesc { get; } = new MediaSort("SCORE_DESC", "Score (Desc)", 17);
             public static MediaSort Popularity { get; } = new MediaSort("POPULARITY", "Popularity", 18);
             public static MediaSort PopularityDesc { get; } = new MediaSort("POPULARITY_DESC", "Popularity (Desc)", 19);
+            public static MediaSort Trending { get; } = new MediaSort("TRENDING", "Trending", 20);
+            public static MediaSort TrendingDesc { get; } = new MediaSort("TRENDING_DESC", "Trending (Desc)", 21);
         }
 
         #endregion

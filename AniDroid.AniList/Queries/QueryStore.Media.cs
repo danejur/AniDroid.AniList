@@ -29,6 +29,7 @@ query ($queryText: String, $page:Int, $count:Int, $type:MediaType) {
       averageScore
       isFavourite
       isAdult
+      trending
       title {
         userPreferred
       }
@@ -63,6 +64,7 @@ query ($page: Int, $count: Int, $sort: [MediaSort], $type: MediaType, $season: M
       averageScore
       isFavourite
       isAdult
+      trending
       title {
         userPreferred
       }
@@ -165,6 +167,7 @@ query ($mediaId: Int!) {
     siteUrl
     isFavourite
     synonyms
+    trending
     rankings {
       id
       rank
