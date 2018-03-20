@@ -468,6 +468,17 @@ query ($page: Int, $count: Int) {
 ";
 
         /// <summary>
+        /// Returns: User with UnreadNotificationCount
+        /// </summary>
+        public static string GetUserNotificationCount => @"
+query {
+  Data: Viewer {
+    unreadNotificationCount
+  }
+}
+";
+
+        /// <summary>
         /// Parameters: (id: int)
         /// <para></para>
         /// Returns: AniListActivity

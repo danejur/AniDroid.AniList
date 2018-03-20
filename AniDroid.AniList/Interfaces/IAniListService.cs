@@ -65,6 +65,8 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> GetAniListNotifications(int perPage);
 
+        Task<OneOf<User, IAniListError>> GetAniListNotificationCount(CancellationToken cToken);
+
         #endregion
 
         #region Character

@@ -216,6 +216,15 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
+        public Task<OneOf<User, IAniListError>> GetAniListNotificationCount(CancellationToken cToken = default)
+        {
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.GetUserNotificationCount
+            };
+            return GetResponseAsync<User>(query, cToken);
+        }
+
         #endregion
 
         #region Character
