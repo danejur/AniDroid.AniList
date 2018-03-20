@@ -202,10 +202,10 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<AniListActivity>(query, cToken);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> GetAniListActivity(int perPage = 20)
+        public IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> GetAniListActivity(AniListActivityDto activityDto, int perPage = 20)
         {
             return new PagedAsyncEnumerable<AniListActivity>(perPage,
-                CreateGetPageFunc<AniListActivity>(QueryStore.GetUserActivity, null),
+                CreateGetPageFunc<AniListActivity>(QueryStore.GetAniListActivity, activityDto),
                 HasNextPage);
         }
 

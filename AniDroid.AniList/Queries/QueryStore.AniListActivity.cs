@@ -106,12 +106,12 @@ mutation ($id: Int, $type: LikeableType) {
 ";
 
         /// <summary>
-        /// Parameters: (page: int, count: int)
+        /// Parameters: (isFollowing: bool?, userId: int?, page: int, count: int)
         /// <para></para>
         /// Returns: PagedData of AniListActivity
         /// </summary>
-        public static string GetUserActivity => @"
-query ($page: Int, $count: Int) {
+        public static string GetAniListActivity => @"
+query ($isFollowing: Boolean, $userId: Int, $page: Int, $count: Int) {
   Data: Page(page: $page, perPage: $count) {
     pageInfo {
       total
@@ -120,7 +120,7 @@ query ($page: Int, $count: Int) {
       lastPage
       hasNextPage
     }
-    Data: activities(isFollowing: true, sort: ID_DESC) {
+    Data: activities(isFollowing: $isFollowing, sort: ID_DESC, userId: $userId) {
       ... on TextActivity {
         id
         userId
