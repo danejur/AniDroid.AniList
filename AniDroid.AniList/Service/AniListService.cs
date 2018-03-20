@@ -128,7 +128,7 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<User>(query, cToken);
         }
 
-        public Task<OneOf<Media.MediaListCollection, IAniListError>> GetUserMediaList(string userName, Media.MediaType type, CancellationToken cToken = default)
+        public Task<OneOf<Media.MediaListCollection, IAniListError>> GetUserMediaList(string userName, Media.MediaType type, CancellationToken cToken)
         {
             var query = new GraphQLQuery
             {
@@ -147,7 +147,7 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public Task<OneOf<User.UserFavourites, IAniListError>> ToggleFavorite(FavoriteDto favoriteDto, CancellationToken cToken = default)
+        public Task<OneOf<User.UserFavourites, IAniListError>> ToggleFavorite(FavoriteDto favoriteDto, CancellationToken cToken)
         {
             var mutation = new GraphQLQuery
             {
@@ -157,6 +157,25 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<User.UserFavourites>(mutation, cToken);
         }
 
+        public Task<OneOf<AniListActivity, IAniListError>> PostUserMessage(int userId, string message, CancellationToken cToken)
+        {
+            var mutation = new GraphQLQuery
+            {
+                Query = QueryStore.PostUserMessage,
+                Variables = new { userId, message }
+            };
+            return GetResponseAsync<AniListActivity>(mutation, cToken);
+        }
+
+        public Task<OneOf<User, IAniListError>> ToggleFollowUser(int userId, CancellationToken cToken)
+        {
+            var mutation = new GraphQLQuery
+            {
+                Query = QueryStore.ToggleUserFollowing,
+                Variables = new { userId }
+            };
+            return GetResponseAsync<User>(mutation, cToken);
+        }
 
         #endregion
 

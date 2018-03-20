@@ -49,6 +49,10 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<User.UserFavourites, IAniListError>> ToggleFavorite(FavoriteDto favoriteDto, CancellationToken cToken);
 
+        Task<OneOf<AniListActivity, IAniListError>> PostUserMessage(int userId, string message, CancellationToken cToken);
+
+        Task<OneOf<User, IAniListError>> ToggleFollowUser(int userId, CancellationToken cToken);
+
         #endregion
 
         #region Activity

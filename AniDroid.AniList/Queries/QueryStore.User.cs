@@ -224,5 +224,36 @@ mutation ($animeId: Int, $mangaId: Int, $characterId: Int, $staffId: Int, $studi
   }
 }
 ";
+
+        /// <summary>
+        /// Parameters: (userId: int, message: string)
+        /// <para></para>
+        /// Returns: MessageActivity
+        /// </summary>
+        public static string PostUserMessage => @"
+mutation ($userId: Int, $message: String) {
+  Data: SaveMessageActivity(recipientId: $userId, message: $message) {
+    id
+    type
+    recipientId
+    createdAt
+    message
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (userId: int)
+        /// <para></para>
+        /// Returns: User
+        /// </summary>
+        public static string ToggleUserFollowing => @"
+mutation ($userId: Int) {
+  Data: ToggleFollow(userId: $userId) {
+    id
+    isFollowing
+  }
+}
+";
     }
 }
