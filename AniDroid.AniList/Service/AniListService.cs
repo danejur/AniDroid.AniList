@@ -105,6 +105,16 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
+        public Task<OneOf<Media.MediaList, IAniListError>> UpdateMediaListEntry(MediaListEditDto editDto, CancellationToken cToken)
+        {
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.UpdateMediaList,
+                Variables = editDto
+            };
+            return GetResponseAsync<Media.MediaList>(query, cToken);
+        }
+
         #endregion
 
         #region User

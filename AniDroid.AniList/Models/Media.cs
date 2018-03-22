@@ -18,8 +18,8 @@ namespace AniDroid.AniList.Models
         public MediaSeason Season { get; set; }
         public int Episodes { get; set; }
         public int Duration { get; set; }
-        public int Chapters { get; set; }
-        public int Volumes { get; set; }
+        public int? Chapters { get; set; }
+        public int? Volumes { get; set; }
         public string CountryOfOrigin { get; set; }
         public bool IsLicensed { get; set; }
         public string Source { get; set; }

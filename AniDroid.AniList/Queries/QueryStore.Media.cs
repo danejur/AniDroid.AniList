@@ -349,5 +349,42 @@ query ($mediaId: Int!, $page: Int, $perPage: Int) {
   }
 }
 ";
+
+        /// <summary>
+        /// Parameters: (mediaId: int, status: MediaListStatus, score?: float, progress?: int, progressVolumes?: int, repeat?: int, notes: string, private: bool)
+        /// <para></para>
+        /// Returns: MediaList
+        /// </summary>
+        public static string UpdateMediaList => @"
+mutation ($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int, $progressVolumes: Int, $repeat: Int, $notes: String, $private: Boolean) {
+  Data: SaveMediaListEntry(mediaId: $mediaId, status: $status, score: $score, progress: $progress, progressVolumes: $progressVolumes, repeat: $repeat, notes: $notes, private: $private) {
+    id
+    userId
+    mediaId
+    status
+    score
+    progress
+    progressVolumes
+    repeat
+    priority
+    private
+    notes
+    hiddenFromStatusLists
+    customLists
+    startedAt {
+      year
+      month
+      day
+    }
+    completedAt {
+      year
+      month
+      day
+    }
+    updatedAt
+    createdAt
+  }
+}
+";
     }
 }

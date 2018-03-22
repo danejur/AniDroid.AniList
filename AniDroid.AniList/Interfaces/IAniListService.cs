@@ -35,6 +35,8 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<OneOf<IPagedData<Staff.Edge>, IAniListError>> GetMediaStaff(int mediaId, int perPage);
 
+        Task<OneOf<Media.MediaList, IAniListError>> UpdateMediaListEntry(MediaListEditDto editDto, CancellationToken cToken);
+
         #endregion
 
         #region User

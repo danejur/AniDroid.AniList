@@ -47,9 +47,13 @@ namespace AniDroid.AniList
         public static T GetEnum<T>(string value) where T : AniListEnum =>
             (GetValueDictionary<T>().TryGetValue(value, out var retEnum) ? retEnum : null) as T;
 
+        public static T GetEnum<T>(int position) where T : AniListEnum =>
+            GetEnumValues<T>().ElementAtOrDefault(position);
+
         public static int GetIndex<T>(string value) where T : AniListEnum =>
             GetEnum<T>(value)?.Index ?? -1;
 
+        // TODO: this might be a good thing to cache
         public static List<T> GetEnumValues<T>() where T : AniListEnum =>
             GetValueDictionary<T>().Select(x => x.Value as T).OrderBy(x => x.Index).ToList();
 
