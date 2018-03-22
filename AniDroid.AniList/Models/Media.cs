@@ -149,8 +149,8 @@ namespace AniDroid.AniList.Models
             public bool Private { get; set; }
             public string Notes { get; set; }
             public bool HiddenFromStatusLists { get; set; }
-            //public List<Tuple<string, bool>> CustomLists { get; set; }    Bug created on github for this
-            // advanced scores
+            // public List<Tuple<string, bool>> CustomLists { get; set; }   TODO: Bug created on github for this
+            // advanced scores TODO: Implement
             public FuzzyDate StartedAt { get; set; }
             public FuzzyDate CompletedAt { get; set; }
             public int UpdatedAt { get; set; }

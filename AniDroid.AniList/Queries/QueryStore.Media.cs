@@ -214,6 +214,45 @@ query ($mediaId: Int!) {
       url
       site
     }
+    mediaListEntry {
+      user {
+        mediaListOptions {
+          scoreFormat
+          animeList {
+            advancedScoring
+            advancedScoringEnabled
+            customLists
+          }
+          mangaList {
+            advancedScoring
+            advancedScoringEnabled
+            customLists
+          }
+        }
+      }
+      status
+      score
+      progress
+      progressVolumes
+      repeat
+      priority
+      private
+      notes
+      hiddenFromStatusLists
+      customLists
+      startedAt {
+        year
+        month
+        day
+      }
+      completedAt {
+        year
+        month
+        day
+      }
+      updatedAt
+      createdAt
+    }
   }
 }
 ";

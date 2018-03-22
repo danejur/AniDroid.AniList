@@ -12,13 +12,36 @@ namespace AniDroid.AniList.Queries
         /// (Must be authorized)
         /// </summary>
         public static string GetCurrentUser => @"
-query {
+{
   Data: Viewer {
     id
     name
     bannerImage
     avatar {
       large
+    }
+    options {
+      titleLanguage
+      displayAdultContent
+    }
+    mediaListOptions {
+      scoreFormat
+      rowOrder
+      useLegacyLists
+      animeList {
+        sectionOrder
+        splitCompletedSectionByFormat
+        customLists
+        advancedScoring
+        advancedScoringEnabled
+      }
+      mangaList {
+        sectionOrder
+        splitCompletedSectionByFormat
+        customLists
+        advancedScoring
+        advancedScoringEnabled
+      }
     }
   }
 }
