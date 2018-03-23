@@ -239,7 +239,7 @@ query ($mediaId: Int!) {
       private
       notes
       hiddenFromStatusLists
-      customLists
+      customLists (asArray: true)
       startedAt {
         year
         month
@@ -351,13 +351,13 @@ query ($mediaId: Int!, $page: Int, $perPage: Int) {
 ";
 
         /// <summary>
-        /// Parameters: (mediaId: int, status: MediaListStatus, score?: float, progress?: int, progressVolumes?: int, repeat?: int, notes: string, private: bool)
+        /// Parameters: (mediaId: int, status: MediaListStatus, score?: float, progress?: int, progressVolumes?: int, repeat?: int, notes: string, private: bool, customLists?: string[], hiddenFromStatusLists: bool)
         /// <para></para>
         /// Returns: MediaList
         /// </summary>
         public static string UpdateMediaList => @"
-mutation ($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int, $progressVolumes: Int, $repeat: Int, $notes: String, $private: Boolean) {
-  Data: SaveMediaListEntry(mediaId: $mediaId, status: $status, score: $score, progress: $progress, progressVolumes: $progressVolumes, repeat: $repeat, notes: $notes, private: $private) {
+mutation ($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int, $progressVolumes: Int, $repeat: Int, $notes: String, $private: Boolean, $customLists: [String], $hiddenFromStatusLists: Boolean) {
+  Data: SaveMediaListEntry(mediaId: $mediaId, status: $status, score: $score, progress: $progress, progressVolumes: $progressVolumes, repeat: $repeat, notes: $notes, private: $private, customLists: $customLists, hiddenFromStatusLists: $hiddenFromStatusLists) {
     id
     userId
     mediaId
@@ -370,7 +370,7 @@ mutation ($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int
     private
     notes
     hiddenFromStatusLists
-    customLists
+    customLists(asArray: true)
     startedAt {
       year
       month
