@@ -383,6 +383,51 @@ mutation ($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int
     }
     updatedAt
     createdAt
+    media {
+      id
+      title {
+        romaji
+        english
+        native
+        userPreferred
+      }
+      startDate {
+        year
+        month
+        day
+      }
+      endDate {
+        year
+        month
+        day
+      }
+      coverImage {
+        large
+      }
+      bannerImage
+      duration
+      format
+      type
+      status
+      episodes
+      chapters
+      volumes
+      season
+      description
+      averageScore
+      meanScore
+      popularity
+      genres
+      siteUrl
+      isFavourite
+      synonyms
+      trending
+      nextAiringEpisode {
+        airingAt
+        timeUntilAiring
+        episode
+      }
+    }
   }
 }
 ";
