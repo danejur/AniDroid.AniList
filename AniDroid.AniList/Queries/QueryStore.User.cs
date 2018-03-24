@@ -128,55 +128,61 @@ query ($userId: Int, $type: MediaType) {
         }
       }
     }
-    statusLists(asArray: true) {
-      status
-      score
-      progress
-      progressVolumes
-      repeat
-      priority
-      notes
-      hiddenFromStatusLists
-      startedAt {
-        year
-        month
-        day
-      }
-      completedAt {
-        year
-        month
-        day
-      }
-      customLists (asArray: true)
-      media {
-        id
-        title {
-          userPreferred
-          english
-          romaji
-          native
-        }
-        coverImage {
-          medium
-          large
-        }
+    lists {
+      name
+      isCustomList
+      isSplitCompletedList
+      entries {
         status
-        episodes
-        chapters
-        volumes
-        format
-        averageScore
-        meanScore
-        popularity
-        startDate {
+        score
+        progress
+        progressVolumes
+        repeat
+        priority
+        notes
+        hiddenFromStatusLists
+        startedAt {
           year
           month
           day
         }
-        endDate {
+        completedAt {
           year
           month
           day
+        }
+        customLists(asArray: true)
+        media {
+          id
+          title {
+            userPreferred
+            english
+            romaji
+            native
+          }
+          coverImage {
+            medium
+            large
+          }
+          status
+          episodes
+          chapters
+          volumes
+          format
+          type
+          averageScore
+          meanScore
+          popularity
+          startDate {
+            year
+            month
+            day
+          }
+          endDate {
+            year
+            month
+            day
+          }
         }
       }
     }

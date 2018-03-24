@@ -16,8 +16,8 @@ namespace AniDroid.AniList.Models
         public FuzzyDate StartDate { get; set; }
         public FuzzyDate EndDate { get; set; }
         public MediaSeason Season { get; set; }
-        public int Episodes { get; set; }
-        public int Duration { get; set; }
+        public int? Episodes { get; set; }
+        public int? Duration { get; set; }
         public int? Chapters { get; set; }
         public int? Volumes { get; set; }
         public string CountryOfOrigin { get; set; }
@@ -159,10 +159,17 @@ namespace AniDroid.AniList.Models
             public User User { get; set; }
         }
 
+        public class MediaListGroup
+        {
+            public string Name { get; set; }
+            public bool IsCustomList { get; set; }
+            public bool IsSplitCompletedList { get; set; }
+            public List<MediaList> Entries { get; set; }
+        }
+
         public class MediaListCollection
         {
-            public List<List<MediaList>> StatusLists { get; set; }
-            public List<List<MediaList>> CustomLists { get; set; }
+            public List<MediaListGroup> Lists { get; set; }
             public User User { get; set; }
 
         }
