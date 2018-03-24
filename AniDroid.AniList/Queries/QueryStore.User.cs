@@ -107,13 +107,13 @@ query ($userId: Int, $userName: String) {
 ";
 
         /// <summary>
-        /// Parameters: (name: string, type: MediaType)
+        /// Parameters: (id: int, type: MediaType)
         /// <para></para>
         /// Returns: MediaListCollection
         /// </summary>
-        public static string GetMediaListsByUserNameAndType => @"
-query ($name: String, $type: MediaType) {
-  Data: MediaListCollection(userName: $name, type: $type) {
+        public static string GetMediaListsByUserIdAndType => @"
+query ($userId: Int, $type: MediaType) {
+  Data: MediaListCollection(userId: $userId, type: $type) {
     user {
       name
       mediaListOptions {
@@ -147,7 +147,7 @@ query ($name: String, $type: MediaType) {
         month
         day
       }
-      customLists
+      customLists (asArray: true)
       media {
         id
         title {
