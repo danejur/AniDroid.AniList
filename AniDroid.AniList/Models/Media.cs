@@ -1,6 +1,8 @@
-﻿using AniDroid.AniList.DataTypes;
+﻿using System;
+using AniDroid.AniList.DataTypes;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace AniDroid.AniList.Models
@@ -157,6 +159,31 @@ namespace AniDroid.AniList.Models
             public int CreatedAt { get; set; }
             public Media Media { get; set; }
             public User User { get; set; }
+
+            public string GetScoreString(User.ScoreFormat scoreFormat)
+            {
+                if (scoreFormat == User.ScoreFormat.ThreeSmileys)
+                {
+                    return new[] { "🤔 (no score)", "🙁", "😐", "🙂" }[Math.Min((int)Score, 3)];
+                }
+
+                if (Score == 0)
+                {
+                    return "No score given";
+                }
+
+                if (scoreFormat == User.ScoreFormat.TenDecimal)
+                {
+                    return $"{Score:#.#}";
+                }
+
+                if (scoreFormat == User.ScoreFormat.FiveStars)
+                {
+                    return string.Concat(Enumerable.Repeat("★", (int)Score));
+                }
+
+                return $"{Score:#}";
+            }
         }
 
         public class MediaListGroup
