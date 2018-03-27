@@ -107,13 +107,13 @@ query ($userId: Int, $userName: String) {
 ";
 
         /// <summary>
-        /// Parameters: (id: int, type: MediaType)
+        /// Parameters: (id: int, type: MediaType, groupCompleted: bool)
         /// <para></para>
         /// Returns: MediaListCollection
         /// </summary>
         public static string GetMediaListsByUserIdAndType => @"
-query ($userId: Int, $type: MediaType) {
-  Data: MediaListCollection(userId: $userId, type: $type, forceSingleCompletedList: true) {
+query ($userId: Int, $type: MediaType, $groupCompleted: Boolean) {
+  Data: MediaListCollection(userId: $userId, type: $type, forceSingleCompletedList: $groupCompleted) {
     user {
       name
       mediaListOptions {

@@ -45,7 +45,7 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<User, IAniListError>> GetUser(string userName, int? userId, CancellationToken cToken);
 
-        Task<OneOf<Media.MediaListCollection, IAniListError>> GetUserMediaList(int userId, Media.MediaType type, CancellationToken cToken);
+        Task<OneOf<Media.MediaListCollection, IAniListError>> GetUserMediaList(int userId, Media.MediaType type, bool groupCompleted, CancellationToken cToken);
 
         IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> SearchUsers(string queryText, int perPage);
 

@@ -138,12 +138,12 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<User>(query, cToken);
         }
 
-        public Task<OneOf<Media.MediaListCollection, IAniListError>> GetUserMediaList(int userId, Media.MediaType type, CancellationToken cToken)
+        public Task<OneOf<Media.MediaListCollection, IAniListError>> GetUserMediaList(int userId, Media.MediaType type, bool groupCompleted, CancellationToken cToken)
         {
             var query = new GraphQLQuery
             {
                 Query = QueryStore.GetMediaListsByUserIdAndType,
-                Variables = new { userId, type },
+                Variables = new { userId, type, groupCompleted },
             };
             return GetResponseAsync<Media.MediaListCollection>(query, cToken);
         }
