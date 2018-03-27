@@ -113,7 +113,7 @@ query ($userId: Int, $userName: String) {
         /// </summary>
         public static string GetMediaListsByUserIdAndType => @"
 query ($userId: Int, $type: MediaType) {
-  Data: MediaListCollection(userId: $userId, type: $type) {
+  Data: MediaListCollection(userId: $userId, type: $type, forceSingleCompletedList: true) {
     user {
       name
       mediaListOptions {
@@ -130,6 +130,7 @@ query ($userId: Int, $type: MediaType) {
     }
     lists {
       name
+      status
       isCustomList
       isSplitCompletedList
       entries {

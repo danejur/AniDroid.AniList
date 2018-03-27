@@ -174,7 +174,7 @@ namespace AniDroid.AniList.Models
 
                 if (scoreFormat == User.ScoreFormat.TenDecimal)
                 {
-                    return $"{Score:#.#}";
+                    return $"{Score:#.#} / 10";
                 }
 
                 if (scoreFormat == User.ScoreFormat.FiveStars)
@@ -182,7 +182,7 @@ namespace AniDroid.AniList.Models
                     return string.Concat(Enumerable.Repeat("★", (int)Score));
                 }
 
-                return $"{Score:#}";
+                return scoreFormat == User.ScoreFormat.Ten ? $"{Score:#} / 10" : $"{Score:#} / 100";
             }
         }
 
@@ -191,6 +191,7 @@ namespace AniDroid.AniList.Models
             public string Name { get; set; }
             public bool IsCustomList { get; set; }
             public bool IsSplitCompletedList { get; set; }
+            public MediaListStatus Status { get; set; }
             public List<MediaList> Entries { get; set; }
         }
 
