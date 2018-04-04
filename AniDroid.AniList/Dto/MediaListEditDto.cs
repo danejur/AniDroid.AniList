@@ -14,8 +14,9 @@ namespace AniDroid.AniList.Dto
         public int? ProgressVolumes { get; set; }
         public int? Repeat { get; set; }
         public string Notes { get; set; }
-        public bool Private { get; set; }
+        public bool? Private { get; set; }
+        public int? Priority { get; set; }
         public ICollection<string> CustomLists { get; set; }
-        public bool HiddenFromStatusLists { get; set; }
+        public bool? HiddenFromStatusLists { get; set; }
     }
 }

@@ -356,8 +356,8 @@ query ($mediaId: Int!, $page: Int, $perPage: Int) {
         /// Returns: MediaList
         /// </summary>
         public static string UpdateMediaList => @"
-mutation ($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int, $progressVolumes: Int, $repeat: Int, $notes: String, $private: Boolean, $customLists: [String], $hiddenFromStatusLists: Boolean) {
-  Data: SaveMediaListEntry(mediaId: $mediaId, status: $status, score: $score, progress: $progress, progressVolumes: $progressVolumes, repeat: $repeat, notes: $notes, private: $private, customLists: $customLists, hiddenFromStatusLists: $hiddenFromStatusLists) {
+mutation ($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int, $progressVolumes: Int, $repeat: Int, $notes: String, $priority: Int, $private: Boolean, $customLists: [String], $hiddenFromStatusLists: Boolean) {
+  Data: SaveMediaListEntry(mediaId: $mediaId, status: $status, score: $score, progress: $progress, progressVolumes: $progressVolumes, repeat: $repeat, notes: $notes, priority: $priority, private: $private, customLists: $customLists, hiddenFromStatusLists: $hiddenFromStatusLists) {
     id
     userId
     mediaId
