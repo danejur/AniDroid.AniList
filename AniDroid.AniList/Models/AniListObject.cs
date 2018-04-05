@@ -59,7 +59,7 @@ namespace AniDroid.AniList.Models
             return DateTimeOffset.FromUnixTimeSeconds(sec);
         }
 
-        public string GetAgeString(int sec)
+        public string GetAgeString(long sec)
         {
             var ageSeconds = DateTimeOffset.Now.ToUnixTimeSeconds() - sec;
 
@@ -82,6 +82,12 @@ namespace AniDroid.AniList.Models
 
             var ageDays = ageSeconds / 86400;
             return $"{ageDays} day{(ageDays != 1 ? "s" : "")} ago";
+        }
+
+        public string GetFormattedDateString(long sec)
+        {
+            var date = DateTimeOffset.FromUnixTimeSeconds(sec);
+            return date.ToString("MMMM dd, yyyy");
         }
 
         #region Enum Classes

@@ -137,9 +137,8 @@ namespace AniDroid.AniList.Models
             }
         }
 
-        public class MediaList
+        public class MediaList : AniListObject
         {
-            public int Id { get; set; }
             public int UserId { get; set; }
             public int MediaId { get; set; }
             public MediaListStatus Status { get; set; }
@@ -164,7 +163,7 @@ namespace AniDroid.AniList.Models
             {
                 if (scoreFormat == User.ScoreFormat.ThreeSmileys)
                 {
-                    return new[] { "🤔 (no score)", "🙁", "😐", "🙂" }[Math.Min((int)Score, 3)];
+                    return new[] {"🤔 (no score)", "🙁", "😐", "🙂"}[Math.Min((int)Score, 3)];
                 }
 
                 if (Score == 0)
@@ -183,6 +182,45 @@ namespace AniDroid.AniList.Models
                 }
 
                 return scoreFormat == User.ScoreFormat.Ten ? $"{Score:#} / 10" : $"{Score:#} / 100";
+            }
+
+            public string GetFormattedProgressString(MediaType type, int? maxProgress)
+            {
+                var retStr = "";
+
+                if (Status == MediaListStatus.Completed)
+                {
+                    retStr = CompletedAt?.IsValid() == true
+                        ? $"Completed on:  {CompletedAt.GetFuzzyDateString()}"
+                        : "Completed on unknown date";
+                }
+                else if (Status == MediaListStatus.Planning)
+                {
+                    retStr = $"Added to lists:  {GetFormattedDateString(CreatedAt)}";
+                }
+                else if (Status == MediaListStatus.Current || Status == MediaListStatus.Dropped || Status == MediaListStatus.Paused || Status == MediaListStatus.Repeating)
+                {
+                    var progressType = "";
+
+                    if (type == MediaType.Anime)
+                    {
+                        progressType = $"episode{(Progress == 1 ? "" : "s")}";
+                    }
+                    else if (type == MediaType.Manga)
+                    {
+                        progressType = $"chapter{(Progress == 1 ? "" : "s")}";
+                    }
+
+                    retStr =
+                        $"Progress:  {Progress}{(maxProgress.HasValue ? $" / {maxProgress} " : " ")}{progressType}";
+                }
+
+                if ((Repeat ?? 0) > 0)
+                {
+                    retStr += $"  (Repeats:  {Repeat})";
+                }
+
+                return retStr;
             }
         }
 
