@@ -174,6 +174,12 @@ query ($userId: Int, $type: MediaType, $groupCompleted: Boolean) {
           averageScore
           meanScore
           popularity
+          nextAiringEpisode {
+            id
+            airingAt
+            episode
+            timeUntilAiring
+          }
           startDate {
             year
             month
