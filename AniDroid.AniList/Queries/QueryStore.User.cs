@@ -109,24 +109,48 @@ query ($userId: Int, $userName: String) {
         /// <summary>
         /// Parameters: (id: int, type: MediaType, groupCompleted: bool)
         /// <para></para>
-        /// Returns: MediaListCollection
+        /// Returns: MediaListCollection with User
         /// </summary>
         public static string GetMediaListsByUserIdAndType => @"
 query ($userId: Int, $type: MediaType, $groupCompleted: Boolean) {
   Data: MediaListCollection(userId: $userId, type: $type, forceSingleCompletedList: $groupCompleted) {
     user {
+      id
       name
+      about(asHtml: true)
+      avatar {
+        large
+        medium
+      }
+      bannerImage
+      isFollowing
+      options {
+        titleLanguage
+        displayAdultContent
+      }
       mediaListOptions {
         scoreFormat
+        rowOrder
+        useLegacyLists
         animeList {
-          customLists
           sectionOrder
+          customLists
+          advancedScoring
+          splitCompletedSectionByFormat
+          advancedScoringEnabled
         }
         mangaList {
-          customLists
           sectionOrder
+          customLists
+          advancedScoring
+          splitCompletedSectionByFormat
+          advancedScoringEnabled
         }
       }
+      donatorTier
+      unreadNotificationCount
+      siteUrl
+      updatedAt
     }
     lists {
       name
