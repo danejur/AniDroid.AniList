@@ -11,6 +11,17 @@ namespace AniDroid.AniList.DataTypes
         public int? Month { get; set; }
         public int? Day { get; set; }
 
+        public FuzzyDate()
+        {
+        }
+
+        public FuzzyDate(DateTime? date)
+        {
+            Year = date?.Year ?? 0;
+            Month = date?.Month ?? 0;
+            Day = date?.Day ?? 0;
+        }
+
         public DateTime? GetDate()
         {
             if (Year.HasValue && Month.HasValue && Day.HasValue)
@@ -55,7 +66,7 @@ namespace AniDroid.AniList.DataTypes
                 return Year?.ToString();
             }
 
-            var retString = DateTimeFormatInfo.CurrentInfo.GetMonthName(Month.Value);
+            var retString = DateTimeFormatInfo.CurrentInfo?.GetMonthName(Month.Value);
             retString += Day.HasValue ? $" {Day.Value}" : "";
             retString += Year.HasValue ? $", {Year.Value}" : "";
             return retString;

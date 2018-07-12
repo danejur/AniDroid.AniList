@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AniDroid.AniList.DataTypes;
 using AniDroid.AniList.Models;
 
 namespace AniDroid.AniList.Dto
@@ -18,5 +19,7 @@ namespace AniDroid.AniList.Dto
         public int? Priority { get; set; }
         public ICollection<string> CustomLists { get; set; }
         public bool? HiddenFromStatusLists { get; set; }
+        public FuzzyDate StartDate { get; set; }
+        public FuzzyDate FinishDate { get; set; }
     }
 }
