@@ -227,6 +227,7 @@ query ($mediaId: Int!) {
           }
         }
       }
+      id
       status
       score
       progress
@@ -425,6 +426,17 @@ mutation ($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int
         episode
       }
     }
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (mediaListId: int)
+        /// </summary>
+        public static string DeleteMediaList => @"
+mutation ($mediaListId: Int) {
+  DeleteMediaListEntry(id: $mediaListId) {
+    deleted
   }
 }
 ";

@@ -58,7 +58,7 @@ namespace AniDroid.AniList
             GetValueDictionary<T>().Select(x => x.Value as T).OrderBy(x => x.Index).ToList();
 
         public bool Equals(AniListEnum obj) =>
-            obj.GetType() == GetType() && obj.Value == Value;
+            obj?.GetType() == GetType() && obj.Value == Value;
 
         public bool Equals(string val) =>
             Value == val;

@@ -115,6 +115,17 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<Media.MediaList>(query, cToken);
         }
 
+        public async Task<OneOf<bool, IAniListError>> DeleteMediaListEntry(int mediaListId, CancellationToken cToken)
+        {
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.DeleteMediaList,
+                Variables = new { mediaListId }
+            };
+
+            return await GetResponseAsync(query, cToken);
+        }
+
         #endregion
 
         #region User
@@ -434,6 +445,28 @@ namespace AniDroid.AniList.Service
             where T : class
         {
             return GetResponseAsync<T, T>(CreateRequest(query), obj => obj, cToken);
+        }
+
+        // TODO: Document
+        private async Task<OneOf<bool, IAniListError>> GetResponseAsync(GraphQLQuery query, CancellationToken cToken)
+        {
+            try
+            {
+                var servResp = await CreateClient().ExecuteTaskAsync<GraphQLResponse>(CreateRequest(query), cToken)
+                    .ConfigureAwait(false);
+
+                if (servResp.IsSuccessful)
+                {
+                    return true;
+                }
+
+                return new AniListError((int)servResp.StatusCode, servResp.ErrorMessage, servResp.ErrorException,
+                    servResp.Data?.Errors);
+            }
+            catch (Exception e)
+            {
+                return new AniListError(0, e.Message, e, null);
+            }
         }
 
         // TODO: Document

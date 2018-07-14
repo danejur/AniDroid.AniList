@@ -37,6 +37,8 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<Media.MediaList, IAniListError>> UpdateMediaListEntry(MediaListEditDto editDto, CancellationToken cToken);
 
+        Task<OneOf<bool, IAniListError>> DeleteMediaListEntry(int mediaListId, CancellationToken cToken);
+
         #endregion
 
         #region User

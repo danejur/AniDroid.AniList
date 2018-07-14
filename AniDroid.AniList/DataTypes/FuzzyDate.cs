@@ -32,6 +32,11 @@ namespace AniDroid.AniList.DataTypes
             return null;
         }
 
+        public DateTime GetFuzzyDate()
+        {
+            return new DateTime(Year ?? DateTime.Now.Year, Month ?? 1, Day ?? 1);
+        }
+
         public bool IsValid()
         {
             return Year.HasValue || Month.HasValue;

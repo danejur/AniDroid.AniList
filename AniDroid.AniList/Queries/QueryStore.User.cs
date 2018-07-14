@@ -158,6 +158,8 @@ query ($userId: Int, $type: MediaType, $groupCompleted: Boolean) {
       isCustomList
       isSplitCompletedList
       entries {
+        id
+        createdAt
         status
         score
         progress

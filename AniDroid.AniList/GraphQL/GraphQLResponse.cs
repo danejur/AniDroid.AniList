@@ -11,4 +11,9 @@ namespace AniDroid.AniList.GraphQL
         public List<GraphQLError> Errors { get; set; }
         public T Value => Data?.ContainsKey("Data") == true ? Data["Data"] : null;
     }
+
+    public class GraphQLResponse
+    {
+        public List<GraphQLError> Errors { get; set; }
+    }
 }
