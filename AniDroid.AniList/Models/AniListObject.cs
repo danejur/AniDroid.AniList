@@ -59,29 +59,32 @@ namespace AniDroid.AniList.Models
             return DateTimeOffset.FromUnixTimeSeconds(sec);
         }
 
-        public string GetAgeString(long sec)
+        public string GetDurationString(long seconds, int precision = 0)
         {
-            var ageSeconds = DateTimeOffset.Now.ToUnixTimeSeconds() - sec;
-
-            if (ageSeconds < 60)
+            if (seconds < 60)
             {
-                return $"{ageSeconds} second{(ageSeconds != 1 ? "s" : "")} ago";
+                return $"{seconds} second{(seconds != 1 ? "s" : "")}";
             }
 
-            if (ageSeconds < 3600)
+            if (seconds < 3600)
             {
-                var ageMinutes = ageSeconds / 60;
-                return $"{ageMinutes} minute{(ageMinutes != 1 ? "s" : "")} ago";
+                var ageMinutes = decimal.Round((decimal)seconds / 60, precision, MidpointRounding.AwayFromZero);
+                return $"{ageMinutes} minute{(ageMinutes != 1 ? "s" : "")}";
             }
 
-            if (ageSeconds < 86400)
+            if (seconds < 86400)
             {
-                var ageHours = ageSeconds / 3600;
-                return $"{ageHours} hour{(ageHours != 1 ? "s" : "")} ago";
+                var ageHours = decimal.Round((decimal)seconds / 3600, precision, MidpointRounding.AwayFromZero);
+                return $"{ageHours} hour{(ageHours != 1 ? "s" : "")}";
             }
 
-            var ageDays = ageSeconds / 86400;
-            return $"{ageDays} day{(ageDays != 1 ? "s" : "")} ago";
+            var ageDays = decimal.Round((decimal)seconds / 86400, precision, MidpointRounding.AwayFromZero);
+            return $"{ageDays} day{(ageDays != 1 ? "s" : "")}";
+        }
+
+        public string GetAgeString(long seconds)
+        {
+            return $"{GetDurationString(DateTimeOffset.Now.ToUnixTimeSeconds() - seconds)} ago";
         }
 
         public string GetFormattedDateString(long sec)
