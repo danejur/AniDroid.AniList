@@ -198,6 +198,32 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<User>(mutation, cToken);
         }
 
+        public IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowers(int userId, User.UserSort sort,
+            int perPage = 20)
+        {
+            var arguments = new
+            {
+                userId,
+                sort
+            };
+            return new PagedAsyncEnumerable<User>(perPage,
+                CreateGetPageFunc<User>(QueryStore.GetUserFollowers, arguments),
+                HasNextPage);
+        }
+
+        public IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowing(int userId, User.UserSort sort,
+            int perPage = 20)
+        {
+            var arguments = new
+            {
+                userId,
+                sort
+            };
+            return new PagedAsyncEnumerable<User>(perPage,
+                CreateGetPageFunc<User>(QueryStore.GetUserFollowing, arguments),
+                HasNextPage);
+        }
+
         #endregion
 
         #region Activity

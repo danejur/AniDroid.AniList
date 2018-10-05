@@ -317,5 +317,63 @@ mutation ($userId: Int) {
   }
 }
 ";
+
+        /// <summary>
+        /// Paramters: (userId: int, sort: UserSort, page?: int, count?: int)
+        /// <para></para>
+        /// Returns: PagedData of User
+        /// </summary>
+        public static string GetUserFollowing => @"
+query ($userId: Int!, $sort: [UserSort], $page: Int, $count: Int) {
+  Data: Page(page: $page, perPage: $count) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    Data: following(userId: $userId, sort: $sort) {
+      id
+      name
+      avatar {
+        large
+      }
+      isFollowing
+      donatorTier
+      isBlocked
+    }
+  }
+}
+";
+
+        /// <summary>
+        /// Paramters: (userId: int, sort: UserSort, page?: int, count?: int)
+        /// <para></para>
+        /// Returns: PagedData of User
+        /// </summary>
+        public static string GetUserFollowers => @"
+query ($userId: Int!, $sort: [UserSort], $page: Int, $count: Int) {
+  Data: Page(page: $page, perPage: $count) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    Data: followers(userId: $userId, sort: $sort) {
+      id
+      name
+      avatar {
+        large
+      }
+      isFollowing
+      donatorTier
+      isBlocked
+    }
+  }
+}
+";
     }
 }

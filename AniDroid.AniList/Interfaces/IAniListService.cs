@@ -57,6 +57,10 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<User, IAniListError>> ToggleFollowUser(int userId, CancellationToken cToken);
 
+        IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowers(int userId, User.UserSort sort, int perPage);
+
+        IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowing(int userId, User.UserSort sort, int perPage);
+
         #endregion
 
         #region Activity

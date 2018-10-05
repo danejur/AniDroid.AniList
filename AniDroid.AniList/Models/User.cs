@@ -99,6 +99,21 @@ namespace AniDroid.AniList.Models
             public static FavoriteType Studio { get; } = new FavoriteType("STUDIO", "Studio", 4);
         }
 
+        public sealed class UserSort : AniListEnum
+        {
+            private UserSort(string val, string displayVal, int index) : base(val, displayVal, index) { }
+
+            public static UserSort Id { get; } = new UserSort("ID", "Id", 0);
+            public static UserSort IdDesc { get; } = new UserSort("ID_DESC", "Id (Desc)", 1);
+            public static UserSort Username { get; } = new UserSort("USERNAME", "Username", 2);
+            public static UserSort UsernameDesc { get; } = new UserSort("USERNAME_DESC", "Username (Desc)", 3);
+            public static UserSort WatchedTime { get; } = new UserSort("WATCHED_TIME", "Watched Time", 4);
+            public static UserSort WatchedTimeDesc { get; } = new UserSort("WATCHED_TIME_DESC", "Watched Time (Desc)", 5);
+            public static UserSort ChaptersRead { get; } = new UserSort("CHAPTERS_READ", "Chapters Read", 6);
+            public static UserSort ChaptersReadDesc { get; } = new UserSort("CHAPTERS_READ_DESC", "Chapters Read (Desc)", 7);
+            public static UserSort SearchMatch { get; } = new UserSort("SEARCH_MATCH", "Search Match", 8);
+        }
+
         #endregion
     }
 }
