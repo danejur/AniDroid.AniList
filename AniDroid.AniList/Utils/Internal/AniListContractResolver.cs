@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using AniDroid.AniList.DataTypes;
 using AniDroid.AniList.Interfaces;
@@ -11,7 +12,7 @@ namespace AniDroid.AniList.Utils.Internal
     {
         private static AniListContractResolver _instance;
 
-        private readonly Dictionary<Type, JsonConverter> _converterCache;
+        private readonly ConcurrentDictionary<Type, JsonConverter> _converterCache;
 
         // Manual Singleton ftw!
         public static AniListContractResolver Instance
@@ -21,7 +22,7 @@ namespace AniDroid.AniList.Utils.Internal
 
         private AniListContractResolver()
         {
-            _converterCache = new Dictionary<Type, JsonConverter>();
+            _converterCache = new ConcurrentDictionary<Type, JsonConverter>();
 
             NamingStrategy = new CamelCaseNamingStrategy();
             InterfaceConcreteMap = new Dictionary<Type, Type>
