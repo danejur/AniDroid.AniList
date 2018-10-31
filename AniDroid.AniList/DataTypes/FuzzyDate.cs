@@ -24,9 +24,16 @@ namespace AniDroid.AniList.DataTypes
 
         public DateTime? GetDate()
         {
-            if (Year.HasValue && Month.HasValue && Day.HasValue)
+            if (Year > 0 && Month > 0 && Day > 0)
             {
-                return new DateTime(Year.Value, Month.Value, Day.Value);
+                try
+                {
+                    return new DateTime(Year.Value, Month.Value, Day.Value);
+                }
+                catch
+                {
+                    return null;
+                }
             }
 
             return null;
@@ -39,7 +46,7 @@ namespace AniDroid.AniList.DataTypes
 
         public bool IsValid()
         {
-            return Year.HasValue || Month.HasValue;
+            return Year > 0 || Month > 0;
         }
 
         public bool Equals(FuzzyDate date)
@@ -66,7 +73,7 @@ namespace AniDroid.AniList.DataTypes
 
         public string GetFuzzyDateString()
         {
-            if (!Month.HasValue)
+            if (!(Month > 0 && Month < 13))
             {
                 return Year?.ToString();
             }
