@@ -18,6 +18,8 @@ namespace AniDroid.AniList.Dto
         public string YearLike => Year.HasValue ? $"{Year}%" : null;
         public int? PopularityGreaterThan { get; set; }
         public int? AverageGreaterThan { get; set; }
+        public int? EpisodesGreaterThan { get; set; }
+        public int? EpisodesLessThan { get; set; }
 
         public ICollection<string> IncludedGenres { get; set; }
         public ICollection<string> ExcludedGenres { get; set; }
