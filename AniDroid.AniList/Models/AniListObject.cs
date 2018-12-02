@@ -24,6 +24,9 @@ namespace AniDroid.AniList.Models
             public string Native { get; set; }
             public List<string> Alternative { get; set; }
 
+            public string FormattedName => $"{First} {Last}".Trim();
+
+            // TODO: remove this
             public string GetFormattedName(bool nativeLineBreak = false) =>
                 $"{$"{First} {Last}".Trim()}{(string.IsNullOrWhiteSpace(Native) ? "" : ($"{(nativeLineBreak ? "\n" : " ")}({Native})"))}";
         }
