@@ -30,6 +30,7 @@ query ($queryText: String, $page:Int, $count:Int, $type:MediaType) {
       isFavourite
       isAdult
       trending
+      genres
       title {
         userPreferred
       }
@@ -65,6 +66,7 @@ query ($page: Int, $count: Int, $sort: [MediaSort], $type: MediaType, $season: M
       isFavourite
       isAdult
       trending
+      genres
       title {
         userPreferred
       }
