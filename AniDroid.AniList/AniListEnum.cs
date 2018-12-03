@@ -64,5 +64,10 @@ namespace AniDroid.AniList
 
         public bool Equals(string val) =>
             Value == val;
+
+        public override string ToString()
+        {
+            return DisplayValue;
+        }
     }
 }
