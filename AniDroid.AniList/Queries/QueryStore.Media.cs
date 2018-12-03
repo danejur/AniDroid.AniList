@@ -12,8 +12,8 @@ namespace AniDroid.AniList.Queries
         /// Returns: PagedData of Media
         /// </summary>
         public static string SearchMedia => @"
-query ($queryText: String, $page:Int, $count:Int, $type:MediaType) {
-  Data: Page(page:$page, perPage:$count) {
+query ($queryText: String, $page: Int, $count: Int, $type: MediaType) {
+  Data: Page(page: $page, perPage: $count) {
     pageInfo {
       total
       perPage
@@ -36,6 +36,33 @@ query ($queryText: String, $page:Int, $count:Int, $type:MediaType) {
       }
       coverImage {
         large
+      }
+      mediaListEntry {
+        id
+        userId
+        mediaId
+        status
+        score
+        progress
+        progressVolumes
+        repeat
+        priority
+        private
+        notes
+        hiddenFromStatusLists
+        customLists(asArray: true)
+        startedAt {
+          year
+          month
+          day
+        }
+        completedAt {
+          year
+          month
+          day
+        }
+        updatedAt
+        createdAt
       }
     }
   }

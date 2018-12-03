@@ -200,6 +200,7 @@ query ($userId: Int, $type: MediaType, $groupCompleted: Boolean) {
           averageScore
           meanScore
           popularity
+          genres
           nextAiringEpisode {
             id
             airingAt
