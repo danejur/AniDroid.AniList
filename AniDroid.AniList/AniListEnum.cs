@@ -60,7 +60,9 @@ namespace AniDroid.AniList
         public bool Equals(AniListEnum obj) =>
             obj?.GetType() == GetType() && obj.Value == Value;
 
-        public bool EqualsAny(params AniListEnum[] objs) => objs.Any(x => x.Equals(Value));
+        public bool EqualsAny<T>(params T[] objs) where T : AniListEnum => objs.Any(x => x.Equals(Value));
+
+        public bool EqualsAny<T>(IList<T> objs) where T : AniListEnum => objs.Any(x => x.Equals(Value));
 
         public bool Equals(string val) =>
             Value == val;

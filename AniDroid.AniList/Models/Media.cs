@@ -297,18 +297,20 @@ namespace AniDroid.AniList.Models
         /// </summary>
         public sealed class MediaFormat : AniListEnum
         {
+            public MediaType MediaType { get; private set; }
+
             private MediaFormat(string val, string displayVal, int index) : base(val, displayVal, index) { }
 
-            public static MediaFormat Tv { get; } = new MediaFormat("TV", "TV", 0);
-            public static MediaFormat TvShort { get; } = new MediaFormat("TV_SHORT", "TV Short", 1);
-            public static MediaFormat Movie { get; } = new MediaFormat("MOVIE", "Movie", 2);
-            public static MediaFormat Special { get; } = new MediaFormat("SPECIAL", "Special", 3);
-            public static MediaFormat Ova { get; } = new MediaFormat("OVA", "OVA", 4);
-            public static MediaFormat Ona { get; } = new MediaFormat("ONA", "ONA", 5);
-            public static MediaFormat Music { get; } = new MediaFormat("MUSIC", "Music", 6);
-            public static MediaFormat Manga { get; } = new MediaFormat("MANGA", "Manga", 7);
-            public static MediaFormat Novel { get; } = new MediaFormat("NOVEL", "Novel", 8);
-            public static MediaFormat OneShot { get; } = new MediaFormat("ONE_SHOT", "One Shot", 9);
+            public static MediaFormat Tv { get; } = new MediaFormat("TV", "TV", 0) { MediaType = MediaType.Anime };
+            public static MediaFormat TvShort { get; } = new MediaFormat("TV_SHORT", "TV Short", 1) { MediaType = MediaType.Anime };
+            public static MediaFormat Movie { get; } = new MediaFormat("MOVIE", "Movie", 2) { MediaType = MediaType.Anime };
+            public static MediaFormat Special { get; } = new MediaFormat("SPECIAL", "Special", 3) { MediaType = MediaType.Anime };
+            public static MediaFormat Ova { get; } = new MediaFormat("OVA", "OVA", 4) { MediaType = MediaType.Anime };
+            public static MediaFormat Ona { get; } = new MediaFormat("ONA", "ONA", 5) { MediaType = MediaType.Anime };
+            public static MediaFormat Music { get; } = new MediaFormat("MUSIC", "Music", 6) { MediaType = MediaType.Anime };
+            public static MediaFormat Manga { get; } = new MediaFormat("MANGA", "Manga", 7) { MediaType = MediaType.Manga };
+            public static MediaFormat Novel { get; } = new MediaFormat("NOVEL", "Novel", 8) { MediaType = MediaType.Manga };
+            public static MediaFormat OneShot { get; } = new MediaFormat("ONE_SHOT", "One Shot", 9) { MediaType = MediaType.Manga };
         }
 
         /// <summary>
