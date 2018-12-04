@@ -259,12 +259,12 @@ query ($isFollowing: Boolean, $userId: Int, $page: Int, $count: Int) {
 ";
 
         /// <summary>
-        /// Parameters: (page: int, count: int)
+        /// Parameters: (page: int, count: int, resetNotificationCount: bool = false)
         /// <para></para>
         /// Returns: PagedData of AniListNotification
         /// </summary>
         public static string GetUserNotifications => @"
-query ($page: Int, $count: Int) {
+query ($page: Int, $count: Int, $resetNotificationCount: Boolean = false) {
   Data: Page(page: $page, perPage: $count) {
     pageInfo {
       total
@@ -273,7 +273,7 @@ query ($page: Int, $count: Int) {
       lastPage
       hasNextPage
     }
-    Data: notifications(resetNotificationCount: true) {
+    Data: notifications(resetNotificationCount: $resetNotificationCount) {
       ... on AiringNotification {
         id
         type

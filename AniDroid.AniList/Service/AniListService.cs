@@ -275,10 +275,10 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> GetAniListNotifications(int perPage = 20)
+        public IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> GetAniListNotifications(bool resetNotificationCount, int perPage = 20)
         {
             return new PagedAsyncEnumerable<AniListNotification>(perPage,
-                CreateGetPageFunc<AniListNotification>(QueryStore.GetUserNotifications, null),
+                CreateGetPageFunc<AniListNotification>(QueryStore.GetUserNotifications, new { resetNotificationCount }),
                 HasNextPage);
         }
 
