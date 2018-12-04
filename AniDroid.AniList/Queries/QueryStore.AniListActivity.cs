@@ -7,13 +7,13 @@ namespace AniDroid.AniList.Queries
     internal partial class QueryStore
     {
         /// <summary>
-        /// Parameters: (text: string)
+        /// Parameters: (text: string, activityId: int)
         /// <para></para>
         /// Returns: AniListActivity
         /// </summary>
-        public static string PostTextActivity => @"
-mutation ($text: String) {
-  Data: SaveTextActivity(text: $text) {
+        public static string SaveTextActivity => @"
+mutation ($text: String, $activityId: Int) {
+  Data: SaveTextActivity(text: $text, id: $activityId) {
     id
     userId
     type
@@ -53,6 +53,19 @@ mutation ($text: String) {
         }
       }
     }
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (activityId: int)
+        /// <para></para>
+        /// Returns: DeletedResponse
+        /// </summary>
+        public static string DeleteActivity => @"
+mutation ($activityId: Int) {
+  Data: DeleteActivity(id: $activityId) {
+    deleted
   }
 }
 ";

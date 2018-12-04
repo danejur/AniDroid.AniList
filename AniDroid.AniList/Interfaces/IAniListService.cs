@@ -65,7 +65,16 @@ namespace AniDroid.AniList.Interfaces
 
         #region Activity
 
-        Task<OneOf<AniListActivity, IAniListError>> PostTextActivity(string text, CancellationToken cToken);
+        /// <summary>
+        /// Saves a text activity to AniList, which will show up in the user's feed.
+        /// </summary>
+        /// <param name="text">The text for the activity.</param>
+        /// <param name="activityId">(Optional) The Id of the activity to update with new text.</param>
+        /// <param name="cToken"></param>
+        /// <returns></returns>
+        Task<OneOf<AniListActivity, IAniListError>> SaveTextActivity(string text, int? activityId, CancellationToken cToken);
+
+        Task<OneOf<AniListObject.DeletedResponse, IAniListError>> DeleteActivity(int activityId, CancellationToken cToken);
 
         Task<OneOf<AniListActivity.ActivityReply, IAniListError>> PostActivityReply(int activityId, string text, CancellationToken cToken);
 

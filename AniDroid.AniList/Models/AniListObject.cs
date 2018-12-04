@@ -51,6 +51,11 @@ namespace AniDroid.AniList.Models
             public PageInfo PageInfo { get; set; }
         }
 
+        public class DeletedResponse
+        {
+            public bool Deleted { get; set; }
+        }
+
         public abstract class ConnectionEdge<TNodeType> where TNodeType : AniListObject
         {
             public int Id { get; set; }

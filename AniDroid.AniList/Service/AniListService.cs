@@ -238,14 +238,24 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<List<User>>(query, cToken);
         }
 
-        public Task<OneOf<AniListActivity, IAniListError>> PostTextActivity(string text, CancellationToken cToken = default)
+        public Task<OneOf<AniListActivity, IAniListError>> SaveTextActivity(string text, int? activityId, CancellationToken cToken = default)
         {
             var query = new GraphQLQuery
             {
-                Query = QueryStore.PostTextActivity,
-                Variables = new { text },
+                Query = QueryStore.SaveTextActivity,
+                Variables = new { text, activityId },
             };
             return GetResponseAsync<AniListActivity>(query, cToken);
+        }
+
+        public Task<OneOf<AniListObject.DeletedResponse, IAniListError>> DeleteActivity(int activityId, CancellationToken cToken)
+        {
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.DeleteActivity,
+                Variables = new { activityId },
+            };
+            return GetResponseAsync<AniListObject.DeletedResponse>(query, cToken);
         }
 
         public Task<OneOf<AniListActivity.ActivityReply, IAniListError>> PostActivityReply(int activityId, string text, CancellationToken cToken = default)
