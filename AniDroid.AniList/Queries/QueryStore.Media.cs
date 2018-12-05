@@ -100,6 +100,33 @@ query ($page: Int, $count: Int, $sort: [MediaSort], $type: MediaType, $season: M
       coverImage {
         large
       }
+      mediaListEntry {
+        id
+        userId
+        mediaId
+        status
+        score
+        progress
+        progressVolumes
+        repeat
+        priority
+        private
+        notes
+        hiddenFromStatusLists
+        customLists(asArray: true)
+        startedAt {
+          year
+          month
+          day
+        }
+        completedAt {
+          year
+          month
+          day
+        }
+        updatedAt
+        createdAt
+      }
     }
   }
 }
