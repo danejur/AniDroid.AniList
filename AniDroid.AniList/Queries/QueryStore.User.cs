@@ -168,6 +168,7 @@ query ($userId: Int, $type: MediaType, $groupCompleted: Boolean) {
         priority
         notes
         hiddenFromStatusLists
+        updatedAt
         startedAt {
           year
           month
