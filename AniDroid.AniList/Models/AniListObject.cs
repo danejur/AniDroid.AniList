@@ -90,6 +90,31 @@ namespace AniDroid.AniList.Models
             return $"{ageDays} day{(ageDays != 1 ? "s" : "")}";
         }
 
+        public string GetExactDurationString(long seconds, bool includeSeconds = false)
+        {
+            var timespan = TimeSpan.FromSeconds(seconds);
+            var formatString = new StringBuilder();
+
+            if (timespan.Days > 0)
+            {
+                formatString.Append("%d'd '");
+            }
+            if (timespan.Hours > 0)
+            {
+                formatString.Append("%h'h '");
+            }
+            if (timespan.Minutes > 0)
+            {
+                formatString.Append("%m'm '");
+            }
+            if (timespan.Seconds > 0 && includeSeconds)
+            {
+                formatString.Append("%s's '");
+            }
+
+            return timespan.ToString(formatString.ToString()).Trim();
+        }
+
         public string GetAgeString(long seconds)
         {
             return $"{GetDurationString(DateTimeOffset.Now.ToUnixTimeSeconds() - seconds)} ago";

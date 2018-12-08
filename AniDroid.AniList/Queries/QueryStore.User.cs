@@ -198,6 +198,7 @@ query ($userId: Int, $type: MediaType, $groupCompleted: Boolean) {
           volumes
           format
           type
+          duration
           averageScore
           meanScore
           popularity
