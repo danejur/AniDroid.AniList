@@ -1,4 +1,6 @@
-﻿namespace AniDroid.AniList.Models
+﻿using System;
+
+namespace AniDroid.AniList.Models
 {
     public class AiringSchedule : AniListObject
     {
@@ -7,6 +9,16 @@
         public int Episode { get; set; }
         public int MediaId { get; set; }
         public Media Media { get; set; }
+
+        public DateTime GetAiringAtDateTime()
+        {
+            return DateTimeOffset.FromUnixTimeSeconds(AiringAt).DateTime;
+        }
+
+        public TimeSpan GetTimeUntilAiringTimeSpan()
+        {
+            return TimeSpan.FromSeconds(TimeUntilAiring);
+        }
 
         #region Internal Classes
 
