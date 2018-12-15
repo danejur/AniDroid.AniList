@@ -69,6 +69,10 @@ namespace AniDroid.AniList.Models
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> liked your comment, in the forum thread <b><font color='{accentColor}'>{Thread?.Title}</font></b>.";
             }
+            else if (Type.Equals(NotificationType.ActivityReplySubscribed))
+            {
+                notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> replied to an activity you previously replied to.";
+            }
 
             return notificationText;
         }
@@ -93,7 +97,8 @@ namespace AniDroid.AniList.Models
                 Type.Equals(NotificationType.ActivityReply) ||
                 Type.Equals(NotificationType.ActivityMention) ||
                 Type.Equals(NotificationType.ActivityLike) ||
-                Type.Equals(NotificationType.ActivityReplyLike))
+                Type.Equals(NotificationType.ActivityReplyLike) ||
+                Type.Equals(NotificationType.ActivityReplySubscribed))
             {
                 returnType = NotificationActionType.Activity;
             }
@@ -137,6 +142,7 @@ namespace AniDroid.AniList.Models
             public static NotificationType ActivityReplyLike { get; } = new NotificationType("ACTIVITY_REPLY_LIKE", "Activity Reply Like", 9);
             public static NotificationType ThreadLike { get; } = new NotificationType("THREAD_LIKE", "Thread Like", 10);
             public static NotificationType ThreadCommentLike { get; } = new NotificationType("THREAD_COMMENT_LIKE", "Thread Comment Like", 11);
+            public static NotificationType ActivityReplySubscribed { get; } = new NotificationType("ACTIVITY_REPLY_SUBSCRIBED", "Activity Reply Subscribed", 12);
         }
 
         public sealed class NotificationActionType : AniListEnum

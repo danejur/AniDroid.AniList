@@ -474,6 +474,20 @@ query ($page: Int, $count: Int, $resetNotificationCount: Boolean = false) {
           }
         }
       }
+      ... on ActivityReplySubscribedNotification {
+        id
+        type
+        context
+        createdAt
+        activityId
+        user {
+          id
+          name
+          avatar {
+            large
+          }
+        }
+      }
     }
   }
 }
