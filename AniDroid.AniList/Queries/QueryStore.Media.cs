@@ -35,7 +35,9 @@ query ($queryText: String, $page: Int, $count: Int, $type: MediaType) {
         userPreferred
       }
       coverImage {
+        extraLarge
         large
+        color
       }
       mediaListEntry {
         id
@@ -98,7 +100,9 @@ query ($page: Int, $count: Int, $sort: [MediaSort], $type: MediaType, $season: M
         userPreferred
       }
       coverImage {
+        extraLarge
         large
+        color
       }
       mediaListEntry {
         id
@@ -158,7 +162,9 @@ query ($mediaId: Int!) {
       day
     }
     coverImage {
-      large
+        extraLarge
+        large
+        color
     }
     characters {
       pageInfo {
@@ -456,7 +462,9 @@ mutation ($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int
         day
       }
       coverImage {
+        extraLarge
         large
+        color
       }
       bannerImage
       duration

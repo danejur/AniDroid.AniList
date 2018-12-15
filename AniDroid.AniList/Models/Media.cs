@@ -28,7 +28,7 @@ namespace AniDroid.AniList.Models
         public string Hashtag { get; set; }
         public MediaTrailer Trailer { get; set; }
         public int UpdatedAt { get; set; }
-        public AniListImage CoverImage { get; set; }
+        public MediaCoverImage CoverImage { get; set; }
         public string BannerImage { get; set; }
         public List<string> Genres { get; set; }
         public List<string> Synonyms { get; set; }
@@ -275,6 +275,12 @@ namespace AniDroid.AniList.Models
         {
             public string Name { get; set; }
             public bool Enabled { get; set; }
+        }
+
+        public class MediaCoverImage : AniListImage
+        {
+            public string ExtraLarge { get; set; }
+            public string Color { get; set; }
         }
 
         #endregion
