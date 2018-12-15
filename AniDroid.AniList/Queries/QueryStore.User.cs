@@ -189,7 +189,7 @@ query ($userId: Int, $type: MediaType, $groupCompleted: Boolean) {
             native
           }
           coverImage {
-            medium
+            color
             large
           }
           status
