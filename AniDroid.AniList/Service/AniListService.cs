@@ -224,6 +224,17 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
+        public IAsyncEnumerable<OneOf<IPagedData<Media.MediaList>, IAniListError>> GetMediaFollowingUsersMediaLists(int mediaId, int perPage)
+        {
+            var arguments = new
+            {
+                mediaId
+            };
+            return new PagedAsyncEnumerable<Media.MediaList>(perPage,
+                CreateGetPageFunc<Media.MediaList>(QueryStore.GetMediaFollowingUsersMediaLists, arguments),
+                HasNextPage);
+        }
+
         #endregion
 
         #region Activity

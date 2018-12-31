@@ -378,5 +378,40 @@ query ($userId: Int!, $sort: [UserSort], $page: Int, $count: Int) {
   }
 }
 ";
+
+        /// <summary>
+        /// Paramters: (mediaId: int, page?: int, count?: int)
+        /// <para></para>
+        /// Returns: PagedData of MediaList
+        /// </summary>
+        public static string GetMediaFollowingUsersMediaLists => @"
+query ($mediaId: Int!, $page: Int, $count: Int) {
+  Data: Page(page: $page, perPage: $count) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    Data: mediaList(mediaId: $mediaId, isFollowing: true, sort: UPDATED_TIME_DESC) {
+      id
+      status
+      score
+      progress
+      user {
+        id
+        name
+        avatar {
+          large
+        }
+        mediaListOptions {
+          scoreFormat
+        }
+      }
+    }
+  }
+}
+";
     }
 }

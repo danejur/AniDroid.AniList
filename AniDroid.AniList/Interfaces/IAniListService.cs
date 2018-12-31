@@ -61,6 +61,8 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowing(int userId, User.UserSort sort, int perPage);
 
+        IAsyncEnumerable<OneOf<IPagedData<Media.MediaList>, IAniListError>> GetMediaFollowingUsersMediaLists(int mediaId, int perPage);
+
         #endregion
 
         #region Activity
