@@ -441,6 +441,14 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
+        public IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> GetMediaForumThreads(int mediaId, int perPage)
+        {
+            var arguments = new { mediaId };
+            return new PagedAsyncEnumerable<ForumThread>(perPage,
+                CreateGetPageFunc<ForumThread>(QueryStore.GetMediaForumThreads, arguments),
+                HasNextPage);
+        }
+
         #endregion
 
         #region Internal
