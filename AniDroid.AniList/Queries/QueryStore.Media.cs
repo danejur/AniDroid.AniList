@@ -162,9 +162,9 @@ query ($mediaId: Int!) {
       day
     }
     coverImage {
-        extraLarge
-        large
-        color
+      extraLarge
+      large
+      color
     }
     characters {
       pageInfo {
@@ -273,6 +273,15 @@ query ($mediaId: Int!) {
       url
       site
     }
+    reviews {
+      pageInfo {
+        total
+        perPage
+        hasNextPage
+        currentPage
+        lastPage
+      }
+    }
     mediaListEntry {
       user {
         mediaListOptions {
@@ -299,7 +308,7 @@ query ($mediaId: Int!) {
       private
       notes
       hiddenFromStatusLists
-      customLists (asArray: true)
+      customLists(asArray: true)
       startedAt {
         year
         month
@@ -501,6 +510,53 @@ mutation ($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int
 mutation ($mediaListId: Int) {
   DeleteMediaListEntry(id: $mediaListId) {
     deleted
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (mediaId: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: PagedData of Reviews
+        /// </summary>
+        public static string GetMediaReviews => @"
+query ($mediaId: Int!, $page: Int, $count: Int) {
+  Data: Page(page: $page, perPage: $count) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    Data: reviews(mediaId: $mediaId) {
+      id
+      summary
+      rating
+      ratingAmount
+      score
+      userRating
+      media {
+        id
+        title {
+          userPreferred
+        }
+        coverImage {
+          large
+          color
+        }
+      }
+      user {
+        id
+        name
+        avatar {
+          large
+        }
+        mediaListOptions {
+          scoreFormat
+        }
+      }
+    }
   }
 }
 ";

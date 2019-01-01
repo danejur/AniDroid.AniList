@@ -126,6 +126,13 @@ namespace AniDroid.AniList.Service
             return await GetResponseAsync(query, cToken);
         }
 
+        public IAsyncEnumerable<OneOf<IPagedData<Review>, IAniListError>> GetMediaReviews(int mediaId, int perPage)
+        {
+            var arguments = new { mediaId };
+            return new PagedAsyncEnumerable<Review>(perPage,
+                CreateGetPageFunc<Review>(QueryStore.GetMediaReviews, arguments), HasNextPage);
+        }
+
         #endregion
 
         #region User
@@ -233,6 +240,13 @@ namespace AniDroid.AniList.Service
             return new PagedAsyncEnumerable<Media.MediaList>(perPage,
                 CreateGetPageFunc<Media.MediaList>(QueryStore.GetMediaFollowingUsersMediaLists, arguments),
                 HasNextPage);
+        }
+
+        public IAsyncEnumerable<OneOf<IPagedData<Review>, IAniListError>> GetUserReviews(int userId, int perPage)
+        {
+            var arguments = new { userId };
+            return new PagedAsyncEnumerable<Review>(perPage,
+                CreateGetPageFunc<Review>(QueryStore.GetUserReviews, arguments), HasNextPage);
         }
 
         #endregion

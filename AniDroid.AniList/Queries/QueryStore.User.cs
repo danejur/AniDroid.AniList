@@ -413,5 +413,52 @@ query ($mediaId: Int!, $page: Int, $count: Int) {
   }
 }
 ";
+
+        /// <summary>
+        /// Parameters: (userId: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: PagedData of Reviews
+        /// </summary>
+        public static string GetUserReviews => @"
+query ($userId: Int!, $page: Int, $count: Int) {
+  Data: Page(page: $page, perPage: $count) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    Data: reviews(userId: $userId) {
+      id
+      summary
+      rating
+      ratingAmount
+      score
+      userRating
+      media {
+        id
+        title {
+          userPreferred
+        }
+        coverImage {
+          large
+          color
+        }
+      }
+      user {
+        id
+        name
+        avatar {
+          large
+        }
+        mediaListOptions {
+          scoreFormat
+        }
+      }
+    }
+  }
+}
+";
     }
 }

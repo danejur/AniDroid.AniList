@@ -39,6 +39,8 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<bool, IAniListError>> DeleteMediaListEntry(int mediaListId, CancellationToken cToken);
 
+        IAsyncEnumerable<OneOf<IPagedData<Review>, IAniListError>> GetMediaReviews(int mediaId, int perPage);
+
         #endregion
 
         #region User
@@ -62,6 +64,8 @@ namespace AniDroid.AniList.Interfaces
         IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowing(int userId, User.UserSort sort, int perPage);
 
         IAsyncEnumerable<OneOf<IPagedData<Media.MediaList>, IAniListError>> GetMediaFollowingUsersMediaLists(int mediaId, int perPage);
+
+        IAsyncEnumerable<OneOf<IPagedData<Review>, IAniListError>> GetUserReviews(int userId, int perPage);
 
         #endregion
 
