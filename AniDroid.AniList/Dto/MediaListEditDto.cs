@@ -21,5 +21,6 @@ namespace AniDroid.AniList.Dto
         public bool? HiddenFromStatusLists { get; set; }
         public FuzzyDate StartDate { get; set; }
         public FuzzyDate FinishDate { get; set; }
+        public List<float?> AdvancedScores { get; set; }
     }
 }

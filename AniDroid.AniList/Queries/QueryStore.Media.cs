@@ -45,6 +45,7 @@ query ($queryText: String, $page: Int, $count: Int, $type: MediaType) {
         mediaId
         status
         score
+        advancedScores
         progress
         progressVolumes
         repeat
@@ -110,6 +111,7 @@ query ($page: Int, $count: Int, $sort: [MediaSort], $type: MediaType, $season: M
         mediaId
         status
         score
+        advancedScores
         progress
         progressVolumes
         repeat
@@ -309,6 +311,7 @@ query ($mediaId: Int!) {
       notes
       hiddenFromStatusLists
       customLists(asArray: true)
+      advancedScores
       startedAt {
         year
         month
@@ -420,18 +423,19 @@ query ($mediaId: Int!, $page: Int, $perPage: Int) {
 ";
 
         /// <summary>
-        /// Parameters: (mediaId: int, status: MediaListStatus, score?: float, progress?: int, progressVolumes?: int, repeat?: int, notes: string, private: bool, customLists?: string[], hiddenFromStatusLists: bool, startDate: FuzzyDate, finishDate: FuzzyDate)
+        /// Parameters: (mediaId: int, status: MediaListStatus, score?: float, progress?: int, progressVolumes?: int, repeat?: int, notes: string, private: bool, customLists?: string[], hiddenFromStatusLists: bool, startDate: FuzzyDate, finishDate: FuzzyDate, advancedScores: List[float])
         /// <para></para>
         /// Returns: MediaList
         /// </summary>
         public static string UpdateMediaList => @"
-mutation ($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int, $progressVolumes: Int, $repeat: Int, $notes: String, $priority: Int, $private: Boolean, $customLists: [String], $hiddenFromStatusLists: Boolean, $startDate: FuzzyDateInput, $finishDate: FuzzyDateInput) {
-  Data: SaveMediaListEntry(mediaId: $mediaId, status: $status, score: $score, progress: $progress, progressVolumes: $progressVolumes, repeat: $repeat, notes: $notes, priority: $priority, private: $private, customLists: $customLists, hiddenFromStatusLists: $hiddenFromStatusLists, startedAt: $startDate, completedAt: $finishDate) {
+mutation ($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int, $progressVolumes: Int, $repeat: Int, $notes: String, $priority: Int, $private: Boolean, $customLists: [String], $hiddenFromStatusLists: Boolean, $startDate: FuzzyDateInput, $finishDate: FuzzyDateInput, $advancedScores: [Float]) {
+  Data: SaveMediaListEntry(mediaId: $mediaId, status: $status, score: $score, progress: $progress, progressVolumes: $progressVolumes, repeat: $repeat, notes: $notes, priority: $priority, private: $private, customLists: $customLists, hiddenFromStatusLists: $hiddenFromStatusLists, startedAt: $startDate, completedAt: $finishDate, advancedScores: $advancedScores) {
     id
     userId
     mediaId
     status
     score
+    advancedScores
     progress
     progressVolumes
     repeat

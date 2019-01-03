@@ -160,6 +160,7 @@ query ($userId: Int, $type: MediaType, $groupCompleted: Boolean) {
       entries {
         id
         createdAt
+        advancedScores
         status
         score
         progress

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace AniDroid.AniList.Models
 {
@@ -151,7 +152,8 @@ namespace AniDroid.AniList.Models
             public string Notes { get; set; }
             public bool HiddenFromStatusLists { get; set; }
             public List<MediaCustomList> CustomLists { get; set; }
-            // advanced scores TODO: Implement
+            // TODO: work-around. see about getting this changed to an array
+            public dynamic AdvancedScores { get; set; }
             public FuzzyDate StartedAt { get; set; }
             public FuzzyDate CompletedAt { get; set; }
             public int UpdatedAt { get; set; }
