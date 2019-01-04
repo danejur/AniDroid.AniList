@@ -346,6 +346,7 @@ query ($page: Int, $count: Int, $resetNotificationCount: Boolean = false) {
       }
       ... on ActivityReplyNotification {
         id
+        activityId
         type
         context
         createdAt
