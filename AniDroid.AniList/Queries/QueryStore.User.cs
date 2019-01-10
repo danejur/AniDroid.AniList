@@ -57,7 +57,7 @@ query ($userId: Int, $userName: String) {
   Data: User(id: $userId, name: $userName) {
     id
     name
-    about(asHtml: true)
+    about
     avatar {
       large
       medium
