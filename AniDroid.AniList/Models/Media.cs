@@ -345,6 +345,11 @@ namespace AniDroid.AniList.Models
             public static MediaSeason Spring { get; } = new MediaSeason("SPRING", "Spring", 1);
             public static MediaSeason Summer { get; } = new MediaSeason("SUMMER", "Summer", 2);
             public static MediaSeason Fall { get; } = new MediaSeason("FALL", "Fall", 3);
+
+            public static MediaSeason GetFromDate(DateTime date)
+            {
+                return GetEnum<MediaSeason>((date.Month - 1) / 3);
+            }
         }
 
         /// <summary>
