@@ -400,6 +400,13 @@ query ($mediaId: Int!, $page: Int, $count: Int) {
       status
       score
       progress
+      media {
+        status
+        volumes
+        chapters
+        episodes
+        type
+      }
       user {
         id
         name
