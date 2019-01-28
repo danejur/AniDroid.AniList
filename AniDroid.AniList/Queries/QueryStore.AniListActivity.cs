@@ -102,6 +102,50 @@ mutation ($activityId: Int, $text: String) {
 ";
 
         /// <summary>
+        /// Parameters: (id: int, text: string)
+        /// <para></para>
+        /// Returns: ActivityReply
+        /// </summary>
+        public static string SaveActivityReply => @"
+mutation ($id: Int, $text: String) {
+  Data: SaveActivityReply(id: $id, text: $text) {
+    id
+    userId
+    activityId
+    text
+    createdAt
+    user {
+      id
+      name
+      avatar {
+        large
+      }
+    }
+    likes {
+      id
+      name
+      avatar {
+        large
+      }
+    }
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (id: int)
+        /// <para></para>
+        /// Returns: DeletedResponse
+        /// </summary>
+        public static string DeleteActivityReply => @"
+mutation ($id: Int) {
+  Data: DeleteActivityReply(id: $id) {
+    deleted
+  }
+}
+";
+
+        /// <summary>
         /// Parameters: (id: int, type: LikeableType)
         /// <para></para>
         /// Returns: List of Users

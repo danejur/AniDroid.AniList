@@ -94,6 +94,10 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<User, IAniListError>> GetAniListNotificationCount(CancellationToken cToken);
 
+        Task<OneOf<AniListActivity.ActivityReply, IAniListError>> SaveActivityReply(int id, string text, CancellationToken cToken);
+
+        Task<OneOf<AniListObject.DeletedResponse, IAniListError>> DeleteActivityReply(int id, CancellationToken cToken);
+
         #endregion
 
         #region Character

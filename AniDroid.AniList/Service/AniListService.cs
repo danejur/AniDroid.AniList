@@ -326,6 +326,26 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<User>(query, cToken);
         }
 
+        public Task<OneOf<AniListActivity.ActivityReply, IAniListError>> SaveActivityReply(int id, string text, CancellationToken cToken)
+        {
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.SaveActivityReply,
+                Variables = new { id, text },
+            };
+            return GetResponseAsync<AniListActivity.ActivityReply>(query, cToken);
+        }
+
+        public Task<OneOf<AniListObject.DeletedResponse, IAniListError>> DeleteActivityReply(int id, CancellationToken cToken)
+        {
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.DeleteActivityReply,
+                Variables = new { id },
+            };
+            return GetResponseAsync<AniListObject.DeletedResponse>(query, cToken);
+        }
+
         #endregion
 
         #region Character
