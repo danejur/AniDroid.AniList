@@ -443,6 +443,18 @@ namespace AniDroid.AniList.Models
             public static MediaSort TrendingDesc { get; } = new MediaSort("TRENDING_DESC", "Trending (Desc)", 21);
         }
 
+        /// <summary>
+        /// Describes the country of origin of the Media (e.g. Japan, Korea, China)
+        /// </summary>
+        public sealed class MediaCountry : AniListEnum
+        {
+            public MediaCountry(string val, string displayVal, int index) : base(val, displayVal, index) { }
+
+            public static MediaCountry Japan { get; } = new MediaCountry("JP", "Japan", 0);
+            public static MediaCountry Korea { get; } = new MediaCountry("KR", "Korea", 1);
+            public static MediaCountry China { get; } = new MediaCountry("CN", "China", 2);
+        }
+
         #endregion
 
     }
