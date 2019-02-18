@@ -25,7 +25,7 @@ namespace AniDroid.AniList.Models
         public int? Volumes { get; set; }
         public string CountryOfOrigin { get; set; }
         public bool IsLicensed { get; set; }
-        public string Source { get; set; }
+        public MediaSource Source { get; set; }
         public string Hashtag { get; set; }
         public MediaTrailer Trailer { get; set; }
         public int UpdatedAt { get; set; }

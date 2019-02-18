@@ -31,6 +31,27 @@ query ($queryText: String, $page: Int, $count: Int, $type: MediaType) {
       isAdult
       trending
       genres
+      status
+      format
+      type
+      startDate {
+        year
+        month
+        day
+      }
+      endDate {
+        year
+        month
+        day
+      }
+      season
+      episodes
+      duration
+      chapters
+      volumes
+      countryOfOrigin
+      isLicensed
+      source
       title {
         userPreferred
       }
@@ -97,6 +118,27 @@ query ($page: Int, $count: Int, $sort: [MediaSort], $type: MediaType, $season: M
       isAdult
       trending
       genres
+      status
+      format
+      type
+      startDate {
+        year
+        month
+        day
+      }
+      endDate {
+        year
+        month
+        day
+      }
+      season
+      episodes
+      duration
+      chapters
+      volumes
+      countryOfOrigin
+      isLicensed
+      source
       title {
         userPreferred
       }
@@ -230,6 +272,8 @@ query ($mediaId: Int!) {
     genres
     siteUrl
     isFavourite
+    countryOfOrigin
+    isLicensed
     synonyms
     trending
     rankings {
