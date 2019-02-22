@@ -22,6 +22,7 @@ namespace AniDroid.AniList.Dto
         public int? EpisodesGreaterThan { get; set; }
         public int? EpisodesLessThan { get; set; }
         public Media.MediaCountry Country { get; set; }
+        public Media.MediaSource Source { get; set; }
 
         public ICollection<string> IncludedGenres { get; set; }
         public ICollection<string> ExcludedGenres { get; set; }
