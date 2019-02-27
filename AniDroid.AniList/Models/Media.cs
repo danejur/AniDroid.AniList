@@ -455,6 +455,22 @@ namespace AniDroid.AniList.Models
             public static MediaCountry China { get; } = new MediaCountry("CN", "China", 2);
         }
 
+        /// <summary>
+        /// Describes the license holder of the Media (e.g. Netflix, Amazon, etc.)
+        /// </summary>
+        public sealed class MediaLicensee : AniListEnum
+        {
+            public MediaLicensee(string val, string displayVal, int index) : base(val, displayVal, index) { }
+
+            public static MediaLicensee Crunchyroll { get; } = new MediaLicensee("Cruncyroll", "Crunchyroll", 0);
+            public static MediaLicensee Funimation { get; } = new MediaLicensee("Funimation", "Funimation", 1);
+            public static MediaLicensee Netflix { get; } = new MediaLicensee("Netflix", "Netflix", 2);
+            public static MediaLicensee Amazon { get; } = new MediaLicensee("Amazon", "Amazon", 3);
+            public static MediaLicensee Hidive { get; } = new MediaLicensee("Hidive", "Hidive", 4);
+            public static MediaLicensee Hulu { get; } = new MediaLicensee("Hulu", "Hulu", 5);
+            public static MediaLicensee Animelab { get; } = new MediaLicensee("Animelab", "Animelab", 6);
+        }
+
         #endregion
 
     }

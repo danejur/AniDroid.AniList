@@ -28,5 +28,7 @@ namespace AniDroid.AniList.Dto
         public ICollection<string> ExcludedGenres { get; set; }
         public ICollection<string> IncludedTags { get; set; }
         public ICollection<string> ExcludedTags { get; set; }
+
+        public ICollection<string> LicensedBy { get; set; }
     }
 }
