@@ -608,5 +608,32 @@ query ($mediaId: Int!, $page: Int, $count: Int) {
   }
 }
 ";
+
+        /// <summary>
+        /// Returns: List of all Media Tags
+        /// </summary>
+        public static string GetMediaTagCollection => @"
+query {
+  Data: MediaTagCollection {
+    id
+    name
+    description
+    category
+    rank
+    isGeneralSpoiler
+    isMediaSpoiler
+    isAdult
+  }
+}
+";
+
+        /// <summary>
+        /// Returns: List of all Genres
+        /// </summary>
+        public static string GetGenreCollection => @"
+query {
+  Data: GenreCollection
+}
+";
     }
 }

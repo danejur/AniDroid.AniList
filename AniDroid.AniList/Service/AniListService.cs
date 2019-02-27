@@ -133,6 +133,26 @@ namespace AniDroid.AniList.Service
                 CreateGetPageFunc<Review>(QueryStore.GetMediaReviews, arguments), HasNextPage);
         }
 
+        public async Task<OneOf<IList<Media.MediaTag>, IAniListError>> GetMediaTagCollectionAsync(CancellationToken cToken)
+        {
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.GetMediaTagCollection
+            };
+
+            return await GetResponseAsync<IList<Media.MediaTag>>(query, cToken);
+        }
+
+        public async Task<OneOf<IList<string>, IAniListError>> GetGenreCollectionAsync(CancellationToken cToken)
+        {
+            var query = new GraphQLQuery
+            {
+                Query = QueryStore.GetGenreCollection
+            };
+
+            return await GetResponseAsync<IList<string>>(query, cToken);
+        }
+
         #endregion
 
         #region User
