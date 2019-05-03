@@ -73,6 +73,10 @@ namespace AniDroid.AniList.Models
             {
                 notificationText = $"<b><font color='{accentColor}'>{User?.Name}</font></b> replied to an activity you previously replied to.";
             }
+            else if (Type.Equals(NotificationType.RelatedMediaAddition))
+            {
+                notificationText = $"<b><font color='{accentColor}'>{Media?.Title?.UserPreferred}</font></b> was recently added to the site.";
+            }
 
             return notificationText;
         }
@@ -81,7 +85,7 @@ namespace AniDroid.AniList.Models
         {
             var imageUrl = User?.Avatar?.Large;
 
-            if (Type.Equals(NotificationType.Airing))
+            if (Type.EqualsAny(NotificationType.Airing, NotificationType.RelatedMediaAddition))
             {
                 imageUrl = Media?.CoverImage?.Large;
             }
@@ -114,7 +118,7 @@ namespace AniDroid.AniList.Models
             {
                 returnType = NotificationActionType.Thread;
             }
-            else if (Type.Equals(NotificationType.Airing))
+            else if (Type.EqualsAny(NotificationType.Airing, NotificationType.RelatedMediaAddition))
             {
                 returnType = NotificationActionType.Media;
             }
@@ -143,6 +147,7 @@ namespace AniDroid.AniList.Models
             public static NotificationType ThreadLike { get; } = new NotificationType("THREAD_LIKE", "Thread Like", 10);
             public static NotificationType ThreadCommentLike { get; } = new NotificationType("THREAD_COMMENT_LIKE", "Thread Comment Like", 11);
             public static NotificationType ActivityReplySubscribed { get; } = new NotificationType("ACTIVITY_REPLY_SUBSCRIBED", "Activity Reply Subscribed", 12);
+            public static NotificationType RelatedMediaAddition { get; } = new NotificationType("RELATED_MEDIA_ADDITION", "Related Media Addition", 13);
         }
 
         public sealed class NotificationActionType : AniListEnum

@@ -533,6 +533,21 @@ query ($page: Int, $count: Int, $resetNotificationCount: Boolean = false) {
           }
         }
       }
+      ... on RelatedMediaAdditionNotification {
+        id
+        type
+        context
+        createdAt
+        media {
+          id
+          title {
+            userPreferred
+          }
+          coverImage {
+            large
+          }
+        }
+      }
     }
   }
 }
