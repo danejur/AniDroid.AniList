@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,7 +9,6 @@ using OneOf;
 
 namespace AniDroid.AniList.Utils.Internal 
 {
-    // TODO: Use IAsyncEnumerator+IAsyncEnumnerable from C# 8.0 ASAP
     internal class PagedAsyncEnumerable<T> : IAsyncEnumerable<OneOf<IPagedData<T>, IAniListError>>
     {
         private readonly Func<PagingInfo, CancellationToken, Task<OneOf<IPagedData<T>, IAniListError>>> _getPage;
@@ -26,7 +26,7 @@ namespace AniDroid.AniList.Utils.Internal
             _nextPage = nextPage ?? throw new ArgumentNullException(nameof(nextPage));
         }
 
-        public IAsyncEnumerator<OneOf<IPagedData<T>, IAniListError>> GetEnumerator()
+        public IAsyncEnumerator<OneOf<IPagedData<T>, IAniListError>> GetAsyncEnumerator(CancellationToken cancellationToken = default)
             => new Enumerator(this);
 
         public class Enumerator : IAsyncEnumerator<OneOf<IPagedData<T>, IAniListError>>
@@ -42,12 +42,12 @@ namespace AniDroid.AniList.Utils.Internal
                 _info = new PagingInfo(source.PageSize);
             }
 
-            public async Task<bool> MoveNextAsync(CancellationToken ct = default)
+            public async ValueTask<bool> MoveNextAsync()
             {
                 if (_info.Remaining == false)
                     return false;
 
-                var pageResult = await _source._getPage(_info, ct).ConfigureAwait(false);
+                var pageResult = await _source._getPage(_info, default).ConfigureAwait(false);
 
                 Current = pageResult;
 
@@ -63,9 +63,11 @@ namespace AniDroid.AniList.Utils.Internal
                 return true;
             }
 
-            public void Dispose()
+            public ValueTask DisposeAsync()
             {
                 Current = null;
+
+                return new ValueTask(Task.CompletedTask);
             }
         }
     }
