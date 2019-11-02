@@ -323,7 +323,7 @@ mutation ($userId: Int) {
 ";
 
         /// <summary>
-        /// Paramters: (userId: int, sort: UserSort, page?: int, count?: int)
+        /// Parameters: (userId: int, sort: UserSort, page?: int, count?: int)
         /// <para></para>
         /// Returns: PagedData of User
         /// </summary>
@@ -352,7 +352,7 @@ query ($userId: Int!, $sort: [UserSort], $page: Int, $count: Int) {
 ";
 
         /// <summary>
-        /// Paramters: (userId: int, sort: UserSort, page?: int, count?: int)
+        /// Parameters: (userId: int, sort: UserSort, page?: int, count?: int)
         /// <para></para>
         /// Returns: PagedData of User
         /// </summary>
@@ -381,7 +381,7 @@ query ($userId: Int!, $sort: [UserSort], $page: Int, $count: Int) {
 ";
 
         /// <summary>
-        /// Paramters: (mediaId: int, page?: int, count?: int)
+        /// Parameters: (mediaId: int, page?: int, count?: int)
         /// <para></para>
         /// Returns: PagedData of MediaList
         /// </summary>
