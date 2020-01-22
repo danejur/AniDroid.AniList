@@ -256,6 +256,15 @@ query ($mediaId: Int!) {
         isMain
       }
     }
+    recommendations {
+      pageInfo {
+        total
+        perPage
+        hasNextPage
+        currentPage
+        lastPage
+      }
+    }
     bannerImage
     duration
     format
@@ -610,6 +619,49 @@ query ($mediaId: Int!, $page: Int, $count: Int) {
 ";
 
         /// <summary>
+        /// Parameters: (mediaId: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: PagedData of Media
+        /// </summary>
+        public static string GetMediaRecommendations => @"
+query ($mediaId: Int!, $page: Int, $perPage: Int) {
+  Data: Media(id: $mediaId) {
+    id
+    type
+    recommendations(page: $page, perPage: $perPage, sort: RATING_DESC) {
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
+      }
+      edges {
+        node {
+          id
+          rating
+          userRating
+          mediaRecommendation {
+            id
+            isAdult
+            title {
+              userPreferred
+            }
+            format
+            type
+            coverImage {
+              large
+            }
+            genres
+          }
+        }
+      }
+    }
+  }
+}
+";
+
+        /// <summary>
         /// Returns: List of all Media Tags
         /// </summary>
         public static string GetMediaTagCollection => @"
@@ -626,7 +678,7 @@ query {
   }
 }
 ";
-
+        
         /// <summary>
         /// Returns: List of all Genres
         /// </summary>

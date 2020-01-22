@@ -41,6 +41,7 @@ namespace AniDroid.AniList.Models
         public Connection<Character.Edge, Character> Characters { get; set; }
         public Connection<Staff.Edge, Staff> Staff { get; set; }
         public Connection<Studio.Edge, Studio> Studios { get; set; }
+        public Connection<Recommendation.Edge, Recommendation> Recommendations { get; set; }
         public bool IsFavourite { get; set; }
         public bool IsAdult { get; set; }
         public AiringSchedule NextAiringEpisode { get; set; }

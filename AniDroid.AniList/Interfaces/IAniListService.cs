@@ -41,6 +41,8 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<OneOf<IPagedData<Review>, IAniListError>> GetMediaReviews(int mediaId, int perPage);
 
+        IAsyncEnumerable<OneOf<IPagedData<Recommendation.Edge>, IAniListError>> GetMediaRecommendations(int mediaId, int perPage);
+
         Task<OneOf<IList<Media.MediaTag>, IAniListError>> GetMediaTagCollectionAsync(CancellationToken cToken);
 
         Task<OneOf<IList<string>, IAniListError>> GetGenreCollectionAsync(CancellationToken cToken);

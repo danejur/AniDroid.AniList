@@ -133,6 +133,14 @@ namespace AniDroid.AniList.Service
                 CreateGetPageFunc<Review>(QueryStore.GetMediaReviews, arguments), HasNextPage);
         }
 
+        public IAsyncEnumerable<OneOf<IPagedData<Recommendation.Edge>, IAniListError>> GetMediaRecommendations(int mediaId, int perPage)
+        {
+            var arguments = new { mediaId };
+            return new PagedAsyncEnumerable<Recommendation.Edge>(perPage,
+                CreateGetPageFunc<Recommendation.Edge, Media>(QueryStore.GetMediaRecommendations, arguments, media => media.Recommendations),
+                HasNextPage);
+        }
+
         public async Task<OneOf<IList<Media.MediaTag>, IAniListError>> GetMediaTagCollectionAsync(CancellationToken cToken)
         {
             var query = new GraphQLQuery
