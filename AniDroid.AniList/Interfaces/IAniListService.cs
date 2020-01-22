@@ -19,7 +19,7 @@ namespace AniDroid.AniList.Interfaces
 
         #region Authorization
 
-        Task<OneOf<IRestResponse<AniListAuthorizationResponse>, IAniListError>> AuthenticateUser(IAniListAuthConfig config, string code, CancellationToken cToken);
+        Task<OneOf<AniListAuthorizationResponse, IAniListError>> AuthenticateUser(IAniListAuthConfig config, string code, CancellationToken cToken);
 
         #endregion
 

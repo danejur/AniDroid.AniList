@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using RestSharp;
 using System.Threading.Tasks;
 using System.Threading;
 using AniDroid.AniList.Models;
 using System.IO;
+using System.Net.Http;
+using System.Text;
 using AniDroid.AniList.Dto;
 using Newtonsoft.Json;
-using RestSharp.Serializers;
 using Newtonsoft.Json.Serialization;
 using AniDroid.AniList.Interfaces;
-using RestSharp.Deserializers;
 using AniDroid.AniList.Queries;
 using Newtonsoft.Json.Linq;
 using AniDroid.AniList.GraphQL;
@@ -22,32 +21,39 @@ namespace AniDroid.AniList.Service
 {
     public class AniListService : IAniListService
     {
+        private readonly IHttpClientFactory _httpClientFactory;
+
         public IAniListServiceConfig Config { get; }
         public IAuthCodeResolver AuthCodeResolver { get; }
 
-        public AniListService(IAniListServiceConfig config, IAuthCodeResolver auth)
+        public AniListService(IAniListServiceConfig config, IAuthCodeResolver auth, IHttpClientFactory httpClientFactory)
         {
             Config = config;
             AuthCodeResolver = auth;
+            _httpClientFactory = httpClientFactory;
         }
 
         #region Authorization
 
-        public async Task<OneOf<IRestResponse<AniListAuthorizationResponse>, IAniListError>> AuthenticateUser(IAniListAuthConfig config, string code, CancellationToken cToken)
+        public async Task<OneOf<AniListAuthorizationResponse, IAniListError>> AuthenticateUser(IAniListAuthConfig config, string code, CancellationToken cToken)
         {
-            var authReq = new RestRequest(Method.POST);
-            authReq.AddParameter("client_id", config.ClientId);
-            authReq.AddParameter("client_secret", config.ClientSecret);
-            authReq.AddParameter("grant_type", "authorization_code");
-            authReq.AddParameter("redirect_uri", config.RedirectUri);
-            authReq.AddParameter("code", code);
-
-            var client = new RestClient(config.AuthTokenUri);
+            var client = _httpClientFactory.CreateClient();
 
             try
             {
-                return new OneOf<IRestResponse<AniListAuthorizationResponse>, IAniListError>(
-                    await client.ExecuteTaskAsync<AniListAuthorizationResponse>(authReq, cToken));
+                var response = await client.PostAsync(config.AuthTokenUri, new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("client_id", config.ClientId),
+                    new KeyValuePair<string, string>("client_secret", config.ClientSecret),
+                    new KeyValuePair<string, string>("grant_type", "authorization_code"),
+                    new KeyValuePair<string, string>("redirect_uri", config.RedirectUri),
+                    new KeyValuePair<string, string>("code", code)
+                }));
+
+                response.EnsureSuccessStatusCode();
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                return JsonConvert.DeserializeObject<AniListAuthorizationResponse>(responseContent);
             }
             catch (Exception e)
             {
@@ -502,54 +508,37 @@ namespace AniDroid.AniList.Service
         #region Internal
 
         /// <summary>
-        /// Creates an IRestClient based off of the configuration and auth resolver passed into the service's constructor.
+        /// Creates an HttpClient using the IHttpClientFactory, configuration,  and auth resolver passed into the service's constructor.
         /// </summary>
         /// <returns></returns>
-        private IRestClient CreateClient()
+        private HttpClient CreateClient()
         {
-            var client = new RestClient(Config.BaseUrl);
-            client.ClearHandlers();
-            client.AddHandler("*", AniListJsonSerializer.Default);
+            var retClient = _httpClientFactory.CreateClient("anidroid");
+            retClient.BaseAddress = new Uri(Config.BaseUrl);
 
             if (AuthCodeResolver.IsAuthorized)
             {
-                client.AddDefaultHeader("Authorization", $"Bearer {AuthCodeResolver.AuthCode}");
+                retClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {AuthCodeResolver.AuthCode}");
             }
 
-            return client;
-        }
-
-        /// <summary>
-        /// Creates a new IRestRequest based on the provided GraphQL query.
-        /// This sets the JSON serializer properly, and also sets the method as POST.
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        private static IRestRequest CreateRequest(GraphQLQuery query)
-        {
-            var req = new RestRequest(Method.POST)
-            {
-                JsonSerializer = AniListJsonSerializer.Default
-            };
-            req.AddJsonBody(query);
-            return req;
+            return retClient;
         }
 
         // TODO: Document
-        private async Task<OneOf<T, IAniListError>> GetResponseAsync<TResponse, T>(IRestRequest req, Func<TResponse, T> getObjectFunc, CancellationToken cToken) where T : class where TResponse : class
+        private async Task<OneOf<T, IAniListError>> GetResponseAsync<TResponse, T>(GraphQLQuery query, Func<TResponse, T> getObjectFunc, CancellationToken cToken) where T : class where TResponse : class
         {
             try
             {
-                var servResp = await CreateClient().ExecuteTaskAsync<GraphQLResponse<TResponse>>(req, cToken)
-                    .ConfigureAwait(false);
+                var resp = await CreateClient().PostAsync("",
+                    new StringContent(AniListJsonSerializer.Default.Serialize(query), Encoding.UTF8,
+                        "application/json"), cToken);
 
-                if (servResp.IsSuccessful)
-                {
-                    return getObjectFunc(servResp.Data.Value);
-                }
+                resp.EnsureSuccessStatusCode();
 
-                return new AniListError((int)servResp.StatusCode, servResp.ErrorMessage, servResp.ErrorException,
-                    servResp.Data?.Errors);
+                var respContent = await resp.Content.ReadAsStringAsync();
+                var respData = AniListJsonSerializer.Default.Deserialize<GraphQLResponse<TResponse>>(respContent);
+
+                return getObjectFunc(respData.Value);
             }
             catch (Exception e)
             {
@@ -561,7 +550,7 @@ namespace AniDroid.AniList.Service
         private Task<OneOf<T, IAniListError>> GetResponseAsync<T>(GraphQLQuery query, CancellationToken cToken)
             where T : class
         {
-            return GetResponseAsync<T, T>(CreateRequest(query), obj => obj, cToken);
+            return GetResponseAsync<T, T>(query, obj => obj, cToken);
         }
 
         // TODO: Document
@@ -569,16 +558,13 @@ namespace AniDroid.AniList.Service
         {
             try
             {
-                var servResp = await CreateClient().ExecuteTaskAsync<GraphQLResponse>(CreateRequest(query), cToken)
-                    .ConfigureAwait(false);
+                var resp = await CreateClient().PostAsync("",
+                    new StringContent(AniListJsonSerializer.Default.Serialize(query), Encoding.UTF8,
+                        "application/json"), cToken);
 
-                if (servResp.IsSuccessful)
-                {
-                    return true;
-                }
+                resp.EnsureSuccessStatusCode();
 
-                return new AniListError((int)servResp.StatusCode, servResp.ErrorMessage, servResp.ErrorException,
-                    servResp.Data?.Errors);
+                return true;
             }
             catch (Exception e)
             {
@@ -609,7 +595,8 @@ namespace AniDroid.AniList.Service
                     Variables = vars,
 
                 };
-                return GetResponseAsync(CreateRequest(query), getPagedDataFunc, ct);
+
+                return GetResponseAsync(query, getPagedDataFunc, ct);
             }
 
             return GetPageAsync;

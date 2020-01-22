@@ -47,7 +47,7 @@ namespace AniDroid.AniList.Utils.Internal
                 if (_info.Remaining == false)
                     return false;
 
-                var pageResult = await _source._getPage(_info, default).ConfigureAwait(false);
+                var pageResult = await _source._getPage(_info, default);
 
                 Current = pageResult;
 
