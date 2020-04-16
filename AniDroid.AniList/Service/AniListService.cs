@@ -533,7 +533,10 @@ namespace AniDroid.AniList.Service
                     new StringContent(AniListJsonSerializer.Default.Serialize(query), Encoding.UTF8,
                         "application/json"), cToken);
 
-                resp.EnsureSuccessStatusCode();
+                if (!resp.IsSuccessStatusCode)
+                {
+                    return new AniListError((int)resp.StatusCode, null, null, null);
+                }
 
                 var respContent = await resp.Content.ReadAsStringAsync();
                 var respData = AniListJsonSerializer.Default.Deserialize<GraphQLResponse<TResponse>>(respContent);
