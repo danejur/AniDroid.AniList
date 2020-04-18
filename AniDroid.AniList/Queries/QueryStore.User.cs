@@ -167,6 +167,7 @@ query ($userId: Int, $type: MediaType, $groupCompleted: Boolean) {
         progressVolumes
         repeat
         priority
+        private
         notes
         hiddenFromStatusLists
         updatedAt
