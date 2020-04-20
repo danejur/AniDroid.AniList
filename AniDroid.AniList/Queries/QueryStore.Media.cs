@@ -316,6 +316,7 @@ query ($mediaId: Int!) {
       description
       isGeneralSpoiler
       isMediaSpoiler
+      rank
     }
     nextAiringEpisode {
       airingAt
@@ -392,7 +393,7 @@ query ($mediaId: Int!, $page: Int, $perPage: Int) {
   Data: Media(id: $mediaId) {
     id
     type
-    characters(page: $page, perPage: $perPage) {
+    characters(page: $page, perPage: $perPage, sort: ROLE) {
       pageInfo {
         total
         perPage
