@@ -19,6 +19,7 @@ namespace AniDroid.AniList.Models
         public FuzzyDate StartDate { get; set; }
         public FuzzyDate EndDate { get; set; }
         public MediaSeason Season { get; set; }
+        public int? SeasonYear { get; set; }
         public int? Episodes { get; set; }
         public int? Duration { get; set; }
         public int? Chapters { get; set; }
@@ -470,6 +471,11 @@ namespace AniDroid.AniList.Models
             public static MediaLicensee Hidive { get; } = new MediaLicensee("Hidive", "Hidive", 4);
             public static MediaLicensee Hulu { get; } = new MediaLicensee("Hulu", "Hulu", 5);
             public static MediaLicensee Animelab { get; } = new MediaLicensee("Animelab", "Animelab", 6);
+            public static MediaLicensee Vrv { get; } = new MediaLicensee("VRV", "VRV", 7);
+            public static MediaLicensee Viz { get; } = new MediaLicensee("Viz", "Viz", 8);
+            public static MediaLicensee MidnightPup { get; } = new MediaLicensee("Midnight Pup", "Midnight Pup", 9);
+            public static MediaLicensee TubiTv { get; } = new MediaLicensee("Tubi TV", "Tubi TV", 10);
+            public static MediaLicensee ConTv { get; } = new MediaLicensee("CONtv", "CONtv", 11);
         }
 
         #endregion

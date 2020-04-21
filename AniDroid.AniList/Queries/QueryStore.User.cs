@@ -200,16 +200,25 @@ query ($userId: Int, $type: MediaType, $groupCompleted: Boolean) {
           volumes
           format
           type
+          source
           duration
           averageScore
           meanScore
           popularity
+          season
+          seasonYear
           genres
+          tags {
+            name
+          }
           nextAiringEpisode {
             id
             airingAt
             episode
             timeUntilAiring
+          }
+          externalLinks {
+            site
           }
           startDate {
             year
