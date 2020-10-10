@@ -31,7 +31,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: Anidroid.Anilist
-        path:  "${{ github.workspace }}/bin/Release"
+        path: "${{ github.workspace }}AniDroid.AniList/bin/Release"
         
   deploy:
     needs: [build]
