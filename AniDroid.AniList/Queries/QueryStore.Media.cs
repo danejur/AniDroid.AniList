@@ -210,15 +210,6 @@ query ($mediaId: Int!) {
       large
       color
     }
-    characters {
-      pageInfo {
-        total
-        perPage
-        hasNextPage
-        currentPage
-        lastPage
-      }
-    }
     staff {
       pageInfo {
         total
@@ -269,7 +260,7 @@ query ($mediaId: Int!) {
     duration
     format
     type
-    status
+    status(version: 2)
     episodes
     chapters
     volumes

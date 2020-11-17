@@ -334,6 +334,7 @@ namespace AniDroid.AniList.Models
             public static MediaStatus Releasing { get; } = new MediaStatus("RELEASING", "Releasing", 1);
             public static MediaStatus NotYetReleased { get; } = new MediaStatus("NOT_YET_RELEASED", "Not Yet Released", 2);
             public static MediaStatus Cancelled { get; } = new MediaStatus("CANCELLED", "Cancelled", 3);
+            public static MediaStatus Hiatus { get; } = new MediaStatus("HIATUS", "Hiatus", 4);
         }
 
         /// <summary>
