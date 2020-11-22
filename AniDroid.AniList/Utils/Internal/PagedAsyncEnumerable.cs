@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using AniDroid.AniList.Interfaces;
-using AniDroid.AniList.Models;
 using OneOf;
 
 namespace AniDroid.AniList.Utils.Internal 

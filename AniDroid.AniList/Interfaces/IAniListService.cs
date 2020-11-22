@@ -1,10 +1,6 @@
-﻿using AniDroid.AniList.Interfaces;
-using AniDroid.AniList.Models;
+﻿using AniDroid.AniList.Models;
 using OneOf;
-using RestSharp;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AniDroid.AniList.Dto;

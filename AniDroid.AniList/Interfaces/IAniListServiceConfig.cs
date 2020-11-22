@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AniDroid.AniList.Interfaces
+﻿namespace AniDroid.AniList.Interfaces
 {
     public interface IAniListServiceConfig
     {

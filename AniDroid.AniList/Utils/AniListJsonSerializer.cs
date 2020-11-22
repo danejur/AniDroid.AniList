@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using AniDroid.AniList.Utils.Internal;
 using Newtonsoft.Json;
 using RestSharp;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AniDroid.AniList.Models
+﻿namespace AniDroid.AniList.Models
 {
     public class Recommendation : AniListObject
     {
