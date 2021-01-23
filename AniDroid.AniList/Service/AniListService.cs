@@ -6,11 +6,23 @@ using AniDroid.AniList.Models;
 using System.Net.Http;
 using System.Text;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums;
+using AniDroid.AniList.Enums.MediaEnums;
+using AniDroid.AniList.Enums.UserEnums;
 using Newtonsoft.Json;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Queries;
 using Newtonsoft.Json.Linq;
 using AniDroid.AniList.GraphQL;
+using AniDroid.AniList.Models.ActivityModels;
+using AniDroid.AniList.Models.CharacterModels;
+using AniDroid.AniList.Models.ForumModels;
+using AniDroid.AniList.Models.MediaModels;
+using AniDroid.AniList.Models.RecommendationModels;
+using AniDroid.AniList.Models.ReviewModels;
+using AniDroid.AniList.Models.StaffModels;
+using AniDroid.AniList.Models.StudioModels;
+using AniDroid.AniList.Models.UserModels;
 using AniDroid.AniList.Utils;
 using AniDroid.AniList.Utils.Internal;
 using OneOf;
@@ -74,7 +86,7 @@ namespace AniDroid.AniList.Service
         }
 
         public IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> SearchMedia(string queryText,
-            Media.MediaType type = null, int perPage = 20)
+            MediaType type = null, int perPage = 20)
         {
             var arguments = new
             {
@@ -93,30 +105,30 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<Character.Edge>, IAniListError>> GetMediaCharacters(int mediaId, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<CharacterEdge>, IAniListError>> GetMediaCharacters(int mediaId, int perPage)
         {
             var arguments = new { mediaId };
-            return new PagedAsyncEnumerable<Character.Edge>(perPage,
-                CreateGetPageFunc<Character.Edge, Media>(QueryStore.GetMediaCharacters, arguments, media => media.Characters),
+            return new PagedAsyncEnumerable<CharacterEdge>(perPage,
+                CreateGetPageFunc<CharacterEdge, Media>(QueryStore.GetMediaCharacters, arguments, media => media.Characters),
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<Staff.Edge>, IAniListError>> GetMediaStaff(int mediaId, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<StaffEdge>, IAniListError>> GetMediaStaff(int mediaId, int perPage)
         {
             var arguments = new { mediaId };
-            return new PagedAsyncEnumerable<Staff.Edge>(perPage,
-                CreateGetPageFunc<Staff.Edge, Media>(QueryStore.GetMediaStaff, arguments, media => media.Staff),
+            return new PagedAsyncEnumerable<StaffEdge>(perPage,
+                CreateGetPageFunc<StaffEdge, Media>(QueryStore.GetMediaStaff, arguments, media => media.Staff),
                 HasNextPage);
         }
 
-        public Task<OneOf<Media.MediaList, IAniListError>> UpdateMediaListEntry(MediaListEditDto editDto, CancellationToken cToken)
+        public Task<OneOf<MediaList, IAniListError>> UpdateMediaListEntry(MediaListEditDto editDto, CancellationToken cToken)
         {
             var query = new GraphQLQuery
             {
                 Query = QueryStore.UpdateMediaList,
                 Variables = editDto
             };
-            return GetResponseAsync<Media.MediaList>(query, cToken);
+            return GetResponseAsync<MediaList>(query, cToken);
         }
 
         public async Task<OneOf<bool, IAniListError>> DeleteMediaListEntry(int mediaListId, CancellationToken cToken)
@@ -137,22 +149,22 @@ namespace AniDroid.AniList.Service
                 CreateGetPageFunc<Review>(QueryStore.GetMediaReviews, arguments), HasNextPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<Recommendation.Edge>, IAniListError>> GetMediaRecommendations(int mediaId, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<ConnectionEdge<Recommendation>>, IAniListError>> GetMediaRecommendations(int mediaId, int perPage)
         {
             var arguments = new { mediaId };
-            return new PagedAsyncEnumerable<Recommendation.Edge>(perPage,
-                CreateGetPageFunc<Recommendation.Edge, Media>(QueryStore.GetMediaRecommendations, arguments, media => media.Recommendations),
+            return new PagedAsyncEnumerable<ConnectionEdge<Recommendation>>(perPage,
+                CreateGetPageFunc<ConnectionEdge<Recommendation>, Media>(QueryStore.GetMediaRecommendations, arguments, media => media.Recommendations),
                 HasNextPage);
         }
 
-        public async Task<OneOf<IList<Media.MediaTag>, IAniListError>> GetMediaTagCollectionAsync(CancellationToken cToken)
+        public async Task<OneOf<IList<MediaTag>, IAniListError>> GetMediaTagCollectionAsync(CancellationToken cToken)
         {
             var query = new GraphQLQuery
             {
                 Query = QueryStore.GetMediaTagCollection
             };
 
-            return await GetResponseAsync<IList<Media.MediaTag>>(query, cToken);
+            return await GetResponseAsync<IList<MediaTag>>(query, cToken);
         }
 
         public async Task<OneOf<IList<string>, IAniListError>> GetGenreCollectionAsync(CancellationToken cToken)
@@ -188,14 +200,14 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<User>(query, cToken);
         }
 
-        public Task<OneOf<Media.MediaListCollection, IAniListError>> GetUserMediaList(int userId, Media.MediaType type, bool groupCompleted, CancellationToken cToken)
+        public Task<OneOf<MediaListCollection, IAniListError>> GetUserMediaList(int userId, MediaType type, bool groupCompleted, CancellationToken cToken)
         {
             var query = new GraphQLQuery
             {
                 Query = QueryStore.GetMediaListsByUserIdAndType,
                 Variables = new { userId, type, groupCompleted },
             };
-            return GetResponseAsync<Media.MediaListCollection>(query, cToken);
+            return GetResponseAsync<MediaListCollection>(query, cToken);
         }
 
         public IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> SearchUsers(string queryText,
@@ -207,14 +219,14 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public Task<OneOf<User.UserFavourites, IAniListError>> ToggleFavorite(FavoriteDto favoriteDto, CancellationToken cToken)
+        public Task<OneOf<UserFavourites, IAniListError>> ToggleFavorite(FavoriteDto favoriteDto, CancellationToken cToken)
         {
             var mutation = new GraphQLQuery
             {
                 Query = QueryStore.ToggleUserFavorite,
                 Variables = favoriteDto,
             };
-            return GetResponseAsync<User.UserFavourites>(mutation, cToken);
+            return GetResponseAsync<UserFavourites>(mutation, cToken);
         }
 
         public Task<OneOf<AniListActivity, IAniListError>> PostUserMessage(int userId, string message, CancellationToken cToken)
@@ -237,7 +249,7 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<User>(mutation, cToken);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowers(int userId, User.UserSort sort,
+        public IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowers(int userId, UserSort sort,
             int perPage = 20)
         {
             var arguments = new
@@ -250,7 +262,7 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowing(int userId, User.UserSort sort,
+        public IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowing(int userId, UserSort sort,
             int perPage = 20)
         {
             var arguments = new
@@ -263,14 +275,14 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<Media.MediaList>, IAniListError>> GetMediaFollowingUsersMediaLists(int mediaId, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<MediaList>, IAniListError>> GetMediaFollowingUsersMediaLists(int mediaId, int perPage)
         {
             var arguments = new
             {
                 mediaId
             };
-            return new PagedAsyncEnumerable<Media.MediaList>(perPage,
-                CreateGetPageFunc<Media.MediaList>(QueryStore.GetMediaFollowingUsersMediaLists, arguments),
+            return new PagedAsyncEnumerable<MediaList>(perPage,
+                CreateGetPageFunc<MediaList>(QueryStore.GetMediaFollowingUsersMediaLists, arguments),
                 HasNextPage);
         }
 
@@ -285,7 +297,7 @@ namespace AniDroid.AniList.Service
 
         #region Activity
 
-        public Task<OneOf<List<User>, IAniListError>> ToggleLike(int id, AniListObject.LikeableType type, CancellationToken cToken = default)
+        public Task<OneOf<List<User>, IAniListError>> ToggleLike(int id, LikeableType type, CancellationToken cToken = default)
         {
             var query = new GraphQLQuery
             {
@@ -305,24 +317,24 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<AniListActivity>(query, cToken);
         }
 
-        public Task<OneOf<AniListObject.DeletedResponse, IAniListError>> DeleteActivity(int activityId, CancellationToken cToken)
+        public Task<OneOf<DeletedResponse, IAniListError>> DeleteActivity(int activityId, CancellationToken cToken)
         {
             var query = new GraphQLQuery
             {
                 Query = QueryStore.DeleteActivity,
                 Variables = new { activityId },
             };
-            return GetResponseAsync<AniListObject.DeletedResponse>(query, cToken);
+            return GetResponseAsync<DeletedResponse>(query, cToken);
         }
 
-        public Task<OneOf<AniListActivity.ActivityReply, IAniListError>> PostActivityReply(int activityId, string text, CancellationToken cToken = default)
+        public Task<OneOf<ActivityReply, IAniListError>> PostActivityReply(int activityId, string text, CancellationToken cToken = default)
         {
             var query = new GraphQLQuery
             {
                 Query = QueryStore.PostActivityReply,
                 Variables = new { activityId, text },
             };
-            return GetResponseAsync<AniListActivity.ActivityReply>(query, cToken);
+            return GetResponseAsync<ActivityReply>(query, cToken);
         }
 
         public Task<OneOf<AniListActivity, IAniListError>> GetAniListActivityById(int id, CancellationToken cToken = default)
@@ -358,24 +370,24 @@ namespace AniDroid.AniList.Service
             return GetResponseAsync<User>(query, cToken);
         }
 
-        public Task<OneOf<AniListActivity.ActivityReply, IAniListError>> SaveActivityReply(int id, string text, CancellationToken cToken)
+        public Task<OneOf<ActivityReply, IAniListError>> SaveActivityReply(int id, string text, CancellationToken cToken)
         {
             var query = new GraphQLQuery
             {
                 Query = QueryStore.SaveActivityReply,
                 Variables = new { id, text },
             };
-            return GetResponseAsync<AniListActivity.ActivityReply>(query, cToken);
+            return GetResponseAsync<ActivityReply>(query, cToken);
         }
 
-        public Task<OneOf<AniListObject.DeletedResponse, IAniListError>> DeleteActivityReply(int id, CancellationToken cToken)
+        public Task<OneOf<DeletedResponse, IAniListError>> DeleteActivityReply(int id, CancellationToken cToken)
         {
             var query = new GraphQLQuery
             {
                 Query = QueryStore.DeleteActivityReply,
                 Variables = new { id },
             };
-            return GetResponseAsync<AniListObject.DeletedResponse>(query, cToken);
+            return GetResponseAsync<DeletedResponse>(query, cToken);
         }
 
         #endregion
@@ -401,11 +413,11 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<Media.Edge>, IAniListError>> GetCharacterMedia(int characterId, Media.MediaType mediaType, int perPage = 20)
+        public IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> GetCharacterMedia(int characterId, MediaType mediaType, int perPage = 20)
         {
             var arguments = new { characterId, mediaType = mediaType?.Value };
-            return new PagedAsyncEnumerable<Media.Edge>(perPage,
-                CreateGetPageFunc<Media.Edge, Character>(QueryStore.GetCharacterMedia, arguments, character => character.Media),
+            return new PagedAsyncEnumerable<MediaEdge>(perPage,
+                CreateGetPageFunc<MediaEdge, Character>(QueryStore.GetCharacterMedia, arguments, character => character.Media),
                 HasNextPage);
         }
 
@@ -432,19 +444,19 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<Character.Edge>, IAniListError>> GetStaffCharacters(int staffId, int perPage = 20)
+        public IAsyncEnumerable<OneOf<IPagedData<CharacterEdge>, IAniListError>> GetStaffCharacters(int staffId, int perPage = 20)
         {
             var arguments = new { staffId };
-            return new PagedAsyncEnumerable<Character.Edge>(perPage,
-                CreateGetPageFunc<Character.Edge, Staff>(QueryStore.GetStaffCharacters, arguments, staff => staff.Characters),
+            return new PagedAsyncEnumerable<CharacterEdge>(perPage,
+                CreateGetPageFunc<CharacterEdge, Staff>(QueryStore.GetStaffCharacters, arguments, staff => staff.Characters),
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<Media.Edge>, IAniListError>> GetStaffMedia(int staffId, Media.MediaType mediaType, int perPage = 20)
+        public IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> GetStaffMedia(int staffId, MediaType mediaType, int perPage = 20)
         {
             var arguments = new { staffId, mediaType = mediaType.Value };
-            return new PagedAsyncEnumerable<Media.Edge>(perPage,
-                CreateGetPageFunc<Media.Edge, Staff>(QueryStore.GetStaffMedia, arguments, staff => staff.StaffMedia),
+            return new PagedAsyncEnumerable<MediaEdge>(perPage,
+                CreateGetPageFunc<MediaEdge, Staff>(QueryStore.GetStaffMedia, arguments, staff => staff.StaffMedia),
                 HasNextPage);
         }
 
@@ -472,11 +484,11 @@ namespace AniDroid.AniList.Service
                 HasNextPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<Media.Edge>, IAniListError>> GetStudioMedia(int studioId, int perPage = 20)
+        public IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> GetStudioMedia(int studioId, int perPage = 20)
         {
             var arguments = new { studioId };
-            return new PagedAsyncEnumerable<Media.Edge>(perPage,
-                CreateGetPageFunc<Media.Edge, Studio>(QueryStore.GetStudioMedia, arguments, studio => studio.Media),
+            return new PagedAsyncEnumerable<MediaEdge>(perPage,
+                CreateGetPageFunc<MediaEdge, Studio>(QueryStore.GetStudioMedia, arguments, studio => studio.Media),
                 HasNextPage);
         }
 

@@ -4,6 +4,18 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums;
+using AniDroid.AniList.Enums.MediaEnums;
+using AniDroid.AniList.Enums.UserEnums;
+using AniDroid.AniList.Models.ActivityModels;
+using AniDroid.AniList.Models.CharacterModels;
+using AniDroid.AniList.Models.ForumModels;
+using AniDroid.AniList.Models.MediaModels;
+using AniDroid.AniList.Models.RecommendationModels;
+using AniDroid.AniList.Models.ReviewModels;
+using AniDroid.AniList.Models.StaffModels;
+using AniDroid.AniList.Models.StudioModels;
+using AniDroid.AniList.Models.UserModels;
 using AniDroid.AniList.Service;
 
 namespace AniDroid.AniList.Interfaces
@@ -23,23 +35,23 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<Media, IAniListError>> GetMediaById(int mediaId, CancellationToken cToken);
 
-        IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> SearchMedia(string queryText, Media.MediaType type, int perPage);
+        IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> SearchMedia(string queryText, MediaType type, int perPage);
 
         IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> BrowseMedia(BrowseMediaDto browseDto, int perPage);
 
-        IAsyncEnumerable<OneOf<IPagedData<Character.Edge>, IAniListError>> GetMediaCharacters(int mediaId, int perPage);
+        IAsyncEnumerable<OneOf<IPagedData<CharacterEdge>, IAniListError>> GetMediaCharacters(int mediaId, int perPage);
 
-        IAsyncEnumerable<OneOf<IPagedData<Staff.Edge>, IAniListError>> GetMediaStaff(int mediaId, int perPage);
+        IAsyncEnumerable<OneOf<IPagedData<StaffEdge>, IAniListError>> GetMediaStaff(int mediaId, int perPage);
 
-        Task<OneOf<Media.MediaList, IAniListError>> UpdateMediaListEntry(MediaListEditDto editDto, CancellationToken cToken);
+        Task<OneOf<MediaList, IAniListError>> UpdateMediaListEntry(MediaListEditDto editDto, CancellationToken cToken);
 
         Task<OneOf<bool, IAniListError>> DeleteMediaListEntry(int mediaListId, CancellationToken cToken);
 
         IAsyncEnumerable<OneOf<IPagedData<Review>, IAniListError>> GetMediaReviews(int mediaId, int perPage);
 
-        IAsyncEnumerable<OneOf<IPagedData<Recommendation.Edge>, IAniListError>> GetMediaRecommendations(int mediaId, int perPage);
+        IAsyncEnumerable<OneOf<IPagedData<ConnectionEdge<Recommendation>>, IAniListError>> GetMediaRecommendations(int mediaId, int perPage);
 
-        Task<OneOf<IList<Media.MediaTag>, IAniListError>> GetMediaTagCollectionAsync(CancellationToken cToken);
+        Task<OneOf<IList<MediaTag>, IAniListError>> GetMediaTagCollectionAsync(CancellationToken cToken);
 
         Task<OneOf<IList<string>, IAniListError>> GetGenreCollectionAsync(CancellationToken cToken);
 
@@ -51,21 +63,21 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<User, IAniListError>> GetUser(string userName, int? userId, CancellationToken cToken);
 
-        Task<OneOf<Media.MediaListCollection, IAniListError>> GetUserMediaList(int userId, Media.MediaType type, bool groupCompleted, CancellationToken cToken);
+        Task<OneOf<MediaListCollection, IAniListError>> GetUserMediaList(int userId, MediaType type, bool groupCompleted, CancellationToken cToken);
 
         IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> SearchUsers(string queryText, int perPage);
 
-        Task<OneOf<User.UserFavourites, IAniListError>> ToggleFavorite(FavoriteDto favoriteDto, CancellationToken cToken);
+        Task<OneOf<UserFavourites, IAniListError>> ToggleFavorite(FavoriteDto favoriteDto, CancellationToken cToken);
 
         Task<OneOf<AniListActivity, IAniListError>> PostUserMessage(int userId, string message, CancellationToken cToken);
 
         Task<OneOf<User, IAniListError>> ToggleFollowUser(int userId, CancellationToken cToken);
 
-        IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowers(int userId, User.UserSort sort, int perPage);
+        IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowers(int userId, UserSort sort, int perPage);
 
-        IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowing(int userId, User.UserSort sort, int perPage);
+        IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> GetUserFollowing(int userId, UserSort sort, int perPage);
 
-        IAsyncEnumerable<OneOf<IPagedData<Media.MediaList>, IAniListError>> GetMediaFollowingUsersMediaLists(int mediaId, int perPage);
+        IAsyncEnumerable<OneOf<IPagedData<MediaList>, IAniListError>> GetMediaFollowingUsersMediaLists(int mediaId, int perPage);
 
         IAsyncEnumerable<OneOf<IPagedData<Review>, IAniListError>> GetUserReviews(int userId, int perPage);
 
@@ -82,11 +94,11 @@ namespace AniDroid.AniList.Interfaces
         /// <returns></returns>
         Task<OneOf<AniListActivity, IAniListError>> SaveTextActivity(string text, int? activityId, CancellationToken cToken);
 
-        Task<OneOf<AniListObject.DeletedResponse, IAniListError>> DeleteActivity(int activityId, CancellationToken cToken);
+        Task<OneOf<DeletedResponse, IAniListError>> DeleteActivity(int activityId, CancellationToken cToken);
 
-        Task<OneOf<AniListActivity.ActivityReply, IAniListError>> PostActivityReply(int activityId, string text, CancellationToken cToken);
+        Task<OneOf<ActivityReply, IAniListError>> PostActivityReply(int activityId, string text, CancellationToken cToken);
 
-        Task<OneOf<List<User>, IAniListError>> ToggleLike(int id, AniListObject.LikeableType type, CancellationToken cToken);
+        Task<OneOf<List<User>, IAniListError>> ToggleLike(int id, LikeableType type, CancellationToken cToken);
 
         Task<OneOf<AniListActivity, IAniListError>> GetAniListActivityById(int id, CancellationToken cToken);
 
@@ -96,9 +108,9 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<User, IAniListError>> GetAniListNotificationCount(CancellationToken cToken);
 
-        Task<OneOf<AniListActivity.ActivityReply, IAniListError>> SaveActivityReply(int id, string text, CancellationToken cToken);
+        Task<OneOf<ActivityReply, IAniListError>> SaveActivityReply(int id, string text, CancellationToken cToken);
 
-        Task<OneOf<AniListObject.DeletedResponse, IAniListError>> DeleteActivityReply(int id, CancellationToken cToken);
+        Task<OneOf<DeletedResponse, IAniListError>> DeleteActivityReply(int id, CancellationToken cToken);
 
         #endregion
 
@@ -108,7 +120,7 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<OneOf<IPagedData<Character>, IAniListError>> SearchCharacters(string queryText, int perPage);
 
-        IAsyncEnumerable<OneOf<IPagedData<Media.Edge>, IAniListError>> GetCharacterMedia(int characterId, Media.MediaType mediaType, int perPage);
+        IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> GetCharacterMedia(int characterId, MediaType mediaType, int perPage);
 
         #endregion
 
@@ -118,9 +130,9 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> SearchStaff(string queryText, int perPage);
 
-        IAsyncEnumerable<OneOf<IPagedData<Character.Edge>, IAniListError>> GetStaffCharacters(int staffId, int perPage);
+        IAsyncEnumerable<OneOf<IPagedData<CharacterEdge>, IAniListError>> GetStaffCharacters(int staffId, int perPage);
 
-        IAsyncEnumerable<OneOf<IPagedData<Media.Edge>, IAniListError>> GetStaffMedia(int staffId, Media.MediaType mediaType, int perPage);
+        IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> GetStaffMedia(int staffId, MediaType mediaType, int perPage);
 
         #endregion
 
@@ -130,7 +142,7 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> SearchStudios(string queryText, int perPage);
 
-        IAsyncEnumerable<OneOf<IPagedData<Media.Edge>, IAniListError>> GetStudioMedia(int studioId, int perPage);
+        IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> GetStudioMedia(int studioId, int perPage);
 
         #endregion
 

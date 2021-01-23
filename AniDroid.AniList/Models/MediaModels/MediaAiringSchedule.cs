@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace AniDroid.AniList.Models
+namespace AniDroid.AniList.Models.MediaModels
 {
-    public class AiringSchedule : AniListObject
+    public class MediaAiringSchedule : AniListObject
     {
         public int AiringAt { get; set; }
         public int TimeUntilAiring { get; set; }
@@ -19,11 +19,5 @@ namespace AniDroid.AniList.Models
         {
             return TimeSpan.FromSeconds(TimeUntilAiring);
         }
-
-        #region Internal Classes
-
-        public class Edge : ConnectionEdge<AiringSchedule> { }
-
-        #endregion
     }
 }

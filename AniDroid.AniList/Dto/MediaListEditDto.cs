@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AniDroid.AniList.DataTypes;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Models;
 
 namespace AniDroid.AniList.Dto
@@ -7,7 +8,7 @@ namespace AniDroid.AniList.Dto
     public class MediaListEditDto
     {
         public int MediaId { get; set; }
-        public Media.MediaListStatus Status { get; set; }
+        public MediaListStatus Status { get; set; }
         public float? Score { get; set; }
         public int? Progress { get; set; }
         public int? ProgressVolumes { get; set; }

@@ -12,4 +12,15 @@
     <PackageReference Include="RestSharp" Version="106.6.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Enums\RecommendationEnums\" />
+    <Folder Include="Enums\ReviewEnums\" />
+    <Folder Include="Enums\UserEnums\" />
+    <Folder Include="Models\CharacterModels\" />
+    <Folder Include="Models\ForumModels\" />
+    <Folder Include="Models\RecommendationModels\" />
+    <Folder Include="Models\ReviewModels\" />
+    <Folder Include="Models\StudioModels\" />
+  </ItemGroup>
+
 </Project>

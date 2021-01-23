@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using AniDroid.AniList.Models.MediaModels;
+using AniDroid.AniList.Models.UserModels;
 
-namespace AniDroid.AniList.Models
+namespace AniDroid.AniList.Models.ForumModels
 {
     public class ForumThread : AniListObject
     {
@@ -23,15 +25,5 @@ namespace AniDroid.AniList.Models
         public string SiteUrl { get; set; }
         public List<ForumThreadCategory> Categories { get; set; }
         public List<Media> MediaCategories { get; set; }
-
-        #region Internal Classes
-
-        public class ForumThreadCategory
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-        }
-
-        #endregion
     }
 }
