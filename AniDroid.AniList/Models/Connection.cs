@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace AniDroid.AniList.Models
 {
-    public class Connection<TEdgeType, TNodeType> : IPagedData<TEdgeType> where TEdgeType : ConnectionEdge<TNodeType> where TNodeType : AniListObject
+    public class Connection<TEdgeType, TNodeType> : IPagedData<TEdgeType> where TEdgeType : ConnectionEdge<TNodeType>
     {
         [JsonProperty("Edges")]
         public ICollection<TEdgeType> Data { get; set; }

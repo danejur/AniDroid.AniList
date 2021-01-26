@@ -55,6 +55,8 @@ namespace AniDroid.AniList.Interfaces
 
         Task<OneOf<IList<string>, IAniListError>> GetGenreCollectionAsync(CancellationToken cToken);
 
+        IAsyncEnumerable<OneOf<IPagedData<ConnectionEdge<MediaTrend>>, IAniListError>> GetMediaTrends(int mediaId, bool releasing, MediaTrendSort[] sort, int perPage);
+
         #endregion
 
         #region User

@@ -57,6 +57,8 @@ namespace AniDroid.AniList.Models.MediaModels
         public string SiteUrl { get; set; }
         public bool AutoCreateForumThread { get; set; }
         public int Trending { get; set; }
+        public Connection<ConnectionEdge<MediaTrend>, MediaTrend> Trends { get; set; }
+        public Connection<ConnectionEdge<MediaTrend>, MediaTrend> AiringTrends { get; set; }
 
         public string GetFormattedDateRangeString()
         {

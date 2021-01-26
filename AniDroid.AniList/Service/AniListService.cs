@@ -177,6 +177,14 @@ namespace AniDroid.AniList.Service
             return await GetResponseAsync<IList<string>>(query, cToken);
         }
 
+        public IAsyncEnumerable<OneOf<IPagedData<ConnectionEdge<MediaTrend>>, IAniListError>> GetMediaTrends(int mediaId, bool releasing, MediaTrendSort[] sort, int perPage)
+        {
+            var arguments = new { mediaId, releasing, sort, perPage };
+            return new PagedAsyncEnumerable<ConnectionEdge<MediaTrend>>(perPage,
+                CreateGetPageFunc<ConnectionEdge<MediaTrend>, Media>(QueryStore.GetMediaTrends, arguments, media => media.Trends),
+                HasNextPage);
+        }
+
         #endregion
 
         #region User

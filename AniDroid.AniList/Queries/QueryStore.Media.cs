@@ -325,6 +325,39 @@ query ($mediaId: Int!) {
         lastPage
       }
     }
+    trends(sort: ID_DESC) {
+      pageInfo {
+        total
+        perPage
+        hasNextPage
+        currentPage
+        lastPage
+      }
+      edges {
+        node {
+          averageScore
+          date
+          trending
+          popularity
+        }
+      }
+    }
+    airingTrends: trends(releasing: true, sort: EPISODE_DESC) {
+      pageInfo {
+        total
+        perPage
+        hasNextPage
+        currentPage
+        lastPage
+      }
+      edges {
+        node {
+          averageScore
+          inProgress
+          episode
+        }
+      }
+    }
     mediaListEntry {
       user {
         mediaListOptions {
@@ -673,6 +706,39 @@ query {
         public static string GetGenreCollection => @"
 query {
   Data: GenreCollection
+}
+";
+
+        /// <summary>
+        /// Parameters: (mediaId: int, page: int, perPage: int, sort: MediaTrendSort[], releasing: bool)
+        /// <para></para>
+        /// Returns: Media with PagedData of Media Trends
+        /// </summary>
+        public static string GetMediaTrends => @"
+query ($mediaId: Int!, $sort: [MediaTrendSort], $releasing: Boolean, $page: Int, $perPage: Int) {
+  Media(id: $mediaId) {
+    id
+    trends(releasing: $releasing, sort: $sort, page: $page, perPage: $perPage) {
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
+      }
+      edges {
+        node {
+          episode
+          averageScore
+          popularity
+          trending
+          date
+          releasing
+          inProgress
+        }
+      }
+    }
+  }
 }
 ";
     }
