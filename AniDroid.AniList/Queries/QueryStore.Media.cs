@@ -206,6 +206,15 @@ query ($mediaId: Int!) {
       large
       color
     }
+    characters {
+      pageInfo {
+        total
+        perPage
+        hasNextPage
+        currentPage
+        lastPage
+      }
+    }
     staff {
       pageInfo {
         total
