@@ -83,6 +83,16 @@ namespace AniDroid.AniList.Interfaces
 
         IAsyncEnumerable<OneOf<IPagedData<Review>, IAniListError>> GetUserReviews(int userId, int perPage);
 
+        IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> GetUserFavoriteAnime(int userId, int perPage);
+
+        IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> GetUserFavoriteManga(int userId, int perPage);
+
+        IAsyncEnumerable<OneOf<IPagedData<CharacterEdge>, IAniListError>> GetUserFavoriteCharacters(int userId, int perPage);
+
+        IAsyncEnumerable<OneOf<IPagedData<StaffEdge>, IAniListError>> GetUserFavoriteStaff(int userId, int perPage);
+
+        IAsyncEnumerable<OneOf<IPagedData<StudioEdge>, IAniListError>> GetUserFavoriteStudios(int userId, int perPage);
+
         #endregion
 
         #region Activity

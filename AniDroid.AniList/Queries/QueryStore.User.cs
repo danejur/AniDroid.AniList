@@ -474,5 +474,181 @@ query ($userId: Int!, $page: Int, $count: Int) {
   }
 }
 ";
+
+        /// <summary>
+        /// Parameters: (userId: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: PagedData of Media
+        /// </summary>
+        public static string GetUserFavoriteAnime => @"
+query ($userId: Int, $page: Int, $perPage: Int) {
+  Data: User(id: $userId) {
+    favourites {
+      anime(page: $page, perPage: $perPage) {
+        pageInfo {
+          total
+          perPage
+          currentPage
+          lastPage
+          hasNextPage
+        }
+        edges {
+          node {
+            id
+            coverImage {
+              color
+              large
+            }
+            title {
+              userPreferred
+            }
+            format
+          }
+        }
+      }
+    }
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (userId: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: PagedData of Media
+        /// </summary>
+        public static string GetUserFavoriteManga => @"
+query ($userId: Int, $page: Int, $perPage: Int) {
+  Data: User(id: $userId) {
+    favourites {
+      manga(page: $page, perPage: $perPage) {
+        pageInfo {
+          total
+          perPage
+          currentPage
+          lastPage
+          hasNextPage
+        }
+        edges {
+          node {
+            id
+            coverImage {
+              color
+              large
+            }
+            title {
+              userPreferred
+            }
+            format
+          }
+        }
+      }
+    }
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (userId: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: PagedData of Characters
+        /// </summary>
+        public static string GetUserFavoriteCharacters => @"
+query ($userId: Int, $page: Int, $perPage: Int) {
+  Data: User(id: $userId) {
+    favourites {
+      characters(page: $page, perPage: $perPage) {
+        pageInfo {
+          total
+          perPage
+          currentPage
+          lastPage
+          hasNextPage
+        }
+        edges {
+          node {
+            id
+            name {
+              full
+              native
+              alternative
+            }
+            image {
+              large
+              medium
+            }
+          }
+        }
+      }
+    }
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (userId: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: PagedData of Staff
+        /// </summary>
+        public static string GetUserFavoriteStaff => @"
+query ($userId: Int, $page: Int, $perPage: Int) {
+  Data: User(id: $userId) {
+    favourites {
+      staff(page: $page, perPage: $perPage) {
+        pageInfo {
+          total
+          perPage
+          currentPage
+          lastPage
+          hasNextPage
+        }
+        edges {
+          node {
+            id
+            name {
+              full
+              native
+              alternative
+            }
+            image {
+              large
+              medium
+            }
+          }
+        }
+      }
+    }
+  }
+}
+";
+
+        /// <summary>
+        /// Parameters: (userId: int, page: int, perPage: int)
+        /// <para></para>
+        /// Returns: PagedData of Studios
+        /// </summary>
+        public static string GetUserFavoriteStudios => @"
+query ($userId: Int, $page: Int, $perPage: Int) {
+  Data: User(id: $userId) {
+    favourites {
+      studios(page: $page, perPage: $perPage) {
+        pageInfo {
+          total
+          perPage
+          currentPage
+          lastPage
+          hasNextPage
+        }
+        edges {
+          node {
+            id
+            name
+            
+          }
+        }
+      }
+    }
+  }
+}
+";
     }
 }

@@ -7,6 +7,7 @@ namespace AniDroid.AniList.Models
         public string First { get; set; }
         public string Last { get; set; }
         public string Native { get; set; }
+        public string Full { get; set; }
         public List<string> Alternative { get; set; }
 
         public string FormattedName => $"{First} {Last}".Trim();

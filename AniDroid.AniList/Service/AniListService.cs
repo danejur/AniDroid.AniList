@@ -301,6 +301,61 @@ namespace AniDroid.AniList.Service
                 CreateGetPageFunc<Review>(QueryStore.GetUserReviews, arguments), HasNextPage);
         }
 
+        public IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> GetUserFavoriteAnime(int userId, int perPage)
+        {
+            var arguments = new
+            {
+                userId
+            };
+            return new PagedAsyncEnumerable<MediaEdge>(perPage,
+                CreateGetPageFunc<MediaEdge, User>(QueryStore.GetUserFavoriteAnime, arguments, x => x.Favourites.Anime),
+                HasNextPage);
+        }
+
+        public IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> GetUserFavoriteManga(int userId, int perPage)
+        {
+            var arguments = new
+            {
+                userId
+            };
+            return new PagedAsyncEnumerable<MediaEdge>(perPage,
+                CreateGetPageFunc<MediaEdge, User>(QueryStore.GetUserFavoriteManga, arguments, x => x.Favourites.Manga),
+                HasNextPage);
+        }
+
+        public IAsyncEnumerable<OneOf<IPagedData<CharacterEdge>, IAniListError>> GetUserFavoriteCharacters(int userId, int perPage)
+        {
+            var arguments = new
+            {
+                userId
+            };
+            return new PagedAsyncEnumerable<CharacterEdge>(perPage,
+                CreateGetPageFunc<CharacterEdge, User>(QueryStore.GetUserFavoriteCharacters, arguments, x => x.Favourites.Characters),
+                HasNextPage);
+        }
+
+        public IAsyncEnumerable<OneOf<IPagedData<StaffEdge>, IAniListError>> GetUserFavoriteStaff(int userId, int perPage)
+        {
+            var arguments = new
+            {
+                userId
+            };
+            return new PagedAsyncEnumerable<StaffEdge>(perPage,
+                CreateGetPageFunc<StaffEdge, User>(QueryStore.GetUserFavoriteStaff, arguments, x => x.Favourites.Staff),
+                HasNextPage);
+        }
+
+        public IAsyncEnumerable<OneOf<IPagedData<StudioEdge>, IAniListError>> GetUserFavoriteStudios(int userId, int perPage)
+        {
+            var arguments = new
+            {
+                userId
+            };
+            return new PagedAsyncEnumerable<StudioEdge>(perPage,
+                CreateGetPageFunc<StudioEdge, User>(QueryStore.GetUserFavoriteStudios, arguments, x => x.Favourites.Studios),
+                HasNextPage);
+        }
+
         #endregion
 
         #region Activity
