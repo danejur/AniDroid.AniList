@@ -1,5 +1,4 @@
-﻿using AniDroid.AniList.Enums;
-using AniDroid.AniList.Enums.MediaEnums;
+﻿using AniDroid.AniList.Enums.MediaEnums;
 
 namespace AniDroid.AniList.Models.UserModels
 {
